@@ -1,0 +1,23 @@
+{
+     "drop_down_menu":
+     {
+         "misc":
+         {
+             "expand_direction": "down"
+         },
+
+         "colours":
+         {
+             "normal_bg": "#3e9e96",
+             "hovered_bg": "#3e9e96"
+         }
+     },
+    "drop_down_menu.#expand_button":
+    {
+        "colours":
+        {
+            "normal_bg": "#3e9e96",
+            "hovered_bg": "#467874"
+        }
+    }
+ }
