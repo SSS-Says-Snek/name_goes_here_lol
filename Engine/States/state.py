@@ -5,13 +5,19 @@ from utils import *
 
 from pygame import *
 
+import types
+
+func_type = types.MethodType
+
 
 class MenuState(BaseState):
-    def __init__(self):
+    def __init__(self, title_idx=0):
         super().__init__()
+        self.next_state = MenuState
+
         self.selection = 0
         self.title = TITLE
-        self.title_idx = 0
+        self.title_idx = title_idx
         self.title_thing = 0
         self.buttons = {
             "start_button": (MenuButton(
@@ -21,7 +27,7 @@ class MenuState(BaseState):
                 text="Start New Game",
                 text_color=(0, 0, 0),
                 font_size=40
-            ), NotImplemented),
+            ), lambda: self.change_state(StatState)),
             "load_button": (MenuButton(
                 self.screen,
                 ((250, 200), (350, 75)),
@@ -36,8 +42,7 @@ class MenuState(BaseState):
                 (128, 128, 128),
                 text="Statistics",
                 text_color=(0, 0, 0),
-                font_size=40
-            ), lambda: self.change_state(StatState)),
+                font_size=40), lambda: self.change_state(StatState)),
             "quit_button": (MenuButton(
                 self.screen,
                 ((250, 400), (100, 75)),
@@ -72,37 +77,27 @@ class MenuState(BaseState):
                 self.selection -= 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == K_RETURN:
-                self.buttons[list(self.buttons.keys())[self.selection]][1]()
+                try:
+                    self.buttons[list(self.buttons.keys())[self.selection]][1]()
+                except TypeError:
+                    print("Not Implemented, shh")
         if pygame_event.type == MOUSEBUTTONDOWN:
-            self.buttons[list(self.buttons.keys())[self.selection]][1]()
+            try:
+                self.buttons[list(self.buttons.keys())[self.selection]][1]()
+            except TypeError:
+                print("Not Implemented, shh")
 
         for dict_key, button in self.buttons.items():
             if button[0].get_rect().collidepoint((mousex, mousey)):
                 self.selection = list(self.buttons.keys()).index(dict_key)
 
+    def process_state_event(self, state_event):
+        if state_event == 3:
+            return StatState
+        return self
+
     def change_state(self, other_state):
-        global CurrentState
-        print("Current State", repr(CurrentState))
-        print("Other State:", repr(other_state))
-        print("Current state doc for handle_events:", CurrentState.handle_events.__doc__)
-        print("Current state doc for draw:", CurrentState.draw.__doc__)
-        print("Other state doc for handle_events", other_state.handle_events.__doc__)
-        print("Other state doc for draw", other_state.draw.__doc__)
-        # self.buttons = other_state().buttons
-        # CurrentState = other_state
-        # temp_draw = other_state().draw
-        # temp_handle_events = other_state().handle_events
-        CurrentState.draw = other_state().draw
-        CurrentState.handle_events = other_state().handle_events
-        # other_state().draw = temp_draw
-        # other_state().handle_events = temp_handle_events
-        print("----------------------TRANSITION-------------------")
-        print("Current State", repr(CurrentState))
-        print("Other State:", repr(other_state))
-        print("Current state doc for handle_events:", CurrentState.handle_events.__doc__)
-        print("Current state doc for draw:", CurrentState.draw.__doc__)
-        print("Other state doc for handle_events", other_state.handle_events.__doc__)
-        print("Other state doc for draw", other_state.draw.__doc__)
+        self.next_state = other_state
 
     def update_title(self):
         for i in self.title:
@@ -121,13 +116,15 @@ class MenuState(BaseState):
 class StatState(BaseState):
     def __init__(self):
         super().__init__()
+        self.next_state = StatState
+
         self.buttons = {"test_button": (MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Bacc",
                                                    text_color=(0, 0, 0), font_size=40), lambda: self.change_state(MenuState))}
 
     def draw(self):
         """STATSTATE doc for draw"""
-        txt = self.font.render("Statistics Yes", True, (0, 0, 0))
-        self.screen.blit(txt, (200, 200))
+        txt = self.font.render("Game Statistics", True, (0, 0, 0))
+        self.screen.blit(txt, (200, 20))
         for dict_key, button in self.buttons.items():
             button[0].draw()
 
@@ -142,29 +139,7 @@ class StatState(BaseState):
                 # self.change_state(MenuState)
 
     def change_state(self, other_state):
-        global CurrentState
-        print("CurrentState is identical to other_state:", CurrentState == other_state)
-        print("Current State", repr(CurrentState))
-        print("Other State:", repr(other_state))
-        print("Current state doc for handle_events:", CurrentState.handle_events.__doc__)
-        print("Current state doc for draw:", CurrentState.draw.__doc__)
-        print("Other state doc for handle_events", other_state.handle_events.__doc__)
-        print("Other state doc for draw", other_state.draw.__doc__)
-        # CurrentState = other_state
-        # temp_draw = other_state().draw
-        # temp_handle_events = other_state().handle_events
-        CurrentState.draw = other_state().draw
-        CurrentState.handle_events = other_state().handle_events
-        # other_state().draw = temp_draw
-        # other_state().handle_events = temp_handle_events
-        print("-----------------TRANSITION-----------------")
-        print("CurrentState is identical to other_state:", CurrentState == other_state)
-        print("Current State", repr(CurrentState))
-        print("Other State:", repr(other_state))
-        print("Current state doc for handle_events:", CurrentState.handle_events.__doc__)
-        print("Current state doc for draw:", CurrentState.draw.__doc__)
-        print("Other state doc for handle_events", other_state.handle_events.__doc__)
-        print("Other state doc for draw", other_state.draw.__doc__)
+        self.next_state = other_state
 
 
 CurrentState = MenuState

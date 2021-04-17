@@ -1,6 +1,7 @@
-import sys
-
 from common import *
+from functools import lru_cache
+
+import sys
 import pygame
 
 pygame.init()
@@ -15,6 +16,7 @@ def extract_items_from_list(list_thing):
             yield item
 
 
+@lru_cache(1000)
 def font(size):
     return pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", size)
 

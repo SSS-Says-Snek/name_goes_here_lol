@@ -8,8 +8,8 @@
 
          "colours":
          {
-             "normal_bg": "#3e9e96",
-             "hovered_bg": "#3e9e96"
+             "normal_bg": "#000000",
+             "hovered_bg": "#000000"
          }
      },
     "drop_down_menu.#expand_button":
