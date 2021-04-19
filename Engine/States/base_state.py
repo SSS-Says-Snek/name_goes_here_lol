@@ -17,9 +17,12 @@ class BaseState(object):
         """Override this function while inheriting from this class"""
         raise GameException("State class must override this function")
 
+    # def change_state(self, other_state):
+    #     """Override this function while inheriting from this class"""
+    #     raise GameException("State class must override this function")
+
     def change_state(self, other_state):
-        """Override this function while inheriting from this class"""
-        raise GameException("State class must override this function")
+        self.next_state = other_state
 
 
 class DummyState:

@@ -96,8 +96,6 @@ class MenuState(BaseState):
             return StatState
         return self
 
-    def change_state(self, other_state):
-        self.next_state = other_state
 
     def update_title(self):
         for i in self.title:
@@ -136,10 +134,8 @@ class StatState(BaseState):
             if self.buttons["test_button"][0].get_rect().collidepoint((mousex, mousey)):
                 self.buttons["test_button"][1]()
                 print(MenuState.draw.__doc__)
-                # self.change_state(MenuState)
-
-    def change_state(self, other_state):
-        self.next_state = other_state
 
 
-CurrentState = MenuState
+class NewGameState(BaseState):
+    def __init__(self):
+        super().__init__()
