@@ -1,0 +1,7 @@
+# __pycache__
+__pycache__/
+Engine/__pycache__/
+Engine/States/__pycache__
+
+# Jetbrains
+.idea/
