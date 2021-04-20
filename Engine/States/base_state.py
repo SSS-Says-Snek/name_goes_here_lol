@@ -5,7 +5,18 @@ from os.path import join
 
 
 class BaseState(object):
+    """
+    The base state for other states to inherit from. This class contains:
+    - self.screen, used to manage the screen
+    - self.font, used to display and render text
+    Inherited classes MUST override `draw` and `handle_events`, or else it would raise a GameException
+    """
     def __init__(self, screen=SCREEN):
+        """
+        Note: self.buttons is a dictionary of buttons MADE IN BUTTONS.PY.
+        To display other things (E.g pygame_gui's elements), manually draw them instead of putting them in the
+        dictionary
+        """
         self.screen = screen
         self.font = pygame.font.Font(join(PATH, "Assets/Fonts/ThaleahFat.ttf"), 60)
 
@@ -17,11 +28,8 @@ class BaseState(object):
         """Override this function while inheriting from this class"""
         raise GameException("State class must override this function")
 
-    # def change_state(self, other_state):
-    #     """Override this function while inheriting from this class"""
-    #     raise GameException("State class must override this function")
-
     def change_state(self, other_state):
+        """No need to override this, this is literally it"""
         self.next_state = other_state
 
 

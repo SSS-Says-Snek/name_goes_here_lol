@@ -1,3 +1,5 @@
+"""This file stores the actual game class, used to run the game in main.py"""
+
 import utils
 from common import *
 from Engine.States.state import *

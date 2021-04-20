@@ -1,9 +1,10 @@
+import pygame_gui
 from Engine.States.base_state import BaseState, DummyState
 from button import MenuButton
 from common import *
 from utils import *
 
-from pygame import *
+from pygame.locals import *
 
 import types
 
@@ -11,6 +12,7 @@ func_type = types.MethodType
 
 
 class MenuState(BaseState):
+    """State that handles menu things"""
     def __init__(self, title_idx=0):
         super().__init__()
         self.next_state = MenuState
@@ -27,7 +29,7 @@ class MenuState(BaseState):
                 text="Start New Game",
                 text_color=(0, 0, 0),
                 font_size=40
-            ), lambda: self.change_state(StatState)),
+            ), lambda: self.change_state(NewGameState)),
             "load_button": (MenuButton(
                 self.screen,
                 ((250, 200), (350, 75)),
@@ -96,7 +98,6 @@ class MenuState(BaseState):
             return StatState
         return self
 
-
     def update_title(self):
         for i in self.title:
             if self.title_idx == self.title_thing:
@@ -139,3 +140,25 @@ class StatState(BaseState):
 class NewGameState(BaseState):
     def __init__(self):
         super().__init__()
+        self.next_state = NewGameState
+        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT))
+        self.clock = pygame.time.Clock()
+
+        self.new_game_input = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(relative_rect=pygame.Rect(100, 300, 300, 75), manager=self.manager)
+        self.screen_width, self.screen_height = self.screen.get_size()
+
+    def draw(self):
+        dt = self.clock.tick(30) / 1000
+        new_game_txt = font(50).render("Enter File name for new game:", True, (0, 0, 0))
+        new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
+        self.screen.blit(new_game_txt, new_game_txt_rect)
+        self.manager.update(dt)
+        self.manager.draw_ui(self.screen)
+        print(self.new_game_input.get_text())
+        pygame.display.update()
+
+    def handle_events(self, event):
+        self.new_game_input.enable()
+        self.new_game_input.focus()
+        self.new_game_input.rebuild_from_changed_theme_data()
+        self.new_game_input.process_event(event)
