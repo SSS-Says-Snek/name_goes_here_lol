@@ -30,6 +30,7 @@ class GameLoop:
                                                                          "Choose pls",
                                                                          relative_rect=pygame.Rect((200, 500), (150, 30)),
                                                                          manager=self.manager)
+        self.draw_debug = False
         pygame.display.set_caption(TITLE)
 
     def run(self):
@@ -39,6 +40,9 @@ class GameLoop:
             self.handle_events()
 
             self.state.draw()
+            
+            if self.draw_debug:
+                self.draw_debug_screen()
 
             txt = utils.font(20).render(repr(self.state), True, (0, 0, 0))
             self.screen.blit(txt, (400, 440))
@@ -65,3 +69,6 @@ class GameLoop:
                         self.state.next_state = StatState
                 if game_event.user_type == 'ui_drop_down_menu_changed':
                     print("Selected option:", game_event.text)
+
+    def draw_debug_screen(self):
+        self.draw_debug = not self.draw_debug

@@ -13,6 +13,7 @@ func_type = types.MethodType
 
 class MenuState(BaseState):
     """State that handles menu things"""
+
     def __init__(self, title_idx=0):
         super().__init__()
         self.next_state = MenuState
@@ -139,26 +140,55 @@ class StatState(BaseState):
 
 class NewGameState(BaseState):
     def __init__(self):
+        # important things
         super().__init__()
         self.next_state = NewGameState
-        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT))
+        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
-
-        self.new_game_input = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(relative_rect=pygame.Rect(100, 300, 300, 75), manager=self.manager)
         self.screen_width, self.screen_height = self.screen.get_size()
+
+        # not so important things used in two or more methods
+        # self.button_ok = MenuButton(self.screen, ((100, 300), (200, 50)), rect_color=(128, 128, 128),
+        #                             text="Okay", text_color=(0, 0, 0), font_size=20)
+        self.buttons = {"okay_button": (MenuButton(self.screen, ((100, 300), (200, 50)), rect_color=(128, 128, 128),
+                                                   text="Okay", text_color=(0, 0, 0), font_size=20), lambda: self.okay())}
+        self.new_game_input_box = pygame.Rect((100, 300), (500, 200))
+        self.new_game_input_box.center = (self.screen_width // 2, self.screen_height // 2)
+        self.new_game_input = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
+            relative_rect=self.new_game_input_box, manager=self.manager
+        )
 
     def draw(self):
         dt = self.clock.tick(30) / 1000
         new_game_txt = font(50).render("Enter File name for new game:", True, (0, 0, 0))
         new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
         self.screen.blit(new_game_txt, new_game_txt_rect)
+        for dict_key, button in self.buttons.items():
+            button[0].draw()
+
         self.manager.update(dt)
         self.manager.draw_ui(self.screen)
-        print(self.new_game_input.get_text())
+
         pygame.display.update()
 
     def handle_events(self, event):
+        mousex, mousey = pygame.mouse.get_pos()
         self.new_game_input.enable()
         self.new_game_input.focus()
         self.new_game_input.rebuild_from_changed_theme_data()
         self.new_game_input.process_event(event)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for key, button in self.buttons.items():
+                if button[0].get_rect().collidepoint((mousex, mousey)):
+                    if key == 'okay_button':
+                        print('e')
+                        button[1]()
+
+    def okay(self):
+        input_text = self.new_game_input.get_text()
+        if input_text != '':
+            print("Ye")
+            print(f"Ze text you typed is: {input_text}")
+        else:
+            print("Nuu")
+        self.change_state(MenuState)
