@@ -1,7 +1,15 @@
+############################################################################################
+#  GITIGNORE FOR THE GAME. THIS FILE TELLS GIT TO IGNORE SOME FILES SO THAT GITHUB         #
+#  WON'T SEE THE FILES                                                                     #
+############################################################################################
+
 # __pycache__
 __pycache__/
 Engine/__pycache__/
 Engine/States/__pycache__
 
-# Jetbrains
+# Jetbrains IDEs
 .idea/
+
+# Private User Data
+Assets/Data/UserData/

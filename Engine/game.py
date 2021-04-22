@@ -3,6 +3,7 @@
 import utils
 from common import *
 from Engine.States.state import *
+from Engine.debug_game import DebugGame
 
 import sys
 
@@ -16,8 +17,9 @@ pygame.init()
 
 
 class GameLoop:
-    def __init__(self):
-        self.screen = SCREEN
+    """Class that stores and runs the game"""
+    def __init__(self, screen=SCREEN):
+        self.screen = screen
         self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(PATH / "Assets/Fonts/ThaLeahFat.ttf", 60)
@@ -30,10 +32,11 @@ class GameLoop:
                                                                          "Choose pls",
                                                                          relative_rect=pygame.Rect((200, 500), (150, 30)),
                                                                          manager=self.manager)
-        self.draw_debug = False
+        self.debug_game = DebugGame()
         pygame.display.set_caption(TITLE)
 
     def run(self):
+        """This function runs the actual game loop"""
         while True:
             dt = self.clock.tick(30) / 1000
             self.screen.fill((245, 245, 245))
@@ -41,8 +44,8 @@ class GameLoop:
 
             self.state.draw()
             
-            if self.draw_debug:
-                self.draw_debug_screen()
+            if self.debug_game.get_debug_state():
+                self.debug_game.draw(information={"state": type(self.state)})
 
             txt = utils.font(20).render(repr(self.state), True, (0, 0, 0))
             self.screen.blit(txt, (400, 440))
@@ -56,12 +59,16 @@ class GameLoop:
                 self.state = self.state.next_state()
 
     def handle_events(self):
+        """Function used to handle the game loop's events"""
         for game_event in pygame.event.get():
             self.manager.process_events(game_event)
             self.state.handle_events(game_event)
             if game_event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
+            if game_event.type == KEYDOWN:
+                if game_event.key == K_F3:
+                    self.debug_game.toggle_debug()
             if game_event.type == USEREVENT:
                 # Pygame GUI's event handler
                 if game_event.user_type == 'ui_button_pressed':
@@ -69,6 +76,3 @@ class GameLoop:
                         self.state.next_state = StatState
                 if game_event.user_type == 'ui_drop_down_menu_changed':
                     print("Selected option:", game_event.text)
-
-    def draw_debug_screen(self):
-        self.draw_debug = not self.draw_debug
