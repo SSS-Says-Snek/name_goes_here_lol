@@ -9,6 +9,6 @@ while small changes like adding new commands will... still be reviewed by me.
 That's it for now lol
 
 ## Requirements for contributing
-- [X] Contributions must be solve a problem and/or fix a bug
+- [X] Contributions must solve a problem and/or fix a bug
 - [X] Contributors are expected to follow the project's Code of Conduct
 - [X] Contributors must not add harmful contributions to the project
