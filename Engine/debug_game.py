@@ -10,7 +10,6 @@ class DebugGame:
         self.draw_debug = False
 
     def draw(self, information: dict):
-        # debug_rect = pygame.Rect(0, 0, 350, 200)
         debug_surf = pygame.Surface((350, 200))
         debug_surf.fill((128, 128, 128))
 
@@ -26,7 +25,6 @@ class DebugGame:
 
         debug_surf.set_alpha(220)
 
-        # pygame.draw.rect(self.screen, (128, 128, 128), debug_rect)
         self.screen.blit(debug_surf, (0, 0))
 
     def toggle_debug(self):
