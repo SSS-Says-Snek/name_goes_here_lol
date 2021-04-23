@@ -1,26 +1,23 @@
 import pygame_gui
 from Engine.States.base_state import BaseState, DummyState
 from Engine.button import MenuButton
+from Engine.other import PopUpMessage
 from common import *
 from utils import *
 
 from pygame.locals import *
 
-import types
-
-func_type = types.MethodType
-
 
 class MenuState(BaseState):
     """State that handles menu things"""
 
-    def __init__(self, title_idx=0):
+    def __init__(self):
         super().__init__()
         self.next_state = MenuState
 
         self.selection = 0
         self.title = TITLE
-        self.title_idx = title_idx
+        self.title_idx = 0
         self.title_thing = 0
         self.buttons = {
             "start_button": (MenuButton(
@@ -85,10 +82,12 @@ class MenuState(BaseState):
                 except TypeError:
                     print("Not Implemented, shh")
         if pygame_event.type == MOUSEBUTTONDOWN:
-            try:
-                self.buttons[list(self.buttons.keys())[self.selection]][1]()
-            except TypeError:
-                print("Not Implemented, shh")
+            for button in self.buttons.values():
+                if button[0].get_rect().collidepoint((mousex, mousey)):
+                    try:
+                        button[1]()
+                    except TypeError:
+                        print("Not Implemented, shh")
 
         for dict_key, button in self.buttons.items():
             if button[0].get_rect().collidepoint((mousex, mousey)):
@@ -114,6 +113,8 @@ class MenuState(BaseState):
 
 
 class StatState(BaseState):
+    """State that represents the statistics screen inside the main menu"""
+
     def __init__(self):
         super().__init__()
         self.next_state = StatState
@@ -148,23 +149,31 @@ class NewGameState(BaseState):
         self.screen_width, self.screen_height = self.screen.get_size()
 
         # not so important things used in two or more methods
-        # self.button_ok = MenuButton(self.screen, ((100, 300), (200, 50)), rect_color=(128, 128, 128),
-        #                             text="Okay", text_color=(0, 0, 0), font_size=20)
-        self.buttons = {"okay_button": (MenuButton(self.screen, ((100, 300), (200, 50)), rect_color=(128, 128, 128),
-                                                   text="Okay", text_color=(0, 0, 0), font_size=20), lambda: self.okay())}
+        self.buttons = {"okay_button": (MenuButton(self.screen, ((450, 300), (200, 50)), rect_color=(128, 128, 128),
+                                                   text="Okay", text_color=(0, 0, 0), font_size=20), lambda: self.okay()),
+                        "cancel_button": (MenuButton(self.screen, ((150, 300), (200, 50)), rect_color=(128, 128, 128),
+                                                     text="Cancel", text_color=(0, 0, 0), font_size=20),
+                                          lambda: self.change_state(MenuState))}
         self.new_game_input_box = pygame.Rect((100, 300), (500, 200))
         self.new_game_input_box.center = (self.screen_width // 2, self.screen_height // 2)
         self.new_game_input = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
             relative_rect=self.new_game_input_box, manager=self.manager
         )
+        self.no_text_in_input = False
 
     def draw(self):
         dt = self.clock.tick(30) / 1000
-        new_game_txt = font(50).render("Enter File name for new game:", True, (0, 0, 0))
+        new_game_txt = font(51).render("Enter File name for new game:", True, (0, 0, 0))
         new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
         self.screen.blit(new_game_txt, new_game_txt_rect)
         for dict_key, button in self.buttons.items():
             button[0].draw()
+
+        if self.no_text_in_input:
+            swidth, sheight = self.screen.get_size()
+            popup = PopUpMessage((swidth // 2, sheight // 2, 200, 150), rect_color=(150, 150, 150),
+                                 text="Please provide a name for the file!", text_font=font(30), screen=self.screen)
+            popup.draw()
 
         self.manager.update(dt)
         self.manager.draw_ui(self.screen)
@@ -180,9 +189,7 @@ class NewGameState(BaseState):
         if event.type == pygame.MOUSEBUTTONDOWN:
             for key, button in self.buttons.items():
                 if button[0].get_rect().collidepoint((mousex, mousey)):
-                    if key == 'okay_button':
-                        print('e')
-                        button[1]()
+                    button[1]()
 
     def okay(self):
         input_text = self.new_game_input.get_text()
@@ -191,4 +198,9 @@ class NewGameState(BaseState):
             print(f"Ze text you typed is: {input_text}")
         else:
             print("Nuu")
-        self.change_state(MenuState)
+            swidth, sheight = self.screen.get_size()
+            # popup = PopUpMessage((swidth // 2, sheight // 2, 200, 150), rect_color=(150, 150, 150),
+            #                      text="Please provide a name for the file!", text_font=font(30), screen=self.screen)
+            # popup.draw()
+            self.no_text_in_input = True
+        # self.change_state(MenuState)
