@@ -33,9 +33,6 @@ class GameLoop:
                                                                          "Choose pls",
                                                                          relative_rect=pygame.Rect((200, 500), (150, 30)),
                                                                          manager=self.manager)
-        e = font(20)
-        print(repr(e))
-        # self.uh = PopUpMessage((200, 200, 400, 200), rect_color=(128, 128, 128), text="pafiohpiofhoadhfpadh ofiahpofiapiasdhpos idfhpafhoasdhfpo asdiohfaphiofdhofpasafidhofhops dfhpiosdhfoiasdhpfoiasdhpofisdha ipofhosdfhosdfiasdpofhasdpfohpoasdfhopiasdi hofpahiposdfhi afhopiashfoip", text_font=e)
         self.debug_game = DebugGame()
         pygame.display.set_caption(TITLE)
 
@@ -47,7 +44,6 @@ class GameLoop:
             self.handle_events()
 
             self.state.draw()
-            # self.uh.draw()
             
             if self.debug_game.get_debug_state():
                 self.debug_game.draw(information={"state": type(self.state)})
