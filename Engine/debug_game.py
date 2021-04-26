@@ -18,10 +18,11 @@ class DebugGame:
         debug_title_txt_pos.center = (175, 20)
         debug_surf.blit(debug_title_txt, debug_title_txt_pos)
 
-        debug_state_txt = font(15).render(f"State: {information['state']}", True, (0, 0, 0))
-        debug_state_txt_pos = debug_state_txt.get_rect()
-        debug_state_txt_pos.center = (175, 60)
-        debug_surf.blit(debug_state_txt, debug_state_txt_pos)
+        debug_state_txt = font(16).render(f"State: {information['state']}", True, (0, 0, 0))
+        debug_surf.blit(debug_state_txt, (15, 90))
+
+        debug_fps_txt = font(20).render(f"Frames per second: {str(round(information['fps'], 5))}", True, (0, 0, 0))
+        debug_surf.blit(debug_fps_txt, (15, 60))
 
         debug_surf.set_alpha(220)
 

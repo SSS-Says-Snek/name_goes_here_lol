@@ -19,6 +19,7 @@ class BaseState(object):
         """
         self.screen = screen
         self.font = pygame.font.Font(join(PATH, "Assets/Fonts/ThaleahFat.ttf"), 60)
+        self.next_state = self.__class__
 
     def draw(self):
         """Override this function while inheriting from this class"""

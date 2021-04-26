@@ -38,15 +38,18 @@ class GameLoop:
 
     def run(self):
         """This function runs the actual game loop"""
+        loop = 0
+        fps = self.clock.get_fps()
         while True:
             dt = self.clock.tick(30) / 1000
             self.screen.fill((245, 245, 245))
             self.handle_events()
 
             self.state.draw()
-            
+            if loop == 1:
+                fps = self.clock.get_fps()
             if self.debug_game.get_debug_state():
-                self.debug_game.draw(information={"state": type(self.state)})
+                self.debug_game.draw(information={"state": type(self.state), "fps": fps})
 
             self.manager.update(dt)
             self.manager.draw_ui(self.screen)
@@ -55,6 +58,8 @@ class GameLoop:
             if self.state.__class__ != self.state.next_state:
                 print(f"Changed from {self.state.__class__} to {self.state.next_state}")
                 self.state = self.state.next_state()
+            loop += 1
+            loop %= 30
 
     def handle_events(self):
         """Function used to handle the game loop's events"""

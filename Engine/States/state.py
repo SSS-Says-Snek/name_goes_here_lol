@@ -13,7 +13,6 @@ class MenuState(BaseState):
 
     def __init__(self):
         super().__init__()
-        self.next_state = MenuState
 
         self.selection = 0
         self.title = TITLE
@@ -69,11 +68,11 @@ class MenuState(BaseState):
 
         if pygame_event.type == KEYDOWN:
             if pygame_event.key == K_DOWN:
-                print('yes')
+                print('Menu Selection Down')
                 self.selection += 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == K_UP:
-                print('yes yes')
+                print('Menu Selection Up')
                 self.selection -= 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == K_RETURN:
@@ -117,10 +116,14 @@ class StatState(BaseState):
 
     def __init__(self):
         super().__init__()
-        self.next_state = StatState
 
-        self.buttons = {"test_button": (MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Bacc",
-                                                   text_color=(0, 0, 0), font_size=40), lambda: self.change_state(MenuState))}
+        self.buttons = {
+            "test_button": (
+                MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Bacc",
+                           text_color=(0, 0, 0), font_size=40),
+                lambda: self.change_state(MenuState)
+            )
+        }
 
     def draw(self):
         """STATSTATE doc for draw"""
@@ -140,10 +143,12 @@ class StatState(BaseState):
 
 
 class NewGameState(BaseState):
+    """State that handles the "new game" file making"""
+
     def __init__(self):
         # important things
         super().__init__()
-        self.next_state = NewGameState
+        # self.next_state = NewGameState
         self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = self.screen.get_size()
@@ -159,7 +164,6 @@ class NewGameState(BaseState):
         self.new_game_input = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
             relative_rect=self.new_game_input_box, manager=self.manager
         )
-        self.no_text_in_input = False
 
     def draw(self):
         dt = self.clock.tick(30) / 1000
@@ -168,12 +172,6 @@ class NewGameState(BaseState):
         self.screen.blit(new_game_txt, new_game_txt_rect)
         for dict_key, button in self.buttons.items():
             button[0].draw()
-
-        if self.no_text_in_input:
-            swidth, sheight = self.screen.get_size()
-            popup = PopUpMessage((swidth // 2, sheight // 2, 200, 150), rect_color=(150, 150, 150),
-                                 text="Please provide a name for the file!", text_font=font(30), screen=self.screen)
-            popup.draw()
 
         self.manager.update(dt)
         self.manager.draw_ui(self.screen)
@@ -194,13 +192,21 @@ class NewGameState(BaseState):
     def okay(self):
         input_text = self.new_game_input.get_text()
         if input_text != '':
-            print("Ye")
             print(f"Ze text you typed is: {input_text}")
         else:
-            print("Nuu")
-            swidth, sheight = self.screen.get_size()
-            # popup = PopUpMessage((swidth // 2, sheight // 2, 200, 150), rect_color=(150, 150, 150),
-            #                      text="Please provide a name for the file!", text_font=font(30), screen=self.screen)
-            # popup.draw()
-            self.no_text_in_input = True
-        # self.change_state(MenuState)
+            print("No Text Selected, to be implemented (Or use placeholder text)")
+        self.change_state(MenuState)
+
+
+class PlayingGameState(BaseState):
+    """IMPORTANT: This state actually allows you to play the game, controlling your player (a snake)"""
+
+    def __init__(self):
+        super().__init__()
+        # self.next_state = PlayingGameState
+
+    def draw(self):
+        pass
+
+    def handle_events(self, event):
+        pass

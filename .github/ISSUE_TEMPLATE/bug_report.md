@@ -12,6 +12,7 @@ What does the bug do? Provide a detailed description of the bug
 
 **How to reproduce the bug**
 How can other people reproduce the bug?
+Example: 
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
