@@ -17,8 +17,8 @@ class BaseState(object):
         To display other things (E.g pygame_gui's elements), manually draw them instead of putting them in the
         dictionary
         """
-        self.screen = screen
-        self.font = pygame.font.Font(join(PATH, "Assets/Fonts/ThaleahFat.ttf"), 60)
+        self.screen = screen  # sets the screen to be the default screen
+        self.font = pygame.font.Font(join(PATH, "Assets/Fonts/ThaleahFat.ttf"), 60)  # sets default font
         self.next_state = self.__class__
 
     def draw(self):

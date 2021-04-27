@@ -192,10 +192,11 @@ class NewGameState(BaseState):
     def okay(self):
         input_text = self.new_game_input.get_text()
         if input_text != '':
-            print(f"Ze text you typed is: {input_text}")
+            print(f"Ze text you typed is: {input_text}\nRedirecting to game screen...")
+            self.change_state(PlayingGameState)
         else:
-            print("No Text Selected, to be implemented (Or use placeholder text)")
-        self.change_state(MenuState)
+            print("No Text Selected, to be implemented (Or use placeholder text)\nRedirecting to main menu...")
+            self.change_state(MenuState)
 
 
 class PlayingGameState(BaseState):
@@ -203,10 +204,10 @@ class PlayingGameState(BaseState):
 
     def __init__(self):
         super().__init__()
-        # self.next_state = PlayingGameState
 
     def draw(self):
-        pass
+        play_game_txt = font(40).render("Placeholder Text", True, (0, 0, 0))
+        self.screen.blit(play_game_txt, (300, 0))
 
     def handle_events(self, event):
         pass

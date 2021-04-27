@@ -17,8 +17,8 @@ def extract_items_from_list(list_thing):
 
 
 @lru_cache(1000)
-def font(size):
-    return pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", size)
+def font(size, text_font="ThaleahFat"):
+    return pygame.font.Font(FONT_PATH / f"{text_font}.ttf", size)
 
 
 def rot_center(image, angle, x, y):
