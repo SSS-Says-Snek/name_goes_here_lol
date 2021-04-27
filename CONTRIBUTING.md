@@ -3,8 +3,8 @@
 Lol, just contribute. Make a pull request, I'm pretty lonely right now.
 
 To contribute, submit a pull request at [https://github.com/SSS-Says-Snek/name_goes_here_lol/pulls](https://github.com/SSS-Says-Snek/name_goes_here_lol/pulls).
-Major changes such as switching from discord.ext.commands to a parser will be reviewed personally by me,
-while small changes like adding new commands will... still be reviewed by me.
+Major changes such as implementing a new currency in the shop would be reviewed by me,
+while small changes like balancing items and buffs will... still be reviewed by me.
 
 That's it for now lol
 
