@@ -14,7 +14,7 @@ class Button:
     def __init__(
             self,
             surface,
-            coordinates: Union[tuple[int, int, int, int], tuple[tuple[int, int], tuple[int, int]]],
+            coordinates: tuple,
             rect_color=(255, 255, 255),
             text=None,
             text_color=(0, 0, 0),
@@ -52,7 +52,7 @@ class MenuButton(Button):
     def __init__(
             self,
             surface,
-            coordinates: Union[tuple[int, int, int, int], tuple[tuple[int, int], tuple[int, int]]],
+            coordinates: tuple,
             rect_color=(255, 255, 255),
             text=None,
             text_color=(0, 0, 0),
@@ -75,7 +75,7 @@ class MenuButton(Button):
             if self.font_size is None:
                 # Doesn't work but ok
                 self.font_size = self.coords[3] // len(self.text) if len(self.coords) == 4 else self.coords[1][0] // len(self.text)
-            font_different_size = pygame.font.Font(PATH / "Assets/Fonts/ThaLeahFat.ttf", self.font_size)
+            font_different_size = pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", self.font_size)
             text_surf = font_different_size.render(self.text, True, self.text_color)
             self.screen.blit(text_surf, (rect.centerx - text_surf.get_width() // 2, rect.centery - text_surf.get_height() // 2))
 

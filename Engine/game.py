@@ -23,7 +23,7 @@ class GameLoop:
         self.screen = screen
         self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(PATH / "Assets/Fonts/ThaLeahFat.ttf", 60)
+        self.font = pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", 60)
 
         self.state = MenuState()
         self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (100, 50)),
