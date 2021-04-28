@@ -1,10 +1,8 @@
 """This file stores the actual game class, used to run the game in main.py"""
 
-import utils
-from common import *
-from Engine.States.state import *
-from Engine.debug_game import DebugGame
-from Engine.other import PopUpMessage
+from src.common import *
+from src.Engine.States.state import *
+from src.Engine.debug_game import DebugGame
 
 import sys
 
@@ -21,9 +19,9 @@ class GameLoop:
     """Class that stores and runs the game"""
     def __init__(self, screen=SCREEN):
         self.screen = screen
-        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "Assets/Themes/test_theme.json")
+        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", 60)
+        self.font = pygame.font.Font(PATH / "src/Assets/Fonts/ThaleahFat.ttf", 60)
 
         self.state = MenuState()
         self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (100, 50)),

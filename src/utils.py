@@ -1,4 +1,4 @@
-from common import *
+from src.common import *
 from functools import lru_cache
 
 import sys

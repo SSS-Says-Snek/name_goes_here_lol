@@ -1,9 +1,7 @@
 import pygame_gui
-from Engine.States.base_state import BaseState, DummyState
-from Engine.button import MenuButton
-from Engine.other import PopUpMessage
-from common import *
-from utils import *
+from src.Engine.States.base_state import BaseState
+from src.Engine.button import MenuButton
+from src.utils import *
 
 from pygame.locals import *
 
@@ -149,7 +147,7 @@ class NewGameState(BaseState):
         # important things
         super().__init__()
         # self.next_state = NewGameState
-        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "Assets/Themes/test_theme.json")
+        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = self.screen.get_size()
 

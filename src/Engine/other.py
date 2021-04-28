@@ -1,9 +1,7 @@
 import random
-from typing import *
 
-from Engine.button import MenuButton
-from common import *
-from utils import *
+from src.Engine.button import MenuButton
+from src.utils import *
 
 import pygame
 from pygame.locals import *

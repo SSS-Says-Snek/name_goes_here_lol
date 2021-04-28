@@ -9,4 +9,4 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 TITLE = "Name Goes Here Lol"
 
 PATH = Path(".")
-FONT_PATH = PATH / "Assets/Fonts"
+FONT_PATH = PATH / "src/Assets/Fonts"

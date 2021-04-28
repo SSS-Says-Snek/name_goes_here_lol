@@ -13,7 +13,7 @@
 """
 __version__ = "-5.0.0"
 
-from Engine.game import GameLoop
+from src.Engine.game import GameLoop
 
 if __name__ == "__main__":
     game_loop = GameLoop()

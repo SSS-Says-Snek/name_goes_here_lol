@@ -1,5 +1,5 @@
-from common import *
-from Engine.other import *
+from src.common import *
+from src.Engine.other import *
 
 from os.path import join
 
@@ -18,7 +18,7 @@ class BaseState(object):
         dictionary
         """
         self.screen = screen  # sets the screen to be the default screen
-        self.font = pygame.font.Font(join(PATH, "Assets/Fonts/ThaleahFat.ttf"), 60)  # sets default font
+        self.font = pygame.font.Font(join(PATH, "src/Assets/Fonts/ThaleahFat.ttf"), 60)  # sets default font
         self.next_state = self.__class__
 
     def draw(self):
