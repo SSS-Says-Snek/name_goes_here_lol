@@ -3,6 +3,7 @@
 from src.common import *
 from src.Engine.States.state import *
 from src.Engine.debug_game import DebugGame
+from src.utils import *
 
 import sys
 
@@ -44,7 +45,7 @@ class GameLoop:
             self.handle_events()
 
             self.state.draw()
-            if loop == 1:
+            if loop % 30 == 1:
                 fps = self.clock.get_fps()
             if self.debug_game.get_debug_state():
                 self.debug_game.draw(information={"state": type(self.state), "fps": fps})
@@ -57,7 +58,6 @@ class GameLoop:
                 print(f"Changed from {self.state.__class__} to {self.state.next_state}")
                 self.state = self.state.next_state()
             loop += 1
-            loop %= 30
 
     def handle_events(self):
         """Function used to handle the game loop's events"""

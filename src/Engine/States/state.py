@@ -96,14 +96,24 @@ class MenuState(BaseState):
         return self
 
     def update_title(self):
-        for i in self.title:
-            if self.title_idx == self.title_thing:
-                title_surf = self.font.render(i, True, (0, 255, 0))
-            else:
-                title_surf = self.font.render(i, True, (0, 128, 0))
-            self.screen.blit(title_surf, (WIDTH // 2 - len(self.title) * 13 + self.title_idx * 30, 0))
-            self.title_idx += 1
-            self.title_idx %= len(self.title)
+        # for i in self.title:
+        #     if self.title_idx == self.title_thing:
+        #         title_surf = self.font.render(i, True, (0, 255, 0))
+        #     else:
+        #         title_surf = self.font.render(i, True, (0, 128, 0))
+        #     self.screen.blit(title_surf, (WIDTH // 2 - len(self.title) * 13 + self.title_idx * 30, 0))
+        #     self.title_idx += 1
+        #      self.title_idx %= len(self.title)
+
+        blit_multicolor_text(
+            self.font, {
+                self.title[:self.title_thing]: (0, 128, 0),
+                self.title[self.title_thing]: (0, 255, 0),
+                self.title[self.title_thing + 1:]: (0, 128, 0)
+            }, (
+                160, 0
+            )
+        )
 
         self.title_thing += 1
         self.title_thing %= len(self.title)

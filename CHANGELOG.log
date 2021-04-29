@@ -11,3 +11,9 @@ Version -5.0.0 changelogs:
 Date of Planning: Apr 4, 2021, at 12:04 AM
 Date Last Modified: Apr 22, 2021, at ???:?? AM
 Date of Release: Apr 22, 2021, at ???:?? PM
+
+
+Version -4.5.0 changelogs:
+- Completely refactor code and put code into new src folder
+- Added function to create a new game file (not really)
+- Made game work on other OSes other than Windows
