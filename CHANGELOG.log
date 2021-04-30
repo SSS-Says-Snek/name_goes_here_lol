@@ -17,3 +17,8 @@ Version -4.5.0 changelogs:
 - Completely refactor code and put code into new src folder
 - Added function to create a new game file (not really)
 - Made game work on other OSes other than Windows
+- Add support for image buttons, and created actual game state
+
+Date of planning: Apr 23, 2021, at 10:02 AM
+Date Last Modified: Apr 28, 2021, at 1:35 PM
+Date of Release: Apr28, 2021, at 1:42 PM
