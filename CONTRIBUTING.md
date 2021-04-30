@@ -12,3 +12,4 @@ That's it for now lol
 - [X] Contributions must solve a problem and/or fix a bug
 - [X] Contributors are expected to follow the project's Code of Conduct
 - [X] Contributors must not add harmful contributions to the project
+- [X] Major contributions (E.g new game feature) must be approved by SSS-Says-Snek first before merging to the project
