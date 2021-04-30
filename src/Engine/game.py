@@ -1,12 +1,14 @@
 """This file stores the actual game class, used to run the game in main.py"""
 
-from src.common import *
 from src.Engine.States.state import *
-from src.Engine.debug_game import DebugGame
-from src.Engine.button import ImageButton
+from src.Engine.States.debug_game import DebugGame
 from src.utils import *
 
+import time
 import sys
+import os
+import psutil
+import arrow
 
 import pygame
 import pygame_gui
@@ -26,20 +28,25 @@ class GameLoop:
         self.font = pygame.font.Font(PATH / "src/Assets/Fonts/ThaleahFat.ttf", 60)
 
         self.state = MenuState()
-        self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (100, 50)),
-                                                         text='wut',
-                                                         manager=self.manager)
-        self.test = pygame_gui.elements.ui_drop_down_menu.UIDropDownMenu(["Test1", "Test2", "TestInfinite"],
-                                                                         "Choose pls",
-                                                                         relative_rect=pygame.Rect((200, 500), (150, 30)),
-                                                                         manager=self.manager)
+        # self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (100, 50)),
+        #                                                  text='wut',
+        #                                                  manager=self.manager)
+        # self.test = pygame_gui.elements.ui_drop_down_menu.UIDropDownMenu(["Test1", "Test2", "TestInfinite"],
+        #                                                                  "Choose pls",
+        #                                                                  relative_rect=pygame.Rect((200, 500), (150, 30)),
+        #                                                                  manager=self.manager)
         self.debug_game = DebugGame()
+        self.process = psutil.Process(os.getpid())
+        self.start_time = arrow.get(time.time())
         pygame.display.set_caption(TITLE)
 
     def run(self):
         """This function runs the actual game loop"""
         loop = 0
         fps = self.clock.get_fps()
+        cpu = self.process.cpu_percent()
+        mem = (self.process.memory_info().rss, psutil.virtual_memory().used)
+        now = arrow.utcnow()
         while True:
             dt = self.clock.tick(30) / 1000
             self.screen.fill((245, 245, 245))
@@ -48,8 +55,19 @@ class GameLoop:
             self.state.draw()
             if loop % 30 == 1:
                 fps = self.clock.get_fps()
+                cpu = self.process.cpu_percent()
+                mem = (self.process.memory_info().rss, psutil.virtual_memory().used)
+                now = arrow.utcnow()
             if self.debug_game.get_debug_state():
-                self.debug_game.draw(information={"state": type(self.state), "fps": fps})
+                self.debug_game.draw(
+                    information={
+                        "state": type(self.state),
+                        "fps": fps,
+                        "cpu": cpu,
+                        "mem": mem,
+                        "time": (self.start_time, now)
+                    }
+                )
 
             self.manager.update(dt)
             self.manager.draw_ui(self.screen)

@@ -49,3 +49,16 @@ def is_hovering(rect, mouse_pos):
 def exit_game():
     pygame.quit()
     sys.exit(0)
+
+
+def format_byte(size: int, decimal_places=3):
+    """Formats a given size and outputs a string equivalent to B, KB, MB, GB, or TB"""
+    if size < 1e03:
+        return f"{round(size, decimal_places)} B"
+    if size < 1e06:
+        return f"{round(size / 1e3, decimal_places)} KB"
+    if size < 1e09:
+        return f"{round(size / 1e6, decimal_places)} MB"
+    if size < 1e12:
+        return f"{round(size / 1e9, decimal_places)} GB"
+    return f"{round(size / 1e12, decimal_places)} TB"
