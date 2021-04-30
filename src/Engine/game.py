@@ -3,6 +3,7 @@
 from src.common import *
 from src.Engine.States.state import *
 from src.Engine.debug_game import DebugGame
+from src.Engine.button import ImageButton
 from src.utils import *
 
 import sys
@@ -54,6 +55,7 @@ class GameLoop:
             self.manager.draw_ui(self.screen)
             pygame.display.update()
 
+            # Checks if the next_state is different than the current state. If it is, change states
             if self.state.__class__ != self.state.next_state:
                 print(f"Changed from {self.state.__class__} to {self.state.next_state}")
                 self.state = self.state.next_state()

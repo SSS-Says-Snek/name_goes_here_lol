@@ -10,3 +10,4 @@ TITLE = "Name Goes Here Lol"
 
 PATH = Path(".")
 FONT_PATH = PATH / "src/Assets/Fonts"
+IMG_PATH = PATH / "src/Assets/Images"

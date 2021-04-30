@@ -3,6 +3,9 @@ from src.common import *
 import pygame
 from typing import *
 
+pygame.init()
+pygame.font.init()
+
 
 class Button:
     """
@@ -11,6 +14,7 @@ class Button:
     Creates a button on a given screen, with coordinates similar to pygame.Rect().
     Text is optional for the button, and rounding corners is supported
     """
+
     def __init__(
             self,
             surface,
@@ -29,9 +33,6 @@ class Button:
         self.font_size = font_size
         self.rounded = rounded
 
-        pygame.init()
-        pygame.font.init()
-
     def draw(self):
         rect = pygame.Rect(self.coords)
         pygame.draw.rect(self.screen, self.rect_color, rect, border_radius=20 if self.rounded else 0)
@@ -47,8 +48,46 @@ class Button:
         return pygame.Rect(self.coords)
 
 
+class ImageButton:
+    def __init__(
+            self,
+            surface,
+            image_name,
+            coord_to_blit,
+            scale=None,
+            resize_to=None
+    ):
+        self.surface = surface
+        self.image = pygame.image.load(IMG_PATH / image_name)
+        self.coord_to_blit = coord_to_blit
+        self.scale = scale
+        self.resize_to = resize_to
+
+        self.image_rect = self.image.get_rect()
+        self.image_rect.topleft = coord_to_blit
+
+        if self.scale is not None:
+            self.image = pygame.transform.smoothscale(
+                self.image, (self.image.get_size()[0] * self.scale,
+                             self.image.get_size()[1] * self.scale)
+            )
+        elif self.resize_to is not None:
+            self.image = pygame.transform.smoothscale(
+                self.image, self.resize_to
+            )
+
+        self.image.convert()
+
+    def draw(self):
+        self.surface.blit(self.image, self.coord_to_blit)
+
+    def get_rect(self):
+        return self.image_rect
+
+
 class MenuButton(Button):
     """Subset of Button, MenuButton adds features suitable for Menu Buttons"""
+
     def __init__(
             self,
             surface,
@@ -82,6 +121,7 @@ class MenuButton(Button):
 
 class HiddenButton:
     """test"""
+
     def __init__(self, access, name, image_filename: Union[str, pygame.Rect], location, size):
         self.access = access
         self.name = name
