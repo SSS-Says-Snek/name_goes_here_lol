@@ -1,5 +1,6 @@
 import pygame_gui
 from src.Engine.States.base_state import BaseState
+from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
 from src.utils import *
 
@@ -214,19 +215,30 @@ class PlayingGameState(BaseState):
         super().__init__()
 
         self.buttons = {
-            "pause_button": (ImageButton(self.screen, "pause.png", (700, 0)), NotImplemented)
+            "pause_button": ([ImageButton(self.screen, "pause.png", (700, 0)),
+                              ImageButton(self.screen, "play.png", (700, 0))], NotImplemented)
         }
+        self.pause_menu = PauseMenu()
 
     def draw(self):
         play_game_txt = font(40).render("Lorem ipsum", True, (0, 0, 0))
         self.screen.blit(play_game_txt, (300, 0))
+        self.pause_menu.draw()
 
         for button in self.buttons.values():
-            button[0].draw()
+            if self.pause_menu.draw_pause:
+                button[0][1].draw()
+            else:
+                button[0][0].draw()
 
     def handle_events(self, event):
         mousex, mousey = pygame.mouse.get_pos()
         if event.type == MOUSEBUTTONDOWN:
             for button_name, button in self.buttons.items():
-                if button[0].get_rect().collidepoint((mousex, mousey)):
-                    print("E")
+                if self.pause_menu.draw_pause:
+                    if button[0][1].get_rect().collidepoint((mousex, mousey)):
+                        self.pause_menu.toggle_menu()
+                else:
+                    if button[0][0].get_rect().collidepoint((mousex, mousey)):
+                        self.pause_menu.toggle_menu()
+        self.pause_menu.handle_events(event)

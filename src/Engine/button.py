@@ -1,4 +1,5 @@
 from src.common import *
+from src.utils import *
 
 import pygame
 from typing import *
@@ -58,7 +59,7 @@ class ImageButton:
             resize_to=None
     ):
         self.surface = surface
-        self.image = pygame.image.load(IMG_PATH / image_name)
+        self.image = load_image(image_name)
         self.coord_to_blit = coord_to_blit
         self.scale = scale
         self.resize_to = resize_to

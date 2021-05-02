@@ -46,6 +46,11 @@ def is_hovering(rect, mouse_pos):
     return False
 
 
+@lru_cache()
+def load_image(image_name):
+    return pygame.image.load(IMG_PATH / image_name)
+
+
 def exit_game():
     pygame.quit()
     sys.exit(0)
