@@ -8,6 +8,11 @@ Right now, Snake+ should just be an upgraded version of snake, with progress, **
 
 Only menu's functioning rn lol
 
+## How to install
+1. Download the repository and extract it to a folder
+2. CD into the extracted folder
+3. Execute "python -m pip install -r requirements.txt" (If you are not on Windows, run "python3 -m pip install -r requirements.txt"
+
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
