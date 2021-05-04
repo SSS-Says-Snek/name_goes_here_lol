@@ -1,4 +1,8 @@
-"""This file stores the actual game class, used to run the game in main.py"""
+"""
+This file stores the actual game class, used to run the game in main.py
+=============================  U S A G E  =============================
+>>> from src
+"""
 
 from src.Engine.States.state import *
 from src.Engine.States.debug_game import DebugGame

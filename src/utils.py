@@ -16,16 +16,11 @@ def extract_items_from_list(list_thing):
             yield item
 
 
-@lru_cache(1000)
-def font(size, text_font="ThaleahFat"):
-    return pygame.font.Font(FONT_PATH / f"{text_font}.ttf", size)
-
-
 def blit_multicolor_text(text_font, text_list: dict, coord_to_blit, screen=SCREEN):
     """
     Function used to render multicolored text. Used as:
     >>> blit_multicolor_text(font(20), {"Text lol": (128, 128, 128), "More Text": (128, 0, 0)})
-    <blits font rendering with "Text lol" colored gray, and "More Text" colored Red>
+    <blits font rendering with "Text lol" colored gray, and "More Text" colored red>
     """
     actual_coord_to_blit = coord_to_blit
     for key, value in text_list.items():
@@ -46,11 +41,6 @@ def is_hovering(rect, mouse_pos):
     return False
 
 
-@lru_cache()
-def load_image(image_name):
-    return pygame.image.load(IMG_PATH / image_name)
-
-
 def exit_game():
     pygame.quit()
     sys.exit(0)
@@ -67,3 +57,13 @@ def format_byte(size: int, decimal_places=3):
     if size < 1e12:
         return f"{round(size / 1e9, decimal_places)} GB"
     return f"{round(size / 1e12, decimal_places)} TB"
+
+
+@lru_cache()
+def load_image(image_name):
+    return pygame.image.load(IMG_PATH / image_name)
+
+
+@lru_cache(1000)
+def font(size, text_font="ThaleahFat"):
+    return pygame.font.Font(FONT_PATH / f"{text_font}.ttf", size)

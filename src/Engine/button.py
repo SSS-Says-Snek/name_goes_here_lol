@@ -82,6 +82,7 @@ class ImageButton:
     def draw(self):
         self.surface.blit(self.image, self.coord_to_blit)
 
+    @lru_cache(1000)
     def get_rect(self):
         return self.image_rect
 
