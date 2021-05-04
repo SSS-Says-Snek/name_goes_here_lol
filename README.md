@@ -16,10 +16,12 @@ Only menu's functioning rn lol
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
+- [ ] Actually add the game
 - [ ] Implement actual game mechanics
 - [ ] Implement settings button in main menu
 - [ ] Make debug screen more asthetically pleasing
 - [ ] Implement saving and loading system
 - [ ] Add actually good graphics
 - [ ] Add shopping system for engaging gameplay
+- [ ] Because of shopping system, scoring system should be in game currency
 - [ ] Add a high score system (preferably switchable between local and overall)
