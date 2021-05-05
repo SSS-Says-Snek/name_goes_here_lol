@@ -10,12 +10,19 @@ Only menu's functioning rn lol
 
 ## Features
 Well, we got this menu...
+![Snake+ Menu Screen](Screenshots/menu.png)
 
 ## How to install
 1. Download the repository and extract it to a folder
 2. CD into the extracted folder
-3. Execute "python -m pip install -r requirements.txt" (If you are not on Windows, run "python3 -m pip install -r requirements.txt"
-
+3. Execute the following code:
+   ```shell script
+   python -m pip install -r requirements.txt
+   ```
+   NOTE: If you are on another OS than Windows, you should run:
+   ```shell script
+   python3 -m pip install -r requirements.txt
+   ```
 ## Todo and Checklists
 
 - [X] Added bare bones for menu

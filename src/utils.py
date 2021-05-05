@@ -30,18 +30,21 @@ def blit_multicolor_text(text_font, text_list: dict, coord_to_blit, screen=SCREE
 
 
 def rot_center(image, angle, x, y):
+    """Rotates an image based on its center to avoid different """
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(center=image.get_rect(center=(x, y)).center)
     return rotated_image, new_rect
 
 
 def is_hovering(rect, mouse_pos):
+    """Checks if a mouse is hovering over a rect"""
     if rect.left <= mouse_pos[0] <= rect.right and rect.top <= mouse_pos[1] <= rect.bottom:
         return True
     return False
 
 
 def exit_game():
+    """Exits the game with pygame.quit() and sys.exit()"""
     pygame.quit()
     sys.exit(0)
 
@@ -61,9 +64,11 @@ def format_byte(size: int, decimal_places=3):
 
 @lru_cache()
 def load_image(image_name):
+    """Loads an image from the asset folder"""
     return pygame.image.load(IMG_PATH / image_name)
 
 
 @lru_cache(1000)
 def font(size, text_font="ThaleahFat"):
+    """Loads a font with a given size and an optional parameter for the font name"""
     return pygame.font.Font(FONT_PATH / f"{text_font}.ttf", size)
