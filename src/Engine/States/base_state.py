@@ -40,7 +40,7 @@ class BaseState(object):
         handle_events() handles all the events of pygame, like key presses, mouse clicks, et cetera,
         though some are already found in the run() function in game.py, like window closing.
         This should not be called anywhere except in game.py, where run() would call it via self.state.
-        USAGE:
+        ==========================================  USAGE:  ==========================================
         >>> state = BaseState()  # Supposed to be something that overrided this function
         >>> state.handle_events(event)
         """
@@ -51,6 +51,9 @@ class BaseState(object):
         """
         No need to override this, this is literally it
         change_state() is used when a state wants to change into another state. It changes self.next_state into the desired state
+        ==========================================  USAGE:  ==========================================
+        >>> your_state = BaseState  # IDK I'm just trying to avoid pycharm errors
+        >>> your_state.change_state("Other State")
         """
         self.next_state = other_state
 

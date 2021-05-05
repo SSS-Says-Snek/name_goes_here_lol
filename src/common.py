@@ -1,3 +1,10 @@
+"""
+Some common variables used many times throughout the game code
+=============================  U S A G E  =============================
+>>> from src.common import *
+>>> # Use the variables here
+"""
+
 import pygame
 from pathlib import Path
 

@@ -17,7 +17,10 @@ class PauseMenu:
         self.draw_pause = False
 
         self.screen_surf = pygame.Surface(self.screen.get_size())
-        self.buttons = {"resume_button": (MenuButton(self.screen, (300, 300, 200, 100), (128, 128, 128), "Resume", (0, 0, 0), 40), lambda: self.toggle_menu())}
+        self.buttons = {
+            "resume_button": (MenuButton(self.screen, (300, 200, 200, 100), (128, 128, 128), "Resume", (0, 0, 0), 40),
+                              lambda: self.toggle_menu())
+        }
         self.alpha = 1
 
     def draw(self):
@@ -25,7 +28,7 @@ class PauseMenu:
             if self.alpha < 230:
                 self.fade(self.alpha)
             pause_txt = font(60).render("Paused", True, (0, 0, 0))
-            self.screen.blit(pause_txt, (300, 200))
+            self.screen.blit(pause_txt, (300, 100))
             self.screen.blit(self.screen_surf, (0, 0))
 
             for button in self.buttons.values():

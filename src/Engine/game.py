@@ -1,7 +1,11 @@
 """
 This file stores the actual game class, used to run the game in main.py
 =============================  U S A G E  =============================
->>> from src
+>>> from src.Engine.game import GameLoop
+>>> game_loop = GameLoop()
+>>> game_loop.run()
+
+Note that GameLoop should ONLY be run inside main.py, and no where else. I just wanna make main.py look cool
 """
 
 from src.Engine.States.state import *

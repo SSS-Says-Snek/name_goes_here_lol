@@ -50,6 +50,7 @@ class Button:
 
 
 class ImageButton:
+    """"""
     def __init__(
             self,
             surface,
