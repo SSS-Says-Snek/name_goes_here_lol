@@ -15,7 +15,7 @@ Well, we got this menu...
 ## How to install
 1. Download the repository and extract it to a folder
 2. CD into the extracted folder
-3. Execute the following code:
+3. Execute the following script in your terminal:
    ```shell script
    python -m pip install -r requirements.txt
    ```
