@@ -8,6 +8,9 @@ Right now, Snake+ should just be an upgraded version of snake, with progress, **
 
 Only menu's functioning rn lol
 
+## Features
+Well, we got this menu...
+
 ## How to install
 1. Download the repository and extract it to a folder
 2. CD into the extracted folder
