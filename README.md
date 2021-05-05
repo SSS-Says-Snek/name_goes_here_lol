@@ -23,6 +23,14 @@ Well, we got this menu...
    ```shell script
    python3 -m pip install -r requirements.txt
    ```
+4. Run the game with
+   ```shell script
+   python main.py
+   ```
+   NOTE: Again, if you're not on Windows, you should run:
+   ```shell script
+   python3 main.py
+   ```
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
