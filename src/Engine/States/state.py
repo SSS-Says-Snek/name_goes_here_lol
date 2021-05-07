@@ -41,9 +41,17 @@ class MenuState(BaseState):
                 text="Statistics",
                 text_color=(0, 0, 0),
                 font_size=40), lambda: self.change_state(StatState)),
+            "setting_button": (MenuButton(
+                self.screen,
+                ((250, 400), (225, 75)),
+                (128, 128, 128),
+                text="Settings",
+                text_color=(0, 0, 0),
+                font_size=40), NotImplemented
+            ),
             "quit_button": (MenuButton(
                 self.screen,
-                ((250, 400), (100, 75)),
+                ((250, 500), (100, 75)),
                 (128, 128, 128),
                 text="Quit",
                 text_color=(0, 0, 0),
@@ -97,15 +105,6 @@ class MenuState(BaseState):
         return self
 
     def update_title(self):
-        # for i in self.title:
-        #     if self.title_idx == self.title_thing:
-        #         title_surf = self.font.render(i, True, (0, 255, 0))
-        #     else:
-        #         title_surf = self.font.render(i, True, (0, 128, 0))
-        #     self.screen.blit(title_surf, (WIDTH // 2 - len(self.title) * 13 + self.title_idx * 30, 0))
-        #     self.title_idx += 1
-        #      self.title_idx %= len(self.title)
-
         blit_multicolor_text(
             self.font, {
                 self.title[:self.title_thing]: (0, 128, 0),
@@ -128,7 +127,7 @@ class StatState(BaseState):
 
         self.buttons = {
             "test_button": (
-                MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Bacc",
+                MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Home",
                            text_color=(0, 0, 0), font_size=40),
                 lambda: self.change_state(MenuState)
             )
@@ -146,9 +145,33 @@ class StatState(BaseState):
         if pygame_event.type == MOUSEBUTTONDOWN:
             print('yes')
             mousex, mousey = pygame.mouse.get_pos()
-            if self.buttons["test_button"][0].get_rect().collidepoint((mousex, mousey)):
-                self.buttons["test_button"][1]()
-                print(MenuState.draw.__doc__)
+            for name, button in self.buttons.items():
+                if button[0].get_rect().collidepoint((mousex, mousey)):
+                    button[1]()
+
+
+class SettingState(BaseState):
+    """State that represents the setting screen inside the main menu"""
+
+    def __init__(self):
+        super().__init__()
+
+        self.buttons = {
+            "test_button": (
+                MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Bacc",
+                           text_color=(0, 0, 0), font_size=40),
+                lambda: self.change_state(MenuState)
+            )
+        }
+
+    def draw(self):
+        txt = self.font.render("Game Settings", True, (0, 0, 0))
+        self.screen.blit(txt, (200, 20))
+        for dict_key, button in self.buttons.items():
+            button[0].draw()
+
+    def handle_events(self, event):
+        pass
 
 
 class NewGameState(BaseState):
