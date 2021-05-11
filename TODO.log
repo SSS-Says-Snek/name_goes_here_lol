@@ -13,5 +13,7 @@
 
 =======================================  PRIORITIES:  =======================================
 1. Actually add the game (Snake), but with a twist (Shopping, high scores, all that good stuff)
+2. Add entity classes inside Entities folder
+3. Figure out how to add shop system
 2. Add the SettingState (It's already here, but does not modify settings at all)
 3. Add StatState (Also already here, but there would be a test stat file to test the stat screen)

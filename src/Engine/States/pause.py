@@ -22,10 +22,11 @@ class PauseMenu:
                               lambda: self.toggle_menu())
         }
         self.alpha = 1
+        self.max_alpha = 180
 
     def draw(self):
         if self.draw_pause:
-            if self.alpha < 230:
+            if self.alpha < self.max_alpha:
                 self.fade(self.alpha)
             pause_txt = font(60).render("Paused", True, (0, 0, 0))
             self.screen.blit(pause_txt, (300, 100))

@@ -1,3 +1,5 @@
+import json
+
 from src.common import *
 from functools import lru_cache
 
@@ -14,19 +16,6 @@ def extract_items_from_list(list_thing):
             yield from extract_items_from_list(item)
         else:
             yield item
-
-
-def blit_multicolor_text(text_font, text_list: dict, coord_to_blit, screen=SCREEN):
-    """
-    Function used to render multicolored text. Used as:
-    >>> blit_multicolor_text(font(20), {"Text lol": (128, 128, 128), "More Text": (128, 0, 0)})
-    <blits font rendering with "Text lol" colored gray, and "More Text" colored red>
-    """
-    actual_coord_to_blit = coord_to_blit
-    for key, value in text_list.items():
-        text_font_part = text_font.render(key, True, value)
-        screen.blit(text_font_part, actual_coord_to_blit)
-        actual_coord_to_blit = (actual_coord_to_blit[0] + text_font.size(key)[0], actual_coord_to_blit[1])
 
 
 def rot_center(image, angle, x, y):
@@ -72,3 +61,12 @@ def load_image(image_name):
 def font(size, text_font="ThaleahFat"):
     """Loads a font with a given size and an optional parameter for the font name"""
     return pygame.font.Font(FONT_PATH / f"{text_font}.ttf", size)
+
+
+def load_setting(key_to_load):
+    with open(DATA_PATH / "config.json") as read_setting_file:
+        all_settings_info = json.load(read_setting_file)
+    try:
+        return all_settings_info[key_to_load]
+    except KeyError:
+        return None

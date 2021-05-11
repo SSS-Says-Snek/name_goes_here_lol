@@ -3,6 +3,7 @@ from src.Engine.States.base_state import BaseState
 from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
 from src.utils import *
+from src.draw_utils import *
 
 from pygame.locals import *
 
@@ -47,7 +48,7 @@ class MenuState(BaseState):
                 (128, 128, 128),
                 text="Settings",
                 text_color=(0, 0, 0),
-                font_size=40), NotImplemented
+                font_size=40), lambda: self.change_state(SettingState)
             ),
             "quit_button": (MenuButton(
                 self.screen,
@@ -143,7 +144,6 @@ class StatState(BaseState):
     def handle_events(self, pygame_event):
         """STATSTATE doc for handle_events"""
         if pygame_event.type == MOUSEBUTTONDOWN:
-            print('yes')
             mousex, mousey = pygame.mouse.get_pos()
             for name, button in self.buttons.items():
                 if button[0].get_rect().collidepoint((mousex, mousey)):
@@ -158,7 +158,7 @@ class SettingState(BaseState):
 
         self.buttons = {
             "test_button": (
-                MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Bacc",
+                MenuButton(self.screen, ((70, 100), (100, 100)), (128, 128, 128), text="Back",
                            text_color=(0, 0, 0), font_size=40),
                 lambda: self.change_state(MenuState)
             )
@@ -166,12 +166,16 @@ class SettingState(BaseState):
 
     def draw(self):
         txt = self.font.render("Game Settings", True, (0, 0, 0))
-        self.screen.blit(txt, (200, 20))
+        blit_on_center(txt, (400, 30))
         for dict_key, button in self.buttons.items():
             button[0].draw()
 
-    def handle_events(self, event):
-        pass
+    def handle_events(self, pygame_event):
+        if pygame_event.type == MOUSEBUTTONDOWN:
+            mousex, mousey = pygame.mouse.get_pos()
+            for name, button in self.buttons.items():
+                if button[0].get_rect().collidepoint((mousex, mousey)):
+                    button[1]()
 
 
 class NewGameState(BaseState):
@@ -242,10 +246,12 @@ class PlayingGameState(BaseState):
                               ImageButton(self.screen, "play.png", (700, 0))], NotImplemented)
         }
         self.pause_menu = PauseMenu()
+        self.background = load_image("bg.png").convert()
 
     def draw(self):
         play_game_txt = font(40).render("Lorem ipsum", True, (0, 0, 0))
         self.screen.blit(play_game_txt, (300, 0))
+        self.screen.blit(self.background, (0, 0))
         self.pause_menu.draw()
 
         for button in self.buttons.values():
