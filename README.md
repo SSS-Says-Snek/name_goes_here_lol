@@ -1,6 +1,7 @@
 ![Github Release Badge](https://img.shields.io/github/v/release/SSS-Says-Snek/name_goes_here_lol?include_prereleases)
 ![Github Repo Size Badge](https://img.shields.io/github/repo-size/SSS-Says-Snek/name_goes_here_lol)
 ![Commits since last version](https://img.shields.io/github/commits-since/SSS-Says-Snek/name_goes_here_lol/latest?color=%28255%2C%200%2C%200%29&include_prereleases)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2d4a2c27e7094629b96ac732b81076c3)](https://www.codacy.com/gh/SSS-Says-Snek/name_goes_here_lol/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SSS-Says-Snek/name_goes_here_lol&amp;utm_campaign=Badge_Grade)
 
 Title's kinda misleading, it's just Snake+ (upgraded version of snake, I had nothing to do, ok? I just wanted to improve my pygame skillz, as they were nonexistant)
 
