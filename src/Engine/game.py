@@ -33,7 +33,8 @@ class GameLoop:
         self.screen = screen
         self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json")
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(PATH / "src/Assets/Fonts/ThaleahFat.ttf", 60)
+        self.font = font(60)
+        self.running = True
 
         self.state = MenuState()
         # self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (100, 50)),
@@ -57,7 +58,7 @@ class GameLoop:
         now = arrow.utcnow()
 
         fps_setting = load_setting("fps")
-        while True:
+        while self.running:
             dt = self.clock.tick(fps_setting) / 1000
             self.screen.fill((245, 245, 245))
             self.handle_events()
@@ -88,6 +89,8 @@ class GameLoop:
                 print(f"Changed from {self.state.__class__} to {self.state.next_state}")
                 self.state = self.state.next_state()
             loop += 1
+        pygame.quit()
+        sys.exit(0)
 
     def handle_events(self):
         """Function used to handle the game loop's events"""
@@ -95,13 +98,13 @@ class GameLoop:
             self.manager.process_events(game_event)
             self.state.handle_events(game_event)
             if game_event.type == QUIT:
-                pygame.quit()
-                sys.exit(0)
+                self.running = False
             if game_event.type == KEYDOWN:
                 if game_event.key == K_F3:
                     self.debug_game.toggle_debug()
             if game_event.type == USEREVENT:
                 # Pygame GUI's event handler
+                # WARNING: Not used currently, so shh
                 if game_event.user_type == 'ui_button_pressed':
                     if game_event.ui_element == self.hello_button:
                         self.state.next_state = StatState

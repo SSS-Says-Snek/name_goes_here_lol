@@ -8,7 +8,8 @@ from pygame.locals import *
 
 
 class TextBox:
-    def __init__(self, coordinates, beginning_text='', inactive_color=pygame.Color('lightskyblue3'), active_color=pygame.Color('dodgerblue2'), fontsize=60):
+    def __init__(self, coordinates, beginning_text='', inactive_color=pygame.Color('lightskyblue3'),
+                 active_color=pygame.Color('dodgerblue2'), fontsize=60):
         self.rect = pygame.Rect(coordinates)
         self.text = beginning_text
         self.color = inactive_color
@@ -108,6 +109,7 @@ class DropDown:
 
 class Menu:
     """Scrapped version of Menu, but might need it someday..."""
+
     def __init__(self, surface):
         self.font = pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", 60)
         self.screen = surface
@@ -242,5 +244,35 @@ class OkayPopUpMessage(PopUpMessage):
         super().__init__(coords, rect_color, text, text_font, screen)
 
 
+class Slider:
+    def __init__(
+            self,
+            coord,
+            color,
+            length,
+            width,
+            min_val,
+            max_val,
+            default_val=None,
+            screen=SCREEN
+    ):
+        self.coord = coord
+        self.color = color
+        self.length = length
+        self.width = width
+        self.min_val = min_val
+        self.max_val = max_val
+        self.screen = self.screen
+
+        if default_val is None:
+            self.default_val = self.min_val
+        else:
+            self.default_val = default_val
+
+    def draw(self):
+        pygame.draw.rect(self.screen, )
+
+
 class GameException(Exception):
+    """Just the default game exception"""
     pass

@@ -50,7 +50,7 @@ class Button:
 
 
 class ImageButton:
-    """"""
+    """An Image button used a bit like the Button and MenuButton class"""
     def __init__(
             self,
             surface,
@@ -123,8 +123,7 @@ class MenuButton(Button):
 
 
 class HiddenButton:
-    """test"""
-
+    """Definately did not copy paste this from my old project"""
     def __init__(self, access, name, image_filename: Union[str, pygame.Rect], location, size):
         self.access = access
         self.name = name

@@ -18,6 +18,7 @@ class MenuState(BaseState):
         self.title = TITLE
         self.title_idx = 0
         self.title_thing = 0
+        self.TITLEUPDATE = pygame.USEREVENT + 1
         self.buttons = {
             "start_button": (MenuButton(
                 self.screen,
@@ -57,8 +58,10 @@ class MenuState(BaseState):
                 text="Quit",
                 text_color=(0, 0, 0),
                 font_size=40
-            ), exit_game)
+            ), lambda: exit_game())
         }
+
+        pygame.time.set_timer(self.TITLEUPDATE, 33)
 
     def draw(self):
         """MenuState doc for draw"""
@@ -95,6 +98,9 @@ class MenuState(BaseState):
                         button[1]()
                     except TypeError:
                         print("Not Implemented, shh")
+        if pygame_event.type == self.TITLEUPDATE:
+            self.title_thing += 1
+            self.title_thing %= len(self.title)
 
         for dict_key, button in self.buttons.items():
             if button[0].get_rect().collidepoint((mousex, mousey)):
@@ -115,9 +121,6 @@ class MenuState(BaseState):
                 160, 0
             )
         )
-
-        self.title_thing += 1
-        self.title_thing %= len(self.title)
 
 
 class StatState(BaseState):
