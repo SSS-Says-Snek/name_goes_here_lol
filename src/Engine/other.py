@@ -1,3 +1,7 @@
+"""
+Other random classes that I might use for other stuff
+"""
+
 import random
 
 from src.Engine.button import MenuButton
@@ -262,7 +266,7 @@ class Slider:
         self.width = width
         self.min_val = min_val
         self.max_val = max_val
-        self.screen = self.screen
+        self.screen = screen
 
         if default_val is None:
             self.default_val = self.min_val
@@ -270,7 +274,7 @@ class Slider:
             self.default_val = default_val
 
     def draw(self):
-        pygame.draw.rect(self.screen, )
+        pygame.draw.rect(self.screen, self.color, self.coord)
 
 
 class GameException(Exception):
