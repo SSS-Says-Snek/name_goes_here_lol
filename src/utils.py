@@ -70,3 +70,7 @@ def load_setting(key_to_load):
         return all_settings_info[key_to_load]
     except KeyError:
         return None
+
+
+def distance(x1, x2, y1, y2):
+    return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5

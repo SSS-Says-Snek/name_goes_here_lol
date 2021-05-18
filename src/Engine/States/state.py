@@ -2,6 +2,7 @@ import pygame_gui
 from src.Engine.States.base_state import BaseState
 from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
+from src.Engine.other import Slider
 from src.utils import *
 from src.draw_utils import *
 
@@ -160,20 +161,27 @@ class SettingState(BaseState):
         super().__init__()
 
         self.buttons = {
-            "test_button": (
+            "home_button": (
                 MenuButton(self.screen, ((70, 100), (100, 100)), (128, 128, 128), text="Back",
                            text_color=(0, 0, 0), font_size=40),
                 lambda: self.change_state(MenuState)
-            )
+            ),
+            # "apply_button": (
+            #     MenuButton(self.screen, (()))
+            # )
         }
+        self.fps_slider = Slider((200, 200), (230, 230, 0), 500, 40, 10, 500, slide_color=(0, 128, 0))
 
     def draw(self):
         txt = self.font.render("Game Settings", True, (0, 0, 0))
         blit_on_center(txt, (400, 30))
+
+        self.fps_slider.draw()
         for dict_key, button in self.buttons.items():
             button[0].draw()
 
     def handle_events(self, pygame_event):
+        self.fps_slider.handle_events(pygame_event)
         if pygame_event.type == MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
             for name, button in self.buttons.items():
