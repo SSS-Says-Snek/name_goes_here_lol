@@ -31,7 +31,7 @@ Well, we got this menu...
    NOTE: Again, if you're not on Windows, you should run:
    ```shell script
    python3 main.py
-   ```'
+   ```
 NOTE: Right now, you have to have python 3.6 or above to run the game. There is no executables right now, because I suck at pyinstaller lel
 ## Todo and Checklists
 
