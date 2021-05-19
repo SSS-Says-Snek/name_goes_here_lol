@@ -56,8 +56,10 @@ class GameLoop:
         cpu = self.process.cpu_percent()
         mem = (self.process.memory_info().rss, psutil.virtual_memory().used)
         now = arrow.utcnow()
-
+        e = time.time()
         fps_setting = load_setting("fps")
+        f = time.time()
+        print(f-e)
         while self.running:
             dt = self.clock.tick(fps_setting) / 1000
             self.screen.fill((245, 245, 245))

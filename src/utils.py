@@ -72,5 +72,17 @@ def load_setting(key_to_load):
         return None
 
 
+def modify_setting(key_to_modify, value):
+    with open(DATA_PATH / "config.json") as read_setting_file:
+        all_settings_info = json.load(read_setting_file)
+    try:
+        all_settings_info[key_to_modify] = value
+    except KeyError:
+        pass
+    else:
+        with open(DATA_PATH / "config.json", "w") as write_setting_file:
+            json.dump(all_settings_info, write_setting_file, indent=4)
+
+
 def distance(x1, x2, y1, y2):
     return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5

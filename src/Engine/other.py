@@ -283,6 +283,7 @@ class Slider:
         else:
             self.slide_color = slide_color
         self.rect_coord = self.coord + (self.length, self.width,)
+        self.rect = pygame.Rect(self.rect_coord)
         self.font = font(self.width)
         self.is_holding_mouse = False
         self.slide_coord = (self.coord[0] + (self.default_val - self.min_val) / self.max_val * self.length, self.coord[1] - width // 2)
@@ -296,7 +297,7 @@ class Slider:
         self.screen.blit(min_val_txt, min_val_txt_rect)
 
         max_val_txt = self.font.render(str(self.max_val), True, (0, 0, 0))
-        self.screen.blit(max_val_txt, (self.coord[0]+self.length+(self.length//30), self.coord[1]))
+        self.screen.blit(max_val_txt, (self.coord[0] + self.length + self.length // 30, self.coord[1]))
 
         current_rect = pygame.draw.rect(self.screen, self.slide_color, self.slide_coord + (20, self.width * 2))
         if self.show_value:
@@ -312,7 +313,8 @@ class Slider:
             self.current_val = round(self.current_val)
 
     def handle_events(self, event):
-        if event.type == MOUSEBUTTONDOWN:
+        mouse_pos = pygame.mouse.get_pos()
+        if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(mouse_pos):
             self.is_holding_mouse = True
         if event.type == MOUSEBUTTONUP:
             self.is_holding_mouse = False

@@ -1,6 +1,6 @@
 """
 ===================================================================================
-|                     N A M E  G O E S  H E R E  L O L  (v-4.4.999999)            |
+|                     N A M E  G O E S  H E R E  L O L  (v-4.4.5.b-1)             |
 |       a game made by SSS_Says_Snek#0194, aimed at upgrading snake               |
 |       it's actually gonna be a terrible game, but hey, why not?                 |
 |                                                                                 |
@@ -11,7 +11,6 @@
 |                                                                                 |
 ===================================================================================
 """
-__version__ = "-4.4.999999"
 import sys
 
 if sys.version_info < (3, 6):

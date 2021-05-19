@@ -2,6 +2,7 @@ from src.common import *
 from src.utils import *
 
 import pygame
+from pygame.locals import *
 from typing import *
 
 pygame.init()
@@ -24,7 +25,8 @@ class Button:
             text=None,
             text_color=(0, 0, 0),
             font_size=None,
-            rounded=True
+            rounded=True,
+            func_when_clicked=None
     ):
         self.screen = surface
         self.coords = coordinates
@@ -33,6 +35,7 @@ class Button:
         self.text_color = text_color
         self.font_size = font_size
         self.rounded = rounded
+        self.func_when_clicked = func_when_clicked
 
     def draw(self):
         rect = pygame.Rect(self.coords)
@@ -44,6 +47,10 @@ class Button:
             font_different_size = pygame.font.Font(PATH / "Assets/Fonts/ThaLeahFat.ttf", self.font_size)
             text_surf = font_different_size.render(self.text, True, self.text_color)
             self.screen.blit(text_surf, (rect.centerx - text_surf.get_width() // 2, rect.centery - text_surf.get_height() // 2))
+
+    def handle_events(self, event):
+        if event.type == MOUSEBUTTONDOWN:
+            self.func_when_clicked()
 
     def get_rect(self):
         return pygame.Rect(self.coords)

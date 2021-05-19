@@ -161,14 +161,21 @@ class SettingState(BaseState):
         super().__init__()
 
         self.buttons = {
-            "home_button": (
-                MenuButton(self.screen, ((70, 100), (100, 100)), (128, 128, 128), text="Back",
+            (
+                MenuButton(self.screen, ((70, 50), (100, 100)), (128, 128, 128), text="Back",
                            text_color=(0, 0, 0), font_size=40),
                 lambda: self.change_state(MenuState)
             ),
-            # "apply_button": (
-            #     MenuButton(self.screen, (()))
-            # )
+            (
+                MenuButton(self.screen, ((600, 490), (150, 100)), (128, 128, 128), text="Okay",
+                           text_color=(0, 0, 0), font_size=40),
+                lambda: self.change_state(MenuState)
+            ),
+            (
+                MenuButton(self.screen, ((400, 490), (150, 100)), (128, 128, 128), text="Apply",
+                           text_color=(0, 0, 0), font_size=40),
+                lambda: self.apply_changes()
+            )
         }
         self.fps_slider = Slider((200, 200), (230, 230, 0), 500, 40, 10, 500, slide_color=(0, 128, 0))
 
@@ -177,16 +184,25 @@ class SettingState(BaseState):
         blit_on_center(txt, (400, 30))
 
         self.fps_slider.draw()
-        for dict_key, button in self.buttons.items():
+        for button in self.buttons:  # .items():
             button[0].draw()
 
     def handle_events(self, pygame_event):
         self.fps_slider.handle_events(pygame_event)
         if pygame_event.type == MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
-            for name, button in self.buttons.items():
+            for button in self.buttons:  # .items():
                 if button[0].get_rect().collidepoint((mousex, mousey)):
                     button[1]()
+
+    def apply_changes(self):
+        """
+        Right now, you need to restart game for it to take change, hang on, I'm gonna change that soon-ish (TM)
+        """
+        fps = self.fps_slider.get_slide_value()
+
+        modify_setting("fps", fps)
+        print(fps)
 
 
 class NewGameState(BaseState):
