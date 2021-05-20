@@ -11,6 +11,7 @@ pygame.font.init()
 
 
 def extract_items_from_list(list_thing):
+    """Not used lol"""
     for item in list_thing:
         if isinstance(item, list):
             yield from extract_items_from_list(item)
@@ -64,6 +65,7 @@ def font(size, text_font="ThaleahFat"):
 
 
 def load_setting(key_to_load):
+    """Loads a setting in the default config.json"""
     with open(DATA_PATH / "config.json") as read_setting_file:
         all_settings_info = json.load(read_setting_file)
     try:
@@ -73,6 +75,7 @@ def load_setting(key_to_load):
 
 
 def modify_setting(key_to_modify, value):
+    """Modify a given key in the defualt config.json"""
     with open(DATA_PATH / "config.json") as read_setting_file:
         all_settings_info = json.load(read_setting_file)
     try:
@@ -85,4 +88,5 @@ def modify_setting(key_to_modify, value):
 
 
 def distance(x1, x2, y1, y2):
+    """Returns the distance between two coords"""
     return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5

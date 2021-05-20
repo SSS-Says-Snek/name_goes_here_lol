@@ -302,7 +302,7 @@ class Slider:
         current_rect = pygame.draw.rect(self.screen, self.slide_color, self.slide_coord + (20, self.width * 2))
         if self.show_value:
             current_val_txt = self.font.render(str(self.current_val), True, (0, 0, 0))
-            current_val_txt_rect = current_val_txt.get_rect(center=(current_rect.centerx, current_rect.centery - 30))
+            current_val_txt_rect = current_val_txt.get_rect(center=(current_rect.midbottom[0], current_rect.centery - self.width))
             self.screen.blit(current_val_txt, current_val_txt_rect)
         if self.is_holding_mouse and self.coord[0] <= mouse_pos[0] <= self.coord[0] + self.length:
             # if self.is_holding_mouse and distance(mouse_pos[0], current_rect.centerx, mouse_pos[1], current_rect.centery) < 100:

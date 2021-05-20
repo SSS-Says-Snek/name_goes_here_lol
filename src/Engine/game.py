@@ -56,10 +56,7 @@ class GameLoop:
         cpu = self.process.cpu_percent()
         mem = (self.process.memory_info().rss, psutil.virtual_memory().used)
         now = arrow.utcnow()
-        e = time.time()
         fps_setting = load_setting("fps")
-        f = time.time()
-        print(f-e)
         while self.running:
             dt = self.clock.tick(fps_setting) / 1000
             self.screen.fill((245, 245, 245))
@@ -91,8 +88,7 @@ class GameLoop:
                 print(f"Changed from {self.state.__class__} to {self.state.next_state}")
                 self.state = self.state.next_state()
             loop += 1
-        pygame.quit()
-        sys.exit(0)
+        exit_game()
 
     def handle_events(self):
         """Function used to handle the game loop's events"""
@@ -104,11 +100,12 @@ class GameLoop:
             if game_event.type == KEYDOWN:
                 if game_event.key == K_F3:
                     self.debug_game.toggle_debug()
-            if game_event.type == USEREVENT:
-                # Pygame GUI's event handler
-                # WARNING: Not used currently, so shh
-                if game_event.user_type == 'ui_button_pressed':
-                    if game_event.ui_element == self.hello_button:
-                        self.state.next_state = StatState
-                if game_event.user_type == 'ui_drop_down_menu_changed':
-                    print("Selected option:", game_event.text)
+            # if game_event.type == USEREVENT:
+            #     Lol this not even used yet, cuz pygame_gui's not quite the theme I'm looking for
+            #     # Pygame GUI's event handler
+            #     # WARNING: Not used currently, so shh
+            #     if game_event.user_type == 'ui_button_pressed':
+            #         if game_event.ui_element == self.hello_button:
+            #             self.state.next_state = StatState
+            #     if game_event.user_type == 'ui_drop_down_menu_changed':
+            #         print("Selected option:", game_event.text)

@@ -3,6 +3,7 @@ from src.Engine.States.base_state import BaseState
 from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
 from src.Engine.other import Slider
+from src.common import __version__, WIDTH, HEIGHT
 from src.utils import *
 from src.draw_utils import *
 
@@ -66,6 +67,9 @@ class MenuState(BaseState):
 
     def draw(self):
         """MenuState doc for draw"""
+        version_txt = font(20).render(f"Version {__version__}", True, (0, 0, 0))
+        version_txt_rect = version_txt.get_rect(bottomright=(WIDTH, HEIGHT))
+        self.screen.blit(version_txt, version_txt_rect)
         self.update_title()
         for dict_key, button in self.buttons.items():
             # The button is a tuple of two things: the actual button, and the action
@@ -106,11 +110,6 @@ class MenuState(BaseState):
         for dict_key, button in self.buttons.items():
             if button[0].get_rect().collidepoint((mousex, mousey)):
                 self.selection = list(self.buttons.keys()).index(dict_key)
-
-    def process_state_event(self, state_event):
-        if state_event == 3:
-            return StatState
-        return self
 
     def update_title(self):
         blit_multicolor_text(
@@ -162,11 +161,6 @@ class SettingState(BaseState):
 
         self.buttons = {
             (
-                MenuButton(self.screen, ((70, 50), (100, 100)), (128, 128, 128), text="Back",
-                           text_color=(0, 0, 0), font_size=40),
-                lambda: self.change_state(MenuState)
-            ),
-            (
                 MenuButton(self.screen, ((600, 490), (150, 100)), (128, 128, 128), text="Okay",
                            text_color=(0, 0, 0), font_size=40),
                 lambda: self.change_state(MenuState)
@@ -177,21 +171,24 @@ class SettingState(BaseState):
                 lambda: self.apply_changes()
             )
         }
-        self.fps_slider = Slider((200, 200), (230, 230, 0), 500, 40, 10, 500, slide_color=(0, 128, 0))
+        self.fps_slider = Slider((200, 100), (230, 230, 0), 500, 40, 10, 500, slide_color=(200, 0, 0))
 
     def draw(self):
         txt = self.font.render("Game Settings", True, (0, 0, 0))
         blit_on_center(txt, (400, 30))
 
+        fps_txt = font(50).render("FPS:", True, (0, 0, 0))
+        self.screen.blit(fps_txt, (40, 100))
+
         self.fps_slider.draw()
-        for button in self.buttons:  # .items():
+        for button in self.buttons:
             button[0].draw()
 
     def handle_events(self, pygame_event):
         self.fps_slider.handle_events(pygame_event)
         if pygame_event.type == MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
-            for button in self.buttons:  # .items():
+            for button in self.buttons:
                 if button[0].get_rect().collidepoint((mousex, mousey)):
                     button[1]()
 

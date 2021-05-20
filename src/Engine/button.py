@@ -129,6 +129,15 @@ class MenuButton(Button):
             self.screen.blit(text_surf, (rect.centerx - text_surf.get_width() // 2, rect.centery - text_surf.get_height() // 2))
 
 
+class RadioButton:
+    def __init__(
+            self,
+            buttons
+    ):
+        """I'm lazy, I'll do it someday"""
+        pass
+
+
 class HiddenButton:
     """Definately did not copy paste this from my old project"""
     def __init__(self, access, name, image_filename: Union[str, pygame.Rect], location, size):
