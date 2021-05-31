@@ -1,4 +1,5 @@
 import pygame_gui
+from src.Engine.Entities.player import Player
 from src.Engine.States.base_state import BaseState
 from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
@@ -67,7 +68,7 @@ class MenuState(BaseState):
 
     def draw(self):
         """MenuState doc for draw"""
-        version_txt = font(20).render(f"Version {__version__}", True, (0, 0, 0))
+        version_txt = font(15, "PixelMillenium").render(f"Version {__version__}", True, (0, 0, 0))
         version_txt_rect = version_txt.get_rect(bottomright=(WIDTH, HEIGHT))
         self.screen.blit(version_txt, version_txt_rect)
         self.update_title()
@@ -271,12 +272,14 @@ class PlayingGameState(BaseState):
         }
         self.pause_menu = PauseMenu()
         self.background = load_image("bg.png").convert()
+        self.player = Player()
 
     def draw(self):
         play_game_txt = font(40).render("Lorem ipsum", True, (0, 0, 0))
         self.screen.blit(play_game_txt, (300, 0))
         self.screen.blit(self.background, (0, 0))
         self.pause_menu.draw()
+        self.player.draw()
 
         for button in self.buttons.values():
             if self.pause_menu.draw_pause:
@@ -295,3 +298,4 @@ class PlayingGameState(BaseState):
                     if button[0][0].get_rect().collidepoint((mousex, mousey)):
                         self.pause_menu.toggle_menu()
         self.pause_menu.handle_events(event)
+        self.player.handle_events(event)

@@ -138,6 +138,20 @@ class RadioButton:
         pass
 
 
+class ToggleButton:
+    def __init__(
+            self,
+            default="off",
+            off_color=(255, 0, 0),
+            on_color=(0, 255, 0),
+            screen=SCREEN
+    ):
+        self.default = default
+        self.off_color = off_color
+        self.on_color = on_color
+        self.screen = screen
+
+
 class HiddenButton:
     """Definately did not copy paste this from my old project"""
     def __init__(self, access, name, image_filename: Union[str, pygame.Rect], location, size):
