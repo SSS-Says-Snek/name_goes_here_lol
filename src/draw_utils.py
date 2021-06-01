@@ -12,7 +12,10 @@ def blit_multicolor_text(text_font, text_list: dict, coord_to_blit, screen=SCREE
     for key, value in text_list.items():
         text_font_part = text_font.render(key, True, value)
         screen.blit(text_font_part, actual_coord_to_blit)
-        actual_coord_to_blit = (actual_coord_to_blit[0] + text_font.size(key)[0], actual_coord_to_blit[1])
+        actual_coord_to_blit = (
+            actual_coord_to_blit[0] + text_font.size(key)[0],
+            actual_coord_to_blit[1],
+        )
 
 
 def blit_on_center(surface, pos, screen=SCREEN):

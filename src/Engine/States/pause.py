@@ -10,16 +10,25 @@ pygame.init()
 
 class PauseMenu:
     def __init__(
-            self,
-            screen=SCREEN,
+        self,
+        screen=SCREEN,
     ):
         self.screen = screen
         self.draw_pause = False
 
         self.screen_surf = pygame.Surface(self.screen.get_size())
         self.buttons = {
-            "resume_button": (MenuButton(self.screen, (300, 200, 200, 100), (128, 128, 128), "Resume", (0, 0, 0), 40),
-                              lambda: self.toggle_menu())
+            "resume_button": (
+                MenuButton(
+                    self.screen,
+                    (300, 200, 200, 100),
+                    (128, 128, 128),
+                    "Resume",
+                    (0, 0, 0),
+                    40,
+                ),
+                lambda: self.toggle_menu(),
+            )
         }
         self.alpha = 1
         self.max_alpha = 180

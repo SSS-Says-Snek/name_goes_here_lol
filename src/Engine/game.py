@@ -29,9 +29,12 @@ pygame.init()
 
 class GameLoop:
     """Class that stores and runs the game"""
+
     def __init__(self, screen=SCREEN):
         self.screen = screen
-        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json")
+        self.manager = pygame_gui.UIManager(
+            (WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json"
+        )
         self.clock = pygame.time.Clock()
         self.font = font(60)
         self.running = True
@@ -75,7 +78,7 @@ class GameLoop:
                         "fps": fps,
                         "cpu": cpu,
                         "mem": mem,
-                        "time": (self.start_time, now)
+                        "time": (self.start_time, now),
                     }
                 )
 

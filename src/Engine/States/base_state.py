@@ -10,6 +10,7 @@ class BaseState(object):
     - self.font, used to display and render text
     Inherited classes MUST override `draw` and `handle_events`, or else it would raise a GameException
     """
+
     def __init__(self, screen=SCREEN):
         """
         Note: self.buttons is a dictionary of buttons MADE IN BUTTONS.PY.
@@ -18,7 +19,9 @@ class BaseState(object):
         """
         self.screen = screen  # sets the screen to be the default screen
         self.font = font(60)  # sets default font
-        self.next_state = self.__class__  # sets the default state, next_state would change when changing states
+        self.next_state = (
+            self.__class__
+        )  # sets the default state, next_state would change when changing states
 
     def draw(self):
         """
@@ -30,8 +33,10 @@ class BaseState(object):
         >>> state.draw()
         <Draws onto screen based on overrided function>
         """
-        raise GameException("State class must override this function.\n"
-                            "To see more information, check the docstring in base_state.BaseState.draw.")
+        raise GameException(
+            "State class must override this function.\n"
+            "To see more information, check the docstring in base_state.BaseState.draw."
+        )
 
     def handle_events(self, event):
         """
@@ -44,8 +49,10 @@ class BaseState(object):
         >>> state = BaseState()  # Supposed to be something that overrided this function
         >>> state.handle_events(event)
         """
-        raise GameException("State class must override this function.\n"
-                            "To see more information, check the docstring in base_state.BaseState.handle_events.")
+        raise GameException(
+            "State class must override this function.\n"
+            "To see more information, check the docstring in base_state.BaseState.handle_events."
+        )
 
     def change_state(self, other_state):
         """
@@ -60,6 +67,7 @@ class BaseState(object):
 
 class DummyState:
     """Exactly like BaseState, but doesn't raise an exception when not overrided"""
+
     def __init__(self, screen=SCREEN):
         self.screen = screen
         self.font = font(60)

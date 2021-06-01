@@ -20,7 +20,7 @@ def extract_items_from_list(list_thing):
 
 
 def rot_center(image, angle, x, y):
-    """Rotates an image based on its center to avoid different """
+    """Rotates an image based on its center to avoid different"""
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(center=image.get_rect(center=(x, y)).center)
     return rotated_image, new_rect
@@ -28,7 +28,10 @@ def rot_center(image, angle, x, y):
 
 def is_hovering(rect, mouse_pos):
     """Checks if a mouse is hovering over a rect"""
-    if rect.left <= mouse_pos[0] <= rect.right and rect.top <= mouse_pos[1] <= rect.bottom:
+    if (
+        rect.left <= mouse_pos[0] <= rect.right
+        and rect.top <= mouse_pos[1] <= rect.bottom
+    ):
         return True
     return False
 

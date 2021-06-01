@@ -10,10 +10,7 @@ pygame.init()
 
 
 class Player:
-    def __init__(
-            self,
-            screen=SCREEN
-    ):
+    def __init__(self, screen=SCREEN):
         self.screen = screen
 
         self.key = "right"
@@ -28,7 +25,7 @@ class Player:
         self.generate_food()
 
     def draw(self):
-        self.player_draw([20, 20], self.player)
+        self.draw_player([20, 20], self.player)
         pygame.draw.rect(self.screen, (255, 0, 255), self.food_rect)
 
     def generate_food(self):
@@ -55,14 +52,16 @@ class Player:
         if len(self.player) > self.player_length:
             del self.player[0]
 
-        if self.food_rect[0] < self.x1 < self.food_rect[0] + self.food_rect[2] and \
-                self.food_rect[1] < self.y1 < self.food_rect[1] + self.food_rect[3]:
+        if (
+            self.food_rect[0] < self.x1 < self.food_rect[0] + self.food_rect[2]
+            and self.food_rect[1] < self.y1 < self.food_rect[1] + self.food_rect[3]
+        ):
             self.generate_food()
             self.player_length += 1
 
         self.x1 += self.change[0]
         self.y1 += self.change[1]
 
-    def player_draw(self, size, player_list):
+    def draw_player(self, size, player_list):
         for pos in player_list:
             pygame.draw.rect(self.screen, (0, 0, 0), pos + size)

@@ -12,8 +12,14 @@ from pygame.locals import *
 
 
 class TextBox:
-    def __init__(self, coordinates, beginning_text='', inactive_color=pygame.Color('lightskyblue3'),
-                 active_color=pygame.Color('dodgerblue2'), fontsize=60):
+    def __init__(
+        self,
+        coordinates,
+        beginning_text="",
+        inactive_color=pygame.Color("lightskyblue3"),
+        active_color=pygame.Color("dodgerblue2"),
+        fontsize=60,
+    ):
         self.rect = pygame.Rect(coordinates)
         self.text = beginning_text
         self.color = inactive_color
@@ -39,7 +45,7 @@ class TextBox:
             if self.active:
                 if event.key == pygame.K_RETURN:
                     print(self.text)
-                    self.text = ''
+                    self.text = ""
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
@@ -60,8 +66,9 @@ class TextBox:
 
 
 class DropDown:
-
-    def __init__(self, screen, color_menu, color_option, coords, dropdown_font, main, options):
+    def __init__(
+        self, screen, color_menu, color_option, coords, dropdown_font, main, options
+    ):
         self.screen = screen
         self.color_menu = color_menu
         self.color_option = color_option
@@ -82,7 +89,12 @@ class DropDown:
             for i, text in enumerate(self.options):
                 rect = self.rect.copy()
                 rect.y += (i + 1) * self.rect.height
-                pygame.draw.rect(self.screen, self.color_option[1 if i == self.active_option else 0], rect, 0)
+                pygame.draw.rect(
+                    self.screen,
+                    self.color_option[1 if i == self.active_option else 0],
+                    rect,
+                    0,
+                )
                 msg = self.font.render(text, 1, (0, 0, 0))
                 self.screen.blit(msg, msg.get_rect(center=rect.center))
 
@@ -119,7 +131,7 @@ class Menu:
         self.screen = surface
         self.title = TITLE
         self.title_idx = 0
-        self.menustate = 'main menu'
+        self.menustate = "main menu"
         self.selection = 0  # 0th index
         self.buttons = {
             "start_button": MenuButton(
@@ -128,7 +140,7 @@ class Menu:
                 (128, 128, 128),
                 text="Start New Game",
                 text_color=(0, 0, 0),
-                font_size=40
+                font_size=40,
             ),
             "load_button": MenuButton(
                 self.screen,
@@ -136,7 +148,7 @@ class Menu:
                 (128, 128, 128),
                 text="Load Game",
                 text_color=(0, 0, 0),
-                font_size=40
+                font_size=40,
             ),
             # "home_button": MenuButton(
             #     self.screen,
@@ -167,7 +179,7 @@ class Menu:
         self.generate_dollar_sign(self.rand_font, self.rand_pos, (0, 255, 0))
 
         for key, button in self.buttons.items():
-            if self.menustate == 'main menu':
+            if self.menustate == "main menu":
                 button.draw()
 
     def handle_events(self):
@@ -184,7 +196,9 @@ class Menu:
                 title_surf = self.font.render(i, True, (0, 255, 0))
             else:
                 title_surf = self.font.render(i, True, (0, 128, 0))
-            self.screen.blit(title_surf, (WIDTH // 2 - len(self.title) * 13 + self.title_idx * 30, 0))
+            self.screen.blit(
+                title_surf, (WIDTH // 2 - len(self.title) * 13 + self.title_idx * 30, 0)
+            )
             self.title_idx += 1
             self.title_idx %= len(self.title)
 
@@ -203,7 +217,14 @@ class Menu:
 
 
 class PopUpMessage:
-    def __init__(self, coords: tuple, rect_color=(0, 0, 0), text=None, text_font=None, screen=SCREEN):
+    def __init__(
+        self,
+        coords: tuple,
+        rect_color=(0, 0, 0),
+        text=None,
+        text_font=None,
+        screen=SCREEN,
+    ):
         self.screen = screen
         self.coords = coords
         self.rect_color = rect_color
@@ -215,18 +236,20 @@ class PopUpMessage:
         messagebox_rect = pygame.Rect(self.coords)
         pygame.draw.rect(self.screen, self.rect_color, messagebox_rect)
         if self.text is not None and self.text_font is not None:
-            text_words = self.text.split(' ')
+            text_words = self.text.split(" ")
             lines = []
             # Let's just assume for now that it's tuple[int, int, int, int] for big brain time
             while len(text_words) > 0:
                 word_lines = []
                 while len(text_words) > 0:
                     word_lines.append(text_words.pop(0))
-                    font_width, font_height = self.text_font.size(' '.join(word_lines + text_words[:1]))
+                    font_width, font_height = self.text_font.size(
+                        " ".join(word_lines + text_words[:1])
+                    )
                     print(word_lines + text_words[:1])
                     if font_width > self.coords[3]:
                         break
-                line = ' '.join(word_lines)
+                line = " ".join(word_lines)
                 lines.append(line)
             print(lines)
             y_offset = 0
@@ -244,24 +267,31 @@ class PopUpMessage:
 
 
 class OkayPopUpMessage(PopUpMessage):
-    def __init__(self, coords: tuple, rect_color=(0, 0, 0), text=None, text_font=None, screen=SCREEN):
+    def __init__(
+        self,
+        coords: tuple,
+        rect_color=(0, 0, 0),
+        text=None,
+        text_font=None,
+        screen=SCREEN,
+    ):
         super().__init__(coords, rect_color, text, text_font, screen)
 
 
 class Slider:
     def __init__(
-            self,
-            coord,
-            color,
-            length,
-            width,
-            min_val,
-            max_val,
-            default_val=None,
-            screen=SCREEN,
-            num_spaces=-1,
-            slide_color=None,
-            show_value=True
+        self,
+        coord,
+        color,
+        length,
+        width,
+        min_val,
+        max_val,
+        default_val=None,
+        screen=SCREEN,
+        num_spaces=-1,
+        slide_color=None,
+        show_value=True,
     ):
         self.coord = coord
         self.color = color
@@ -282,32 +312,53 @@ class Slider:
             self.slide_color = self.color
         else:
             self.slide_color = slide_color
-        self.rect_coord = self.coord + (self.length, self.width,)
+        self.rect_coord = self.coord + (
+            self.length,
+            self.width,
+        )
         self.rect = pygame.Rect(self.rect_coord)
         self.font = font(self.width)
         self.is_holding_mouse = False
-        self.slide_coord = (self.coord[0] + (self.default_val - self.min_val) / self.max_val * self.length, self.coord[1] - width // 2)
+        self.slide_coord = (
+            self.coord[0]
+            + (self.default_val - self.min_val) / self.max_val * self.length,
+            self.coord[1] - width // 2,
+        )
         self.current_val = self.default_val
 
     def draw(self):
         mouse_pos = pygame.mouse.get_pos()
         pygame.draw.rect(self.screen, self.color, self.rect_coord)
         min_val_txt = self.font.render(str(self.min_val), True, (0, 0, 0))
-        min_val_txt_rect = min_val_txt.get_rect(topright=(self.coord[0]-(self.length//30), self.coord[1]))
+        min_val_txt_rect = min_val_txt.get_rect(
+            topright=(self.coord[0] - (self.length // 30), self.coord[1])
+        )
         self.screen.blit(min_val_txt, min_val_txt_rect)
 
         max_val_txt = self.font.render(str(self.max_val), True, (0, 0, 0))
-        self.screen.blit(max_val_txt, (self.coord[0] + self.length + self.length // 30, self.coord[1]))
+        self.screen.blit(
+            max_val_txt,
+            (self.coord[0] + self.length + self.length // 30, self.coord[1]),
+        )
 
-        current_rect = pygame.draw.rect(self.screen, self.slide_color, self.slide_coord + (20, self.width * 2))
+        current_rect = pygame.draw.rect(
+            self.screen, self.slide_color, self.slide_coord + (20, self.width * 2)
+        )
         if self.show_value:
             current_val_txt = self.font.render(str(self.current_val), True, (0, 0, 0))
-            current_val_txt_rect = current_val_txt.get_rect(center=(current_rect.midbottom[0], current_rect.centery - self.width))
+            current_val_txt_rect = current_val_txt.get_rect(
+                center=(current_rect.midbottom[0], current_rect.centery - self.width)
+            )
             self.screen.blit(current_val_txt, current_val_txt_rect)
-        if self.is_holding_mouse and self.coord[0] <= mouse_pos[0] <= self.coord[0] + self.length:
+        if (
+            self.is_holding_mouse
+            and self.coord[0] <= mouse_pos[0] <= self.coord[0] + self.length
+        ):
             # if self.is_holding_mouse and distance(mouse_pos[0], current_rect.centerx, mouse_pos[1], current_rect.centery) < 100:
             self.slide_coord = (mouse_pos[0], self.slide_coord[1])
-            self.current_val = (mouse_pos[0] - self.coord[0]) / self.length * self.max_val + self.default_val
+            self.current_val = (
+                mouse_pos[0] - self.coord[0]
+            ) / self.length * self.max_val + self.default_val
             if self.current_val > self.max_val:
                 self.current_val = self.max_val
             self.current_val = round(self.current_val)
@@ -325,4 +376,5 @@ class Slider:
 
 class GameException(Exception):
     """Just the default game exception"""
+
     pass

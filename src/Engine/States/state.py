@@ -23,52 +23,70 @@ class MenuState(BaseState):
         self.title_thing = 0
         self.TITLEUPDATE = pygame.USEREVENT + 1
         self.buttons = {
-            "start_button": (MenuButton(
-                self.screen,
-                ((250, 100), (275, 75)),
-                (128, 128, 128),
-                text="Start New Game",
-                text_color=(0, 0, 0),
-                font_size=40
-            ), lambda: self.change_state(NewGameState)),
-            "load_button": (MenuButton(
-                self.screen,
-                ((250, 200), (350, 75)),
-                (128, 128, 128),
-                text="Load Existing Game",
-                text_color=(0, 0, 0),
-                font_size=40
-            ), NotImplemented),
-            "stat_button": (MenuButton(
-                self.screen,
-                ((250, 300), (250, 75)),
-                (128, 128, 128),
-                text="Statistics",
-                text_color=(0, 0, 0),
-                font_size=40), lambda: self.change_state(StatState)),
-            "setting_button": (MenuButton(
-                self.screen,
-                ((250, 400), (225, 75)),
-                (128, 128, 128),
-                text="Settings",
-                text_color=(0, 0, 0),
-                font_size=40), lambda: self.change_state(SettingState)
+            "start_button": (
+                MenuButton(
+                    self.screen,
+                    ((250, 100), (275, 75)),
+                    (128, 128, 128),
+                    text="Start New Game",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: self.change_state(NewGameState),
             ),
-            "quit_button": (MenuButton(
-                self.screen,
-                ((250, 500), (100, 75)),
-                (128, 128, 128),
-                text="Quit",
-                text_color=(0, 0, 0),
-                font_size=40
-            ), lambda: exit_game())
+            "load_button": (
+                MenuButton(
+                    self.screen,
+                    ((250, 200), (350, 75)),
+                    (128, 128, 128),
+                    text="Load Existing Game",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                NotImplemented,
+            ),
+            "stat_button": (
+                MenuButton(
+                    self.screen,
+                    ((250, 300), (250, 75)),
+                    (128, 128, 128),
+                    text="Statistics",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: self.change_state(StatState),
+            ),
+            "setting_button": (
+                MenuButton(
+                    self.screen,
+                    ((250, 400), (225, 75)),
+                    (128, 128, 128),
+                    text="Settings",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: self.change_state(SettingState),
+            ),
+            "quit_button": (
+                MenuButton(
+                    self.screen,
+                    ((250, 500), (100, 75)),
+                    (128, 128, 128),
+                    text="Quit",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: exit_game(),
+            ),
         }
 
         pygame.time.set_timer(self.TITLEUPDATE, 33)
 
     def draw(self):
         """MenuState doc for draw"""
-        version_txt = font(15, "PixelMillenium").render(f"Version {__version__}", True, (0, 0, 0))
+        version_txt = font(15, "PixelMillenium").render(
+            f"Version {__version__}", True, (0, 0, 0)
+        )
         version_txt_rect = version_txt.get_rect(bottomright=(WIDTH, HEIGHT))
         self.screen.blit(version_txt, version_txt_rect)
         self.update_title()
@@ -85,11 +103,11 @@ class MenuState(BaseState):
 
         if pygame_event.type == KEYDOWN:
             if pygame_event.key == K_DOWN:
-                print('Menu Selection Down')
+                print("Menu Selection Down")
                 self.selection += 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == K_UP:
-                print('Menu Selection Up')
+                print("Menu Selection Up")
                 self.selection -= 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == K_RETURN:
@@ -114,13 +132,13 @@ class MenuState(BaseState):
 
     def update_title(self):
         blit_multicolor_text(
-            self.font, {
-                self.title[:self.title_thing]: (0, 128, 0),
+            self.font,
+            {
+                self.title[: self.title_thing]: (0, 128, 0),
                 self.title[self.title_thing]: (0, 255, 0),
-                self.title[self.title_thing + 1:]: (0, 128, 0)
-            }, (
-                160, 0
-            )
+                self.title[self.title_thing + 1 :]: (0, 128, 0),
+            },
+            (160, 0),
         )
 
 
@@ -132,9 +150,15 @@ class StatState(BaseState):
 
         self.buttons = {
             "test_button": (
-                MenuButton(self.screen, ((100, 100), (100, 100)), (128, 128, 128), text="Home",
-                           text_color=(0, 0, 0), font_size=40),
-                lambda: self.change_state(MenuState)
+                MenuButton(
+                    self.screen,
+                    ((100, 100), (100, 100)),
+                    (128, 128, 128),
+                    text="Home",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: self.change_state(MenuState),
             )
         }
 
@@ -162,17 +186,31 @@ class SettingState(BaseState):
 
         self.buttons = {
             (
-                MenuButton(self.screen, ((600, 490), (150, 100)), (128, 128, 128), text="Okay",
-                           text_color=(0, 0, 0), font_size=40),
-                lambda: self.change_state(MenuState)
+                MenuButton(
+                    self.screen,
+                    ((600, 490), (150, 100)),
+                    (128, 128, 128),
+                    text="Okay",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: self.change_state(MenuState),
             ),
             (
-                MenuButton(self.screen, ((400, 490), (150, 100)), (128, 128, 128), text="Apply",
-                           text_color=(0, 0, 0), font_size=40),
-                lambda: self.apply_changes()
-            )
+                MenuButton(
+                    self.screen,
+                    ((400, 490), (150, 100)),
+                    (128, 128, 128),
+                    text="Apply",
+                    text_color=(0, 0, 0),
+                    font_size=40,
+                ),
+                lambda: self.apply_changes(),
+            ),
         }
-        self.fps_slider = Slider((200, 100), (230, 230, 0), 500, 40, 10, 500, slide_color=(200, 0, 0))
+        self.fps_slider = Slider(
+            (200, 100), (230, 230, 0), 500, 40, 10, 500, slide_color=(200, 0, 0)
+        )
 
     def draw(self):
         txt = self.font.render("Game Settings", True, (0, 0, 0))
@@ -210,18 +248,42 @@ class NewGameState(BaseState):
         # important things
         super().__init__()
         # self.next_state = NewGameState
-        self.manager = pygame_gui.UIManager((WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json")
+        self.manager = pygame_gui.UIManager(
+            (WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json"
+        )
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = self.screen.get_size()
 
         # not so important things used in two or more methods
-        self.buttons = {"okay_button": (MenuButton(self.screen, ((450, 300), (200, 50)), rect_color=(128, 128, 128),
-                                                   text="Okay", text_color=(0, 0, 0), font_size=20), lambda: self.okay()),
-                        "cancel_button": (MenuButton(self.screen, ((150, 300), (200, 50)), rect_color=(128, 128, 128),
-                                                     text="Cancel", text_color=(0, 0, 0), font_size=20),
-                                          lambda: self.change_state(MenuState))}
+        self.buttons = {
+            "okay_button": (
+                MenuButton(
+                    self.screen,
+                    ((450, 300), (200, 50)),
+                    rect_color=(128, 128, 128),
+                    text="Okay",
+                    text_color=(0, 0, 0),
+                    font_size=20,
+                ),
+                lambda: self.okay(),
+            ),
+            "cancel_button": (
+                MenuButton(
+                    self.screen,
+                    ((150, 300), (200, 50)),
+                    rect_color=(128, 128, 128),
+                    text="Cancel",
+                    text_color=(0, 0, 0),
+                    font_size=20,
+                ),
+                lambda: self.change_state(MenuState),
+            ),
+        }
         self.new_game_input_box = pygame.Rect((100, 300), (500, 200))
-        self.new_game_input_box.center = (self.screen_width // 2, self.screen_height // 2)
+        self.new_game_input_box.center = (
+            self.screen_width // 2,
+            self.screen_height // 2,
+        )
         self.new_game_input = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
             relative_rect=self.new_game_input_box, manager=self.manager
         )
@@ -252,11 +314,13 @@ class NewGameState(BaseState):
 
     def okay(self):
         input_text = self.new_game_input.get_text()
-        if input_text != '':
+        if input_text != "":
             print(f"Ze text you typed is: {input_text}\nRedirecting to game screen...")
             self.change_state(PlayingGameState)
         else:
-            print("No Text Selected, to be implemented (Or use placeholder text)\nRedirecting to main menu...")
+            print(
+                "No Text Selected, to be implemented (Or use placeholder text)\nRedirecting to main menu..."
+            )
             self.change_state(MenuState)
 
 
@@ -267,8 +331,13 @@ class PlayingGameState(BaseState):
         super().__init__()
 
         self.buttons = {
-            "pause_button": ([ImageButton(self.screen, "pause.png", (700, 0)),
-                              ImageButton(self.screen, "play.png", (700, 0))], NotImplemented)
+            "pause_button": (
+                [
+                    ImageButton(self.screen, "pause.png", (700, 0)),
+                    ImageButton(self.screen, "play.png", (700, 0)),
+                ],
+                NotImplemented,
+            )
         }
         self.pause_menu = PauseMenu()
         self.background = load_image("bg.png").convert()
