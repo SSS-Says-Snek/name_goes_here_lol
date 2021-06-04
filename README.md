@@ -38,7 +38,7 @@ NOTE: Right now, you have to have python 3.6 or above to run the game. There is 
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
-- [ ] Actually add the game
+- [X] Actually add the game
 - [ ] Implement actual game mechanics
 - [ ] Implement settings button in main menu
 - [ ] Make debug screen more asthetically pleasing
@@ -47,3 +47,4 @@ NOTE: Right now, you have to have python 3.6 or above to run the game. There is 
 - [ ] Add shopping system for engaging gameplay
 - [ ] Because of shopping system, scoring system should be in game currency
 - [ ] Add a high score system (preferably switchable between local and overall)
+- [ ] Make collision detection between player and food better
