@@ -1,4 +1,5 @@
 language: python
+script: pytest
 python:
   - "3.9"
 install:
