@@ -7,6 +7,7 @@ This file stores the actual game class, used to run the game in main.py
 
 Note that GameLoop should ONLY be run inside main.py, and no where else. I just wanna make main.py look cool
 """
+import math
 
 from src.Engine.States.state import *
 from src.Engine.States.debug_game import DebugGame
@@ -60,6 +61,7 @@ class GameLoop:
         mem = (self.process.memory_info().rss, psutil.virtual_memory().used)
         now = arrow.utcnow()
         fps_setting = load_setting("fps")
+
         while self.running:
             dt = self.clock.tick(fps_setting) / 1000
             self.screen.fill((245, 245, 245))
