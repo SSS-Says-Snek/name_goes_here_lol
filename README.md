@@ -1,4 +1,4 @@
-![Github Release Badge](https://img.shields.io/github/v/release/SSS-Says-Snek/name_goes_here_lol?include_prereleases)
+![Github Release Badge](https://img.shields.io/github/v/release/SSS-Says-Snek/name_goes_here_lol?include_prereleases&sort=date)
 ![Github Repo Size Badge](https://img.shields.io/github/repo-size/SSS-Says-Snek/name_goes_here_lol)
 ![Commits since last version](https://img.shields.io/github/commits-since/SSS-Says-Snek/name_goes_here_lol/latest?color=%28255%2C%200%2C%200%29&include_prereleases)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2d4a2c27e7094629b96ac732b81076c3)](https://www.codacy.com/gh/SSS-Says-Snek/name_goes_here_lol/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SSS-Says-Snek/name_goes_here_lol&amp;utm_campaign=Badge_Grade)
@@ -8,10 +8,12 @@ Title's kinda misleading, it's just Snake+ (upgraded version of snake, I had not
 Right now, Snake+ should just be an upgraded version of snake, with progress, **ENEMIES**, and fun. Not good at working with classes, so if you look at my code it's gonna look like trash... Not that my code without classes is good, kek. This is also my first time making a semi-original idea in pygame, so some ideas will suck.
 
 Only menu's functioning rn lol
+And a semi-playable snake game :kekw:
 
 ## Features
 Well, we got this menu...
 ![Snake+ Menu Screen](Screenshots/menu.png)
+And now we have a *semi-playable* game (I said semi playable because the collision sucks so much)
 
 ## How to install
 1. Download the repository and extract it to a folder
@@ -36,7 +38,7 @@ NOTE: Right now, you have to have python 3.6 or above to run the game. There is 
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
-- [ ] Actually add the game
+- [X] Actually add the game
 - [ ] Implement actual game mechanics
 - [ ] Implement settings button in main menu
 - [ ] Make debug screen more asthetically pleasing
@@ -45,3 +47,4 @@ NOTE: Right now, you have to have python 3.6 or above to run the game. There is 
 - [ ] Add shopping system for engaging gameplay
 - [ ] Because of shopping system, scoring system should be in game currency
 - [ ] Add a high score system (preferably switchable between local and overall)
+- [ ] Make collision detection between player and food better
