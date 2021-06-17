@@ -40,17 +40,13 @@ class GameLoop:
         self.font = font(60)
         self.running = True
 
-        self.state = MenuState()
-        # self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (100, 50)),
-        #                                                  text='wut',
-        #                                                  manager=self.manager)
-        # self.test = pygame_gui.elements.ui_drop_down_menu.UIDropDownMenu(["Test1", "Test2", "TestInfinite"],
-        #                                                                  "Choose pls",
-        #                                                                  relative_rect=pygame.Rect((200, 500), (150, 30)),
-        #                                                                  manager=self.manager)
+        self.state = MenuState(self)
         self.debug_game = DebugGame()
         self.process = psutil.Process(os.getpid())
         self.start_time = arrow.get(time.time())
+
+        self.fps_setting = load_setting("fps")
+
         pygame.display.set_caption(TITLE)
 
     def run(self):
@@ -60,10 +56,9 @@ class GameLoop:
         cpu = self.process.cpu_percent()
         mem = (self.process.memory_info().rss, psutil.virtual_memory().used)
         now = arrow.utcnow()
-        fps_setting = load_setting("fps")
 
         while self.running:
-            dt = self.clock.tick(fps_setting) / 1000
+            dt = self.clock.tick(self.fps_setting) / 1000
             self.screen.fill((245, 245, 245))
             self.handle_events()
 
@@ -91,7 +86,7 @@ class GameLoop:
             # Checks if the next_state is different than the current state. If it is, change states
             if self.state.__class__ != self.state.next_state:
                 print(f"Changed from {self.state.__class__} to {self.state.next_state}")
-                self.state = self.state.next_state()
+                self.state = self.state.next_state(self)
             loop += 1
         exit_game()
 

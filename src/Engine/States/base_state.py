@@ -11,7 +11,7 @@ class BaseState(object):
     Inherited classes MUST override `draw` and `handle_events`, or else it would raise a GameException
     """
 
-    def __init__(self, screen=SCREEN):
+    def __init__(self, game_class, screen=SCREEN):
         """
         Note: self.buttons is a dictionary of buttons MADE IN BUTTONS.PY.
         To display other things (E.g pygame_gui's elements), manually draw them instead of putting them in the
@@ -22,6 +22,9 @@ class BaseState(object):
         self.next_state = (
             self.__class__
         )  # sets the default state, next_state would change when changing states
+        self.game_class = (
+            game_class
+        )  # Some States may need info on the game class
 
     def draw(self):
         """

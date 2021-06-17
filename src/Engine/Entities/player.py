@@ -53,19 +53,12 @@ class Player:
         if len(self.player) > self.player_length:
             del self.player[0]
 
-        # if (
-        #     self.food_rect[0] < self.x1 < self.food_rect[0] + self.food_rect[2]
-        #     and self.food_rect[1] < self.y1 < self.food_rect[1] + self.food_rect[3]
-        # ):
-        # if self.food_rect.collidepoint((self.x1, self.y1)):
         if self.food_rect.colliderect(player_rect):
             self.generate_food()
             self.player_length += 1
 
         self.x1 += self.change[0]
         self.y1 += self.change[1]
-
-        print(f"Head position: ({self.x1}, {self.y1})\nFood position: ({self.food_rect.x}-{self.food_rect.x+20}, {self.food_rect.y}-{self.food_rect.y+20})\n\n")
 
     def draw_player(self, size, player_list):
         for pos in player_list:

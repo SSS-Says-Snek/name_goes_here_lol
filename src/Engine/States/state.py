@@ -14,8 +14,8 @@ from pygame.locals import *
 class MenuState(BaseState):
     """State that handles menu things"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game_class):
+        super().__init__(game_class)
 
         self.selection = 0
         self.title = TITLE
@@ -145,8 +145,8 @@ class MenuState(BaseState):
 class StatState(BaseState):
     """State that represents the statistics screen inside the main menu"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game_class):
+        super().__init__(game_class)
 
         self.buttons = {
             "test_button": (
@@ -181,8 +181,8 @@ class StatState(BaseState):
 class SettingState(BaseState):
     """State that represents the setting screen inside the main menu"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game_class):
+        super().__init__(game_class)
 
         self.buttons = {
             (
@@ -237,6 +237,8 @@ class SettingState(BaseState):
         """
         fps = self.fps_slider.get_slide_value()
 
+        self.game_class.fps_setting = fps
+
         modify_setting("fps", fps)
         print(fps)
 
@@ -244,9 +246,9 @@ class SettingState(BaseState):
 class NewGameState(BaseState):
     """State that handles the "new game" file making"""
 
-    def __init__(self):
+    def __init__(self, game_class):
         # important things
-        super().__init__()
+        super().__init__(game_class)
         # self.next_state = NewGameState
         self.manager = pygame_gui.UIManager(
             (WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json"
@@ -327,8 +329,8 @@ class NewGameState(BaseState):
 class PlayingGameState(BaseState):
     """IMPORTANT: This state actually allows you to play the game, controlling your player (a snake)"""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game_class):
+        super().__init__(game_class)
 
         self.buttons = {
             "pause_button": (
