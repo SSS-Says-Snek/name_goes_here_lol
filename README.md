@@ -14,6 +14,7 @@ And a semi-playable snake game :kekw:
 Well, we got this menu...
 ![Snake+ Menu Screen](Screenshots/menu.png)
 And now we have a *semi-playable* game (I said semi playable because the collision sucks so much)
+![Snake+ Gameplay Screen](Screenshots/gameplay.png)
 
 ## How to install
 1. Download the repository and extract it to a folder
