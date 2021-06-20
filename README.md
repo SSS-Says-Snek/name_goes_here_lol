@@ -48,4 +48,4 @@ NOTE: Right now, you have to have python 3.6 or above to run the game. There is 
 - [ ] Add shopping system for engaging gameplay
 - [ ] Because of shopping system, scoring system should be in game currency
 - [ ] Add a high score system (preferably switchable between local and overall)
-- [ ] Make collision detection between player and food better
+- [X] Make collision detection between player and food better
