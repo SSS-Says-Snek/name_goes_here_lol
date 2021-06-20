@@ -1,6 +1,9 @@
+from src.Engine.States.base_state import BaseState
 from src.common import *
 from src.utils import *
-from src.Engine.button import *
+from src.Engine.button import MenuButton
+
+# from .state import MenuState
 
 import pygame
 from pygame.locals import *
@@ -8,11 +11,14 @@ from pygame.locals import *
 pygame.init()
 
 
-class PauseMenu:
+class PauseMenu(BaseState):
     def __init__(
         self,
+        game_class,
         screen=SCREEN,
     ):
+        super().__init__(game_class)
+
         self.screen = screen
         self.draw_pause = False
 
@@ -28,7 +34,18 @@ class PauseMenu:
                     40,
                 ),
                 lambda: self.toggle_menu(),
-            )
+            ),
+            "quit_button": (
+                MenuButton(
+                    self.screen,
+                    (300, 400, 200, 100),
+                    (128, 128, 128),
+                    "Quit Game",
+                    (0, 0, 0),
+                    40,
+                ),
+                lambda: None,  # self.change_state(MenuState)
+            ),
         }
         self.alpha = 1
         self.max_alpha = 180

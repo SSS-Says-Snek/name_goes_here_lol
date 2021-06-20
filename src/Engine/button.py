@@ -193,7 +193,7 @@ class HiddenButton:
     ):
         self.access = access
         self.name = name
-        self.image = pygame.image.load(rf"images\{image_filename}")
+        self.image = pygame.image.load(f"images/{image_filename}")
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
         self.rect.x = location[0]

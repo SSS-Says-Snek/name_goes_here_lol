@@ -1,7 +1,8 @@
 import pygame_gui
 from src.Engine.Entities.player import Player
 from src.Engine.States.base_state import BaseState
-from src.Engine.States.pause import PauseMenu
+
+# from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
 from src.Engine.other import Slider
 from src.common import __version__, WIDTH, HEIGHT
@@ -341,7 +342,7 @@ class PlayingGameState(BaseState):
                 NotImplemented,
             )
         }
-        self.pause_menu = PauseMenu()
+        self.pause_menu = PauseMenu(game_class)
         self.background = load_image("bg.png").convert()
         self.player = Player()
 
@@ -368,5 +369,78 @@ class PlayingGameState(BaseState):
                 else:
                     if button[0][0].get_rect().collidepoint((mousex, mousey)):
                         self.pause_menu.toggle_menu()
+
         self.pause_menu.handle_events(event)
-        self.player.handle_events(event)
+
+        if not self.pause_menu.draw_pause:
+            self.player.handle_events(event)
+
+
+class PauseMenu(BaseState):
+    def __init__(
+        self,
+        game_class,
+        screen=SCREEN,
+    ):
+        super().__init__(game_class)
+
+        self.screen = screen
+        self.draw_pause = False
+
+        self.screen_surf = pygame.Surface(self.screen.get_size())
+        self.buttons = {
+            "resume_button": (
+                MenuButton(
+                    self.screen,
+                    (300, 200, 200, 100),
+                    (128, 128, 128),
+                    "Resume",
+                    (0, 0, 0),
+                    40,
+                ),
+                lambda: self.toggle_menu(),
+            ),
+            "quit_button": (
+                MenuButton(
+                    self.screen,
+                    (300, 400, 200, 100),
+                    (128, 128, 128),
+                    "Quit Game",
+                    (0, 0, 0),
+                    40,
+                ),
+                lambda: self.change_state(MenuState),
+            ),
+        }
+        self.alpha = 1
+        self.max_alpha = 180
+
+    def draw(self):
+        if self.draw_pause:
+            if self.alpha < self.max_alpha:
+                self.fade(self.alpha)
+            pause_txt = font(60).render("Paused", True, (0, 0, 0))
+            self.screen.blit(pause_txt, (300, 100))
+            self.screen.blit(self.screen_surf, (0, 0))
+
+            for button in self.buttons.values():
+                button[0].draw()
+
+    def fade(self, alpha):
+        self.screen_surf.set_alpha(alpha)
+        self.alpha += 40
+
+    def handle_events(self, event):
+        if self.draw_pause:
+            mousex, mousey = pygame.mouse.get_pos()
+            if event.type == MOUSEBUTTONDOWN:
+                for button in self.buttons.values():
+                    if button[0].get_rect().collidepoint((mousex, mousey)):
+                        button[1]()
+
+    def toggle_menu(self):
+        self.draw_pause = not self.draw_pause
+        self.alpha = 0
+
+    def change_state(self, other_state):
+        self.game_class.state = other_state(self.game_class)

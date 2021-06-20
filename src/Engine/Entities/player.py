@@ -29,7 +29,9 @@ class Player:
         pygame.draw.rect(self.screen, (255, 0, 255), self.food_rect)
 
     def generate_food(self):
-        self.food_rect = pygame.Rect(random.randint(0, WIDTH), random.randint(0, HEIGHT), 20, 20)
+        self.food_rect = pygame.Rect(
+            random.randint(0, WIDTH), random.randint(0, HEIGHT), 20, 20
+        )
         # self.food_rect = [random.randint(0, WIDTH), random.randint(0, HEIGHT), 20, 20]
 
     def handle_events(self, event):

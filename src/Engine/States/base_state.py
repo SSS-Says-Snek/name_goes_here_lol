@@ -22,9 +22,7 @@ class BaseState(object):
         self.next_state = (
             self.__class__
         )  # sets the default state, next_state would change when changing states
-        self.game_class = (
-            game_class
-        )  # Some States may need info on the game class
+        self.game_class = game_class  # Some States may need info on the game class
 
     def draw(self):
         """
@@ -61,8 +59,10 @@ class BaseState(object):
         """
         No need to override this, this is literally it
         change_state() is used when a state wants to change into another state. It changes self.next_state into the desired state
+        Sometimes, there would be a class inheriting from BaseState, but is actually not a state (E.g pause menu)
+        In this case, override change_state with a new function
         ==========================================  USAGE:  ==========================================
-        >>> your_state = BaseState  # IDK I'm just trying to avoid pycharm errors
+        >>> your_state = BaseState()  # IDK I'm just trying to avoid pycharm errors
         >>> your_state.change_state("Other State")
         """
         self.next_state = other_state
