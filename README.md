@@ -3,6 +3,9 @@
 ![Commits since last version](https://img.shields.io/github/commits-since/SSS-Says-Snek/name_goes_here_lol/latest?color=%28255%2C%200%2C%200%29&include_prereleases)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2d4a2c27e7094629b96ac732b81076c3)](https://www.codacy.com/gh/SSS-Says-Snek/name_goes_here_lol/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SSS-Says-Snek/name_goes_here_lol&amp;utm_campaign=Badge_Grade)
 
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/SSS-Says-Snek/name_goes_here_lol.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SSS-Says-Snek/name_goes_here_lol/context:python)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/SSS-Says-Snek/name_goes_here_lol.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SSS-Says-Snek/name_goes_here_lol/alerts/)
+
 Title's kinda misleading, it's just Snake+ (upgraded version of snake, I had nothing to do, ok? I just wanted to improve my pygame skillz, as they were nonexistant)
 
 Right now, Snake+ should just be an upgraded version of snake, with progress, **ENEMIES**, and fun. Not good at working with classes, so if you look at my code it's gonna look like trash... Not that my code without classes is good, kek. This is also my first time making a semi-original idea in pygame, so some ideas will suck.
