@@ -9,7 +9,7 @@ class DebugGame:
         self.draw_debug = False
 
     def draw(self, information: dict):
-        debug_surf = pygame.Surface((400, 230))
+        debug_surf = pygame.Surface((400, 230))  # lgtm [py/call/wrong-arguments]
         debug_surf.fill((128, 128, 128))
 
         debug_title_txt = font(50).render("Debug Screen", True, (0, 0, 0))

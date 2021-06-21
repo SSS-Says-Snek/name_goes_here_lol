@@ -22,7 +22,7 @@ class PauseMenu(BaseState):
         self.screen = screen
         self.draw_pause = False
 
-        self.screen_surf = pygame.Surface(self.screen.get_size())
+        self.screen_surf = pygame.Surface(self.screen.get_size())  # lgtm [py/call/wrong-arguments]
         self.buttons = {
             "resume_button": (
                 MenuButton(

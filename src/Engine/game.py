@@ -7,14 +7,12 @@ This file stores the actual game class, used to run the game in main.py
 
 Note that GameLoop should ONLY be run inside main.py, and no where else. I just wanna make main.py look cool
 """
-import math
 
 from src.Engine.States.state import *
 from src.Engine.States.debug_game import DebugGame
 from src.utils import *
 
 import time
-import sys
 import os
 import psutil
 import arrow
