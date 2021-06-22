@@ -1,4 +1,5 @@
 import random
+import time
 
 from src.common import *
 from src.utils import *
@@ -26,13 +27,13 @@ class Player:
 
     def draw(self):
         self.draw_player([20, 20], self.player)
+        pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
         pygame.draw.rect(self.screen, (255, 0, 255), self.food_rect)
 
     def generate_food(self):
         self.food_rect = pygame.Rect(
             random.randint(0, WIDTH), random.randint(0, HEIGHT), 20, 20
         )
-        # self.food_rect = [random.randint(0, WIDTH), random.randint(0, HEIGHT), 20, 20]
 
     def handle_events(self, event):
         if event.type == KEYDOWN:
@@ -57,11 +58,14 @@ class Player:
 
         if self.food_rect.colliderect(player_rect):
             self.generate_food()
-            self.player_length += 1
+            self.player_length += 10
 
         self.x1 += self.change[0]
         self.y1 += self.change[1]
 
     def draw_player(self, size, player_list):
         for pos in player_list:
-            pygame.draw.rect(self.screen, (0, 0, 0), pos + size)
+            if not ((abs(pos[0] - self.x1) == 5 and pos[1] == self.y1) or (pos[0] == self.x1 and abs(pos[1] - self.y1) == 5)):
+                pygame.draw.rect(self.screen, (0, 0, 0), pos + size)
+            else:
+                pygame.draw.rect(self.screen, (128, 128, 128), pos + size)

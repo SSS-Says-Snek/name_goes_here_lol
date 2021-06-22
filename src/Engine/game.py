@@ -58,9 +58,9 @@ class GameLoop:
         while self.running:
             dt = self.clock.tick(self.fps_setting) / 1000
             self.screen.fill((245, 245, 245))
-            self.handle_events()
 
             self.state.draw()
+            self.handle_events()
             if loop % 30 == 1:
                 fps = self.clock.get_fps()
                 cpu = self.process.cpu_percent()

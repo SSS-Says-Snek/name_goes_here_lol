@@ -1,12 +1,10 @@
 import pygame_gui
 from src.Engine.Entities.player import Player
 from src.Engine.States.base_state import BaseState
-
-# from src.Engine.States.pause import PauseMenu
 from src.Engine.button import *
 from src.Engine.other import Slider
 from src.common import __version__, WIDTH, HEIGHT
-from src.utils import *
+# from src.utils import *
 from src.draw_utils import *
 
 from pygame.locals import *
@@ -336,8 +334,8 @@ class PlayingGameState(BaseState):
         self.buttons = {
             "pause_button": (
                 [
-                    ImageButton(self.screen, "pause.png", (700, 0)),
-                    ImageButton(self.screen, "play.png", (700, 0)),
+                    ImageButton(self.screen, "pause.png", (750, 0), resize_to=(50, 50)),
+                    ImageButton(self.screen, "play.png", (750, 0), resize_to=(50, 50)),
                 ],
                 NotImplemented,
             )
