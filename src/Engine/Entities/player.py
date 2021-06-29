@@ -1,5 +1,6 @@
 import random
 
+from src.Engine.Entities.base_entity import BaseEntity
 from src.common import *
 from src.utils import *
 
@@ -9,9 +10,9 @@ from pygame.locals import *
 pygame.init()
 
 
-class Player:
+class Player(BaseEntity):
     def __init__(self, screen=SCREEN):
-        self.screen = screen
+        super().__init__(screen)
 
         self.key = "right"
 
@@ -68,3 +69,7 @@ class Player:
                 pygame.draw.rect(self.screen, (0, 0, 0), pos + size)
             else:
                 pygame.draw.rect(self.screen, (128, 128, 128), pos + size)
+
+
+class E(BaseEntity):
+    pass

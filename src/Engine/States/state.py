@@ -329,6 +329,7 @@ class PlayingGameState(BaseState):
     """IMPORTANT: This state actually allows you to play the game, controlling your player (a snake)"""
 
     def __init__(self, game_class):
+        from src.Engine.Entities.player import E
         super().__init__(game_class)
 
         self.buttons = {
@@ -343,11 +344,22 @@ class PlayingGameState(BaseState):
         self.pause_menu = PauseMenu(game_class)
         self.background = load_image("bg.png").convert()
         self.player = Player()
+        self.test = E()
+
+        self.map = [
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1]
+        ]
 
     def draw(self):
         play_game_txt = font(40).render("Lorem ipsum", True, (0, 0, 0))
         self.screen.blit(play_game_txt, (300, 0))
-        self.screen.blit(self.background, (0, 0))
+        self.draw_map()
         self.pause_menu.draw()
         self.player.draw()
 
@@ -356,6 +368,12 @@ class PlayingGameState(BaseState):
                 button[0][1].draw()
             else:
                 button[0][0].draw()
+
+    def draw_map(self):
+        for i, row in enumerate(self.map):
+            for j, column in enumerate(row):
+                if column == 1:
+                    self.screen.blit(self.background, (i*800, j*800))
 
     def handle_events(self, event):
         mousex, mousey = pygame.mouse.get_pos()

@@ -6,8 +6,10 @@ from src.Engine.other import GameException
 class BaseState(object):
     """
     The base state for other states to inherit from. This class contains:
-    - self.screen, used to manage the screen
-    - self.font, used to display and render text
+        - self.screen, used to manage the screen
+        - self.font, used to display and render text
+        - self.next_state, used to determine the next state of the state
+        - self.game_class, used to get information from game.py's GameLoop
     Inherited classes MUST override `draw` and `handle_events`, or else it would raise a GameException
     """
 
