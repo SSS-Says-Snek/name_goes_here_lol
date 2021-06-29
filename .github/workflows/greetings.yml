@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Thanks for opening an issue! Our contributors (which is just me right now) shall review the issue, and decide what to do with it.'
+        pr-message: 'Thanks for opening a pull request! Our contributors (which is just me right now) shall review the pull request, and decide what to do with it. If it is a substantial PR, SSS-Says-Snek will decide on whether to merge it or not.'
