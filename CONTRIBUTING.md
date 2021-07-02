@@ -27,5 +27,7 @@ There are a few things to know before you start contributing to the game
   Be careful with the function names!
 4. Try to avoid files that are larger than 3,000 lines of code, as the code starts to get less readable. ***HOWEVER***, the main 
   exception to this rule is `state.py`, as it would cause a circular import if the file is split
-
-That's it for now lol
+5. As a continuation to rule number 1, ***please, please, PLEASE*** DO __NOT__ write messy code. It would:
+   A: Cause confusion about the code
+   B: Cause future contributors to not be able to contribute to that piece of code
+   
