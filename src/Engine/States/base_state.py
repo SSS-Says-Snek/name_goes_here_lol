@@ -37,7 +37,7 @@ class BaseState(object):
         <Draws onto screen based on overrided function>
         """
         raise GameException(
-            "State class must override this function.\n"
+            f"State class {self.__class__} must override this function.\n"
             "To see more information, check the docstring in base_state.BaseState.draw."
         )
 
@@ -53,7 +53,7 @@ class BaseState(object):
         >>> state.handle_events(event)
         """
         raise GameException(
-            "State class must override this function.\n"
+            f"State class {self.__class__} must override this function.\n"
             "To see more information, check the docstring in base_state.BaseState.handle_events."
         )
 

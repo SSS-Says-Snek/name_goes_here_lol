@@ -1,8 +1,9 @@
 import pygame_gui
 from src.Engine.Entities.player import Player
+from src.Engine.Entities.bullet_enemy import BulletEnemy
 from src.Engine.States.base_state import BaseState
 from src.Engine.button import *
-from src.Engine.other import Slider
+from src.Engine.other import Slider, game_data
 from src.common import __version__, WIDTH, HEIGHT
 # from src.utils import *
 from src.draw_utils import *
@@ -344,7 +345,7 @@ class PlayingGameState(BaseState):
         self.pause_menu = PauseMenu(game_class)
         self.background = load_image("bg.png").convert()
         self.player = Player()
-        self.test = E()
+        self.enemy = BulletEnemy()
 
         self.map = [
             [1, 1, 1, 1, 1, 1, 1],
@@ -362,6 +363,7 @@ class PlayingGameState(BaseState):
         self.draw_map()
         self.pause_menu.draw()
         self.player.draw()
+        self.enemy.draw()
 
         for button in self.buttons.values():
             if self.pause_menu.draw_pause:
@@ -373,7 +375,7 @@ class PlayingGameState(BaseState):
         for i, row in enumerate(self.map):
             for j, column in enumerate(row):
                 if column == 1:
-                    self.screen.blit(self.background, (i*800, j*800))
+                    self.screen.blit(self.background, (i*800-game_data.camera_offset[0], j*600-game_data.camera_offset[1]))
 
     def handle_events(self, event):
         mousex, mousey = pygame.mouse.get_pos()
@@ -390,6 +392,7 @@ class PlayingGameState(BaseState):
 
         if not self.pause_menu.draw_pause:
             self.player.handle_events(event)
+            self.enemy.handle_events(event, (self.player.x1, self.player.y1))
 
 
 class PauseMenu(BaseState):
