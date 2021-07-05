@@ -1,7 +1,7 @@
 import random
 
 from src.Engine.Entities.base_entity import BaseEntity
-from src.Engine.other import game_data
+# from src.Engine.other import game_data
 from src.common import *
 from src.utils import *
 

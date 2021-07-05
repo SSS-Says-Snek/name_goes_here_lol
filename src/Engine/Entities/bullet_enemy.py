@@ -60,7 +60,6 @@ class BulletEnemy(BaseEnemy):
             j = 0
             for i, part in enumerate(reversed(list(self.player_obj.player))):
                 if pygame.Rect(bullet.x, bullet.y, 20, 20).colliderect(part):
-                    actual_part = [part[0] + self.player_obj.change[0], part[1] + self.player_obj.change[1], 20, 20]
                     try:
                         print(i)
                         self.player_obj.player = self.player_obj.player[:i]
