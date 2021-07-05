@@ -345,7 +345,7 @@ class PlayingGameState(BaseState):
         self.pause_menu = PauseMenu(game_class)
         self.background = load_image("bg.png").convert()
         self.player = Player()
-        self.enemy = BulletEnemy()
+        self.enemy = BulletEnemy(self.player)
 
         self.map = [
             [1, 1, 1, 1, 1, 1, 1],
@@ -392,7 +392,7 @@ class PlayingGameState(BaseState):
 
         if not self.pause_menu.draw_pause:
             self.player.handle_events(event)
-            self.enemy.handle_events(event, (self.player.x1, self.player.y1))
+            self.enemy.handle_events(event)
 
 
 class PauseMenu(BaseState):

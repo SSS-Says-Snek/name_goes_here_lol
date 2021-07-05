@@ -17,7 +17,6 @@ class Player(BaseEntity):
 
         self.key = "right"
 
-        self.thickness = 20
         self.player = []
         self.player_length = 1
         self.x1 = WIDTH // 2
@@ -26,7 +25,7 @@ class Player(BaseEntity):
         self.food_rect = self.generate_food()
 
     def draw(self):
-        self.draw_player([20, 20], self.player)
+        self.draw_player(self.player)
         pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
         pygame.draw.rect(self.screen, (255, 0, 0), self.food_rect)
 
@@ -45,9 +44,8 @@ class Player(BaseEntity):
                 self.key = "down"
                 self.change = (0, 5)
 
-        player_head = [self.x1, self.y1]
-        player_rect = player_head + [20, 20]
-        self.player.append(player_head)
+        player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
+        self.player.append(player_rect)
 
         if len(self.player) > self.player_length:
             del self.player[0]
@@ -64,15 +62,15 @@ class Player(BaseEntity):
         # game_data.camera_offset[0] += (self.change[0] - game_data.camera_offset[0] + self.x1) // 1
         # game_data.camera_offset[1] += (self.change[1] - game_data.camera_offset[1] + self.y1) // 1
 
-    def draw_player(self, size, player_list):
+    def draw_player(self, player_list):
         for pos in player_list:
             if not ((
                     (abs(pos[0] - self.x1) == 5 and pos[1] == self.y1) or
                     (pos[0] == self.x1 and abs(pos[1] - self.y1) == 5)
             )):
-                pygame.draw.rect(self.screen, (0, 0, 0), pos + size)
+                pygame.draw.rect(self.screen, (0, 0, 0), pos)
             else:
-                pygame.draw.rect(self.screen, (128, 128, 128), pos + size)
+                pygame.draw.rect(self.screen, (128, 128, 128), pos)
 
     @staticmethod
     def generate_food():
