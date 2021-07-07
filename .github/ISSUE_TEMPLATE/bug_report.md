@@ -21,11 +21,14 @@ Example:
 **Expected behavior**
 While encountering the bug, what was supposed to happen?
 
+**How to solve this bug**
+If you have any idea to solve this bug, list it down below! Otherwise, you can delete this field
+
 **Screenshots**
 This is optional, but it is recommended you provide a screenshot of the bug
 
 **Hardware information**
-This is also optional, but it is ***VERY** highly recommended. Fill in information with as much detail as possible
+This is also optional, but it is ***VERY** highly recommended. Fill in information with as much detail as possible. ***NOTE:*** If you exclude this field, we assume that you are using any OS, and the latest game version
  - Operating System (E.g Windows)
  - Game Version (E.g v-5.0.0)
  - Operating System Version (E.g 1722)
