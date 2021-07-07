@@ -26,7 +26,7 @@ class Player(BaseEntity):
 
     def draw(self):
         self.draw_player(self.player)
-        pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
+        # pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
         pygame.draw.rect(self.screen, (255, 0, 0), self.food_rect)
 
     def handle_events(self, event):
@@ -75,7 +75,7 @@ class Player(BaseEntity):
     @staticmethod
     def generate_food():
         return pygame.Rect(
-            random.randint(0, WIDTH), random.randint(0, HEIGHT), 20, 20
+            random.randint(0, WIDTH-20), random.randint(0, HEIGHT-20), 20, 20
         )
 
 

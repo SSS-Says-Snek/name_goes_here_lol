@@ -31,12 +31,12 @@ class BulletEnemy(BaseEnemy):
 
         self.enemy_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
         self.bullets = []
-        self.firing_speed = 5000
+        self.firing_speed = 5.5
         self.bullet_speed = 11
 
         self.FIREBULLET = pygame.USEREVENT + 2
 
-        pygame.time.set_timer(self.FIREBULLET, self.firing_speed)
+        pygame.time.set_timer(self.FIREBULLET, int(self.firing_speed*1000))
 
     def draw(self):
         pygame.draw.rect(self.screen, (180, 180, 180), self.enemy_pos + (40, 40))
