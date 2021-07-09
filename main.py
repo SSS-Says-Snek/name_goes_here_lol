@@ -1,6 +1,6 @@
 """
 ===================================================================================
-|                     N A M E  G O E S  H E R E  L O L  (v-3.0.0)                 |
+|                     N A M E  G O E S  H E R E  L O L  (v-2.5.0)                 |
 |       a game made by SSS_Says_Snek#0194, aimed at upgrading snake               |
 |       it's actually gonna be a terrible game, but hey, why not?                 |
 |                                                                                 |

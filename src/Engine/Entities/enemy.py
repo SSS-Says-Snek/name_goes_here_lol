@@ -32,7 +32,7 @@ class BulletEnemy(BaseEnemy):
         self.enemy_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
         self.bullets = []
         self.firing_speed = 5.5
-        self.bullet_speed = 11
+        self.bullet_speed = 7
 
         self.FIREBULLET = pygame.USEREVENT + 2
 
@@ -62,7 +62,9 @@ class BulletEnemy(BaseEnemy):
                 if pygame.Rect(bullet.x, bullet.y, 20, 20).colliderect(part):
                     try:
                         print(i)
+                        print("HIT")
                         self.player_obj.player = self.player_obj.player[:i]
+                        print("PLAYER LST", self.player_obj.player)
                         self.player_obj.player_length = len(self.player_obj.player)
                         self.bullets.remove(bullet)
                         break

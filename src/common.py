@@ -4,7 +4,7 @@ Some common variables used many times throughout the game code
 >>> from src.common import *
 >>> # Use the variables here
 """
-__version__ = "-3.0.0"
+__version__ = "-2.5.0"
 
 import pygame
 from pathlib import Path

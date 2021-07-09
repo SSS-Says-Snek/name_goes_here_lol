@@ -15,14 +15,14 @@ class Player(BaseEntity):
     def __init__(self, screen=SCREEN):
         super().__init__(screen)
 
-        self.key = "right"
+        self.key = "right"  # Default: Right
 
-        self.player = []
-        self.player_length = 1
-        self.x1 = WIDTH // 2
-        self.y1 = HEIGHT // 2
-        self.change = (5, 0)
-        self.food_rect = self.generate_food()
+        self.player = []  # Default: Empty list
+        self.player_length = 1  # Default: 1 segment
+        self.x1 = WIDTH // 2  # Default: Starting X position
+        self.y1 = HEIGHT // 2  # Default: Starting Y position
+        self.change = (5, 0)  # Default: Right
+        self.food_rect = self.generate_food()  # Default: Random position of food
 
     def draw(self):
         self.draw_player(self.player)
@@ -44,15 +44,6 @@ class Player(BaseEntity):
                 self.key = "down"
                 self.change = (0, 5)
 
-        player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
-        self.player.append(player_rect)
-
-        if len(self.player) > self.player_length:
-            del self.player[0]
-
-        if self.food_rect.colliderect(player_rect):
-            self.food_rect = self.generate_food()
-            self.player_length += 10
         # else:
             # self.food_rect = pygame.Rect(self.food_rect.x - self.change[0], self.food_rect.y - self.change[1], 20, 20)
 
@@ -62,6 +53,20 @@ class Player(BaseEntity):
     def constant_run(self):
         self.x1 += self.change[0]
         self.y1 += self.change[1]
+
+        player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
+        self.player.append(player_rect)
+
+        if len(self.player) > self.player_length:
+            del self.player[0]
+
+        for segment in self.player[:-1]:
+            if segment == player_rect:
+                print("You collided with yourself. Bruh momento")
+
+        if self.food_rect.colliderect(player_rect):
+            self.food_rect = self.generate_food()
+            self.player_length += 10
 
     def draw_player(self, player_list):
         for pos in player_list:

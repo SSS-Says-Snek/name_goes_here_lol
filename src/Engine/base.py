@@ -71,6 +71,7 @@ class BaseState(object):
         >>> state = BaseState()  # Supposed to be something that overrided this function
         >>> state.constant_run()
         """
+        pass
 
     def change_state(self, other_state):
         """

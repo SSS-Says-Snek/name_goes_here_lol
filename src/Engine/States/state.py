@@ -396,7 +396,8 @@ class PlayingGameState(BaseState):
             # self.enemy.handle_events(event)
 
     def constant_run(self):
-        self.player.constant_run()
+        if not self.pause_menu.draw_pause:
+            self.player.constant_run()
 
 
 class PauseMenu(BaseState):
