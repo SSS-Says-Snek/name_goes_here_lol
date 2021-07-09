@@ -61,6 +61,17 @@ class BaseState(object):
             "To see more information, check the docstring in base_state.BaseState.handle_events."
         )
 
+    def constant_run(self):
+        """
+        This function is optional. Do not override if you are not planning to use it
+        This function handles anything that will be run *once per frame*, as currently, the only way of doing that
+        is via the draw() function, and let's face it, that's plain weird to write non-draw related code in draw()
+        This should not be called anywhere except in game.py, where constant_run() would call it via self.state.
+        ==========================================  USAGE:  ==========================================
+        >>> state = BaseState()  # Supposed to be something that overrided this function
+        >>> state.constant_run()
+        """
+
     def change_state(self, other_state):
         """
         No need to override this, this is literally it

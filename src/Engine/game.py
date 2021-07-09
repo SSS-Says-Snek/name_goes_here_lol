@@ -59,6 +59,7 @@ class GameLoop:
             dt = self.clock.tick(self.fps_setting) / 1000
             self.screen.fill((245, 245, 245))
 
+            self.state.constant_run()
             self.handle_events()
             self.state.draw()
             # self.handle_events()

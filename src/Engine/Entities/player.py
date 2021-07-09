@@ -26,7 +26,7 @@ class Player(BaseEntity):
 
     def draw(self):
         self.draw_player(self.player)
-        # pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
+        pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
         pygame.draw.rect(self.screen, (255, 0, 0), self.food_rect)
 
     def handle_events(self, event):
@@ -56,21 +56,22 @@ class Player(BaseEntity):
         # else:
             # self.food_rect = pygame.Rect(self.food_rect.x - self.change[0], self.food_rect.y - self.change[1], 20, 20)
 
-        self.x1 += self.change[0]
-        self.y1 += self.change[1]
-
         # game_data.camera_offset[0] += (self.change[0] - game_data.camera_offset[0] + self.x1) // 1
         # game_data.camera_offset[1] += (self.change[1] - game_data.camera_offset[1] + self.y1) // 1
 
+    def constant_run(self):
+        self.x1 += self.change[0]
+        self.y1 += self.change[1]
+
     def draw_player(self, player_list):
         for pos in player_list:
-            if not ((
-                    (abs(pos[0] - self.x1) == 5 and pos[1] == self.y1) or
-                    (pos[0] == self.x1 and abs(pos[1] - self.y1) == 5)
-            )):
-                pygame.draw.rect(self.screen, (0, 0, 0), pos)
-            else:
-                pygame.draw.rect(self.screen, (128, 128, 128), pos)
+            # if not ((
+            #         (abs(pos[0] - self.x1) == 5 and pos[1] == self.y1) or
+            #         (pos[0] == self.x1 and abs(pos[1] - self.y1) == 5)
+            # )):
+            #     pygame.draw.rect(self.screen, (0, 0, 0), pos)
+            # else:
+            pygame.draw.rect(self.screen, (0, 0, 0), pos)
 
     @staticmethod
     def generate_food():

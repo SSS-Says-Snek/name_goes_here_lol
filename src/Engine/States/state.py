@@ -1,7 +1,7 @@
 import pygame_gui
 from src.Engine.Entities.player import Player
 from src.Engine.Entities.enemy import BulletEnemy
-from src.Engine.States.base_state import BaseState
+from src.Engine.base import BaseState
 from src.Engine.button import *
 from src.Engine.other import Slider, game_data
 from src.common import __version__, WIDTH, HEIGHT
@@ -394,6 +394,9 @@ class PlayingGameState(BaseState):
             self.enemy.handle_events(event)
             self.player.handle_events(event)
             # self.enemy.handle_events(event)
+
+    def constant_run(self):
+        self.player.constant_run()
 
 
 class PauseMenu(BaseState):
