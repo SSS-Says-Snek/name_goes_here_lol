@@ -347,6 +347,7 @@ class PlayingGameState(BaseState):
         self.player = Player()
         self.enemy = BulletEnemy(self.player)
 
+        # Currently, each tile is a 800x600 pixel image. May be changed to a square (possibly 25x25) soon
         self.map = [
             [1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1],
@@ -372,6 +373,7 @@ class PlayingGameState(BaseState):
                 button[0][0].draw()
 
     def draw_map(self):
+        self.screen.fill((135, 206, 235))
         for i, row in enumerate(self.map):
             for j, column in enumerate(row):
                 if column == 1:

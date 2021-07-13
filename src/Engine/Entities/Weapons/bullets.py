@@ -9,9 +9,9 @@ pygame.init()
 
 class Bullet:
     def __init__(self, angle, speed, lifespan, x, y, screen=common.SCREEN):
-        self.angle = angle
-        self.speed = speed
-        self.lifespan = lifespan * game_data.game_fps
+        self.angle = angle  # Default angle for the bullet: MAY CHANGE FOR DIFFERENT BULLETS
+        self.speed = speed  # Default speed for the bullet: MAY CHANGE FOR DIFFERENT BULLETS
+        self.lifespan = lifespan * game_data.game_fps  # Default lifespan, in frames
 
         self.unadjusted_x = x
         self.unadjusted_y = y
