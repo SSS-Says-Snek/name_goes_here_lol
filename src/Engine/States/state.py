@@ -358,8 +358,6 @@ class PlayingGameState(BaseState):
         ]
 
     def draw(self):
-        play_game_txt = font(40).render("Lorem ipsum", True, (0, 0, 0))
-        self.screen.blit(play_game_txt, (300, 0))
         self.draw_map()
         self.pause_menu.draw()
         self.player.draw()
@@ -398,6 +396,7 @@ class PlayingGameState(BaseState):
     def constant_run(self):
         if not self.pause_menu.draw_pause:
             self.player.constant_run()
+            self.enemy.constant_run()
 
 
 class PauseMenu(BaseState):

@@ -62,7 +62,6 @@ class GameLoop:
             self.state.constant_run()
             self.handle_events()
             self.state.draw()
-            # self.handle_events()
             if loop % 30 == 1:
                 fps = self.clock.get_fps()
                 cpu = self.process.cpu_percent()
@@ -100,12 +99,3 @@ class GameLoop:
             if game_event.type == KEYDOWN:
                 if game_event.key == K_F3:
                     self.debug_game.toggle_debug()
-            # if game_event.type == USEREVENT:
-            #     Lol this not even used yet, cuz pygame_gui's not quite the theme I'm looking for
-            #     # Pygame GUI's event handler
-            #     # WARNING: Not used currently, so shh
-            #     if game_event.user_type == 'ui_button_pressed':
-            #         if game_event.ui_element == self.hello_button:
-            #             self.state.next_state = StatState
-            #     if game_event.user_type == 'ui_drop_down_menu_changed':
-            #         print("Selected option:", game_event.text)

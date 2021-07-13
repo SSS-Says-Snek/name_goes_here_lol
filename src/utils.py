@@ -7,7 +7,6 @@ import sys
 import pygame
 
 pygame.init()
-pygame.font.init()
 
 
 def extract_items_from_list(list_thing):
@@ -29,8 +28,8 @@ def rot_center(image, angle, x, y):
 def is_hovering(rect, mouse_pos):
     """Checks if a mouse is hovering over a rect"""
     if (
-        rect.left <= mouse_pos[0] <= rect.right
-        and rect.top <= mouse_pos[1] <= rect.bottom
+            rect.left <= mouse_pos[0] <= rect.right
+            and rect.top <= mouse_pos[1] <= rect.bottom
     ):
         return True
     return False
@@ -93,3 +92,21 @@ def modify_setting(key_to_modify, value):
 def distance(x1, x2, y1, y2):
     """Returns the distance between two coords"""
     return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+
+def textwrap(text, width, render_font):
+    """Wraps text based off of the font to render to, and the max width in pixels"""
+
+    wrapped_lines = []
+    i = 0
+    line_width = len(text)
+
+    while i < line_width:
+        while render_font.size(text[i:line_width])[0] > width:
+            line_width -= 1
+
+        wrapped_lines.append(text[i:line_width])
+        i = line_width
+        line_width = len(text)
+
+    return wrapped_lines

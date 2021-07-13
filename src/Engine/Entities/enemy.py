@@ -1,5 +1,5 @@
-from src.Engine.Entities.base_entity import BaseEntity
 from src.Engine.base import BaseEnemy
+from src.Engine.other import game_data
 from src.common import *
 
 import random
@@ -29,7 +29,8 @@ class BulletEnemy(BaseEnemy):
     def __init__(self, player_obj, screen=SCREEN):
         super().__init__(player_obj, screen)
 
-        self.enemy_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+        self.start_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+        self.enemy_pos = self.start_pos
         self.bullets = []
         self.firing_speed = 5.5
         self.bullet_speed = 7
@@ -39,7 +40,7 @@ class BulletEnemy(BaseEnemy):
         pygame.time.set_timer(self.FIREBULLET, int(self.firing_speed*1000))
 
     def draw(self):
-        pygame.draw.rect(self.screen, (180, 180, 180), self.enemy_pos + (40, 40))
+        pygame.draw.rect(self.screen, (180, 180, 180), (self.enemy_pos[0], self.enemy_pos[1], 40, 40))
 
         for bullet in self.bullets:
             bullet.draw_bullet()
@@ -47,11 +48,13 @@ class BulletEnemy(BaseEnemy):
     def handle_events(self, event):
         if event.type == self.FIREBULLET:
             bullet_rad = math.atan2(
-                self.enemy_pos[0] - self.player_obj.x1, self.enemy_pos[1] - self.player_obj.y1
+                self.enemy_pos[0] - self.player_obj.x1 + game_data.camera_offset[0], self.enemy_pos[1] - self.player_obj.y1 + game_data.camera_offset[1]
             ) + math.radians(90)
+            print(f"Enemy: {self.enemy_pos}, Player: {self.player_obj.x1, self.player_obj.y1}")
             print(math.degrees(bullet_rad))
 
             self.bullets.append(Bullet(bullet_rad, self.bullet_speed, *self.enemy_pos))
+        """
         for bullet in list(self.bullets):
             bullet.update()
             if (not 0 < bullet.x < WIDTH) or (not 0 < bullet.y < HEIGHT):
@@ -63,6 +66,31 @@ class BulletEnemy(BaseEnemy):
                     try:
                         print(i)
                         print("HIT")
+                        self.player_obj.player = self.player_obj.player[:i]
+                        print("PLAYER LST", self.player_obj.player)
+                        self.player_obj.player_length = len(self.player_obj.player)
+                        self.bullets.remove(bullet)
+                        break
+                    except ValueError:
+                        print("Bruh")
+                        continue
+                j += 1
+        """
+
+    def constant_run(self):
+        self.enemy_pos = (self.start_pos[0] - game_data.camera_offset[0], self.start_pos[1] - game_data.camera_offset[1])
+
+        for bullet in list(self.bullets):
+            bullet.update()
+            if (not 0 < bullet.x < WIDTH) or (not 0 < bullet.y < HEIGHT):
+                self.bullets.remove(bullet)
+
+            j = 0
+            for i, part in enumerate(reversed(list(self.player_obj.player))):
+                if pygame.Rect(bullet.x + game_data.camera_offset[0], bullet.y + game_data.camera_offset[1], 20, 20).colliderect(part):
+                    try:
+                        print(i)
+                        print(f"Hit, at {part.x, part.y} (Real: {bullet.x, bullet.y}")
                         self.player_obj.player = self.player_obj.player[:i]
                         print("PLAYER LST", self.player_obj.player)
                         self.player_obj.player_length = len(self.player_obj.player)
