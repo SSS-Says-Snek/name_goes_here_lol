@@ -1,15 +1,14 @@
 import pygame_gui
+import pygame
+
+from src import draw_utils
+from src import utils
+from src import common
 from src.Engine.Entities.player import Player
 from src.Engine.Entities.enemy import BulletEnemy
 from src.Engine.base import BaseState
-from src.Engine.button import *
 from src.Engine.objects import Slider, game_data
-from src.common import __version__, WIDTH, HEIGHT
-
-# from src.utils import *
-from src.draw_utils import *
-
-from pygame.locals import *
+from src.Engine.button import MenuButton, ImageButton
 
 
 class MenuState(BaseState):
@@ -19,7 +18,7 @@ class MenuState(BaseState):
         super().__init__(game_class)
 
         self.selection = 0
-        self.title = TITLE
+        self.title = common.TITLE
         self.title_idx = 0
         self.title_thing = 0
         self.TITLEUPDATE = pygame.USEREVENT + 1
@@ -77,7 +76,7 @@ class MenuState(BaseState):
                     text_color=(0, 0, 0),
                     font_size=40,
                 ),
-                lambda: exit_game(),
+                lambda: utils.exit_game(),
             ),
         }
 
@@ -85,10 +84,10 @@ class MenuState(BaseState):
 
     def draw(self):
         """MenuState doc for draw"""
-        version_txt = font(15, "PixelMillenium").render(
-            f"Version {__version__}", True, (0, 0, 0)
+        version_txt = utils.font(15, "PixelMillenium").render(
+            f"Version {common.__version__}", True, (0, 0, 0)
         )
-        version_txt_rect = version_txt.get_rect(bottomright=(WIDTH, HEIGHT))
+        version_txt_rect = version_txt.get_rect(bottomright=(common.WIDTH, common.HEIGHT))
         self.screen.blit(version_txt, version_txt_rect)
         self.update_title()
         for dict_key, button in self.buttons.items():
@@ -102,21 +101,21 @@ class MenuState(BaseState):
         """MenuState doc for handle_events"""
         mousex, mousey = pygame.mouse.get_pos()
 
-        if pygame_event.type == KEYDOWN:
-            if pygame_event.key == K_DOWN:
+        if pygame_event.type == pygame.KEYDOWN:
+            if pygame_event.key == pygame.K_DOWN:
                 print("Menu Selection Down")
                 self.selection += 1
                 self.selection %= len(self.buttons)
-            if pygame_event.key == K_UP:
+            if pygame_event.key == pygame.K_UP:
                 print("Menu Selection Up")
                 self.selection -= 1
                 self.selection %= len(self.buttons)
-            if pygame_event.key == K_RETURN:
+            if pygame_event.key == pygame.K_RETURN:
                 try:
                     self.buttons[list(self.buttons.keys())[self.selection]][1]()
                 except TypeError:
                     print("Not Implemented, shh")
-        if pygame_event.type == MOUSEBUTTONDOWN:
+        if pygame_event.type == pygame.MOUSEBUTTONDOWN:
             for button in self.buttons.values():
                 if button[0].get_rect().collidepoint((mousex, mousey)):
                     try:
@@ -132,7 +131,7 @@ class MenuState(BaseState):
                 self.selection = list(self.buttons.keys()).index(dict_key)
 
     def update_title(self):
-        blit_multicolor_text(
+        draw_utils.blit_multicolor_text(
             self.font,
             {
                 self.title[: self.title_thing]: (0, 128, 0),
@@ -172,7 +171,7 @@ class StatState(BaseState):
 
     def handle_events(self, pygame_event):
         """STATSTATE doc for handle_events"""
-        if pygame_event.type == MOUSEBUTTONDOWN:
+        if pygame_event.type == pygame.MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
             for name, button in self.buttons.items():
                 if button[0].get_rect().collidepoint((mousex, mousey)):
@@ -215,9 +214,9 @@ class SettingState(BaseState):
 
     def draw(self):
         txt = self.font.render("Game Settings", True, (0, 0, 0))
-        blit_on_center(txt, (400, 30))
+        draw_utils.blit_on_center(txt, (400, 30))
 
-        fps_txt = font(50).render("FPS:", True, (0, 0, 0))
+        fps_txt = utils.font(50).render("FPS:", True, (0, 0, 0))
         self.screen.blit(fps_txt, (40, 100))
 
         self.fps_slider.draw()
@@ -226,7 +225,7 @@ class SettingState(BaseState):
 
     def handle_events(self, pygame_event):
         self.fps_slider.handle_events(pygame_event)
-        if pygame_event.type == MOUSEBUTTONDOWN:
+        if pygame_event.type == pygame.MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
             for button in self.buttons:
                 if button[0].get_rect().collidepoint((mousex, mousey)):
@@ -241,7 +240,7 @@ class SettingState(BaseState):
         self.game_class.fps_setting = fps
         game_data.game_fps = fps
 
-        modify_setting("fps", fps)
+        utils.modify_setting("fps", fps)
         print(fps)
 
 
@@ -253,7 +252,7 @@ class NewGameState(BaseState):
         super().__init__(game_class)
         # self.next_state = NewGameState
         self.manager = pygame_gui.UIManager(
-            (WIDTH, HEIGHT), PATH / "src/Assets/Themes/test_theme.json"
+            (common.WIDTH, common.HEIGHT), common.PATH / "src/Assets/Themes/test_theme.json"
         )
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = self.screen.get_size()
@@ -294,7 +293,7 @@ class NewGameState(BaseState):
 
     def draw(self):
         dt = self.clock.tick(30) / 1000
-        new_game_txt = font(51).render("Enter File name for new game:", True, (0, 0, 0))
+        new_game_txt = utils.font(51).render("Enter File name for new game:", True, (0, 0, 0))
         new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
         self.screen.blit(new_game_txt, new_game_txt_rect)
         for dict_key, button in self.buttons.items():
@@ -332,8 +331,6 @@ class PlayingGameState(BaseState):
     """IMPORTANT: This state actually allows you to play the game, controlling your player (a snake)"""
 
     def __init__(self, game_class):
-        from src.Engine.Entities.player import E
-
         super().__init__(game_class)
 
         self.buttons = {
@@ -346,7 +343,7 @@ class PlayingGameState(BaseState):
             )
         }
         self.pause_menu = PauseMenu(game_class)
-        self.background = load_image("bg.png").convert()
+        self.background = utils.load_image("bg.png").convert()
         self.player = Player()
         self.enemy = BulletEnemy(self.player)
 
@@ -386,7 +383,7 @@ class PlayingGameState(BaseState):
 
     def handle_events(self, event):
         mousex, mousey = pygame.mouse.get_pos()
-        if event.type == MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             for button_name, button in self.buttons.items():
                 if self.pause_menu.draw_pause:
                     if button[0][1].get_rect().collidepoint((mousex, mousey)):
@@ -412,7 +409,7 @@ class PauseMenu(BaseState):
     def __init__(
         self,
         game_class,
-        screen=SCREEN,
+        screen=common.SCREEN,
     ):
         super().__init__(game_class)
 
@@ -453,7 +450,7 @@ class PauseMenu(BaseState):
         if self.draw_pause:
             if self.alpha < self.max_alpha:
                 self.fade(self.alpha)
-            pause_txt = font(60).render("Paused", True, (0, 0, 0))
+            pause_txt = utils.font(60).render("Paused", True, (0, 0, 0))
             self.screen.blit(pause_txt, (300, 100))
             self.screen.blit(self.screen_surf, (0, 0))
 
@@ -467,7 +464,7 @@ class PauseMenu(BaseState):
     def handle_events(self, event):
         if self.draw_pause:
             mousex, mousey = pygame.mouse.get_pos()
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in self.buttons.values():
                     if button[0].get_rect().collidepoint((mousex, mousey)):
                         button[1]()

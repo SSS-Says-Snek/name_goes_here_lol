@@ -1,6 +1,6 @@
+from src import common
 from src.Engine.base import BaseEnemy
 from src.Engine.objects import game_data
-from src.common import *
 
 import random
 import math
@@ -10,7 +10,7 @@ pygame.init()
 
 
 class Bullet:
-    def __init__(self, angle, speed, lifespan, x, y, screen=SCREEN):
+    def __init__(self, angle, speed, lifespan, x, y, screen=common.SCREEN):
         self.angle = angle
         self.speed = speed
         self.lifespan = lifespan * game_data.game_fps
@@ -29,10 +29,10 @@ class Bullet:
 
 
 class BulletEnemy(BaseEnemy):
-    def __init__(self, player_obj, screen=SCREEN):
+    def __init__(self, player_obj, screen=common.SCREEN):
         super().__init__(player_obj, screen)
 
-        self.start_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+        self.start_pos = (random.randint(0, common.WIDTH), random.randint(0, common.HEIGHT))
         self.enemy_pos = self.start_pos
         self.bullets = []
         self.firing_speed = 5.5

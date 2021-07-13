@@ -1,26 +1,24 @@
 import random
 
+from src import common
 from src.Engine.base import BaseEntity
 from src.Engine.objects import game_data
-from src.common import *
-from src.utils import *
 
 import pygame
-from pygame.locals import *
 
 pygame.init()
 
 
 class Player(BaseEntity):
-    def __init__(self, screen=SCREEN):
+    def __init__(self, screen=common.SCREEN):
         super().__init__(screen)
 
-        self.key = "right"  # Default: Right
+        self.key = None  # Default: No orientation
 
         self.player = []  # Default: Empty list
-        self.player_length = 1  # Default: 1 segment
-        self.x1 = WIDTH // 2  # Default: Starting X position
-        self.y1 = HEIGHT // 2  # Default: Starting Y position
+        self.player_length = 10  # Default: 10 segments
+        self.x1 = common.WIDTH // 2  # Default: Starting X position
+        self.y1 = common.HEIGHT // 2  # Default: Starting Y position
 
         self.move_right = False
         self.move_left = False
@@ -30,7 +28,7 @@ class Player(BaseEntity):
         self.camera_x1 = self.x1
         self.camera_y1 = self.y1
 
-        self.change = (0, 0)  # Default: Right
+        self.change = (0, 0)  # Default: Stationary
         self.food_rect = self.generate_food()  # Default: Random position of food
 
     def draw(self):
@@ -57,31 +55,31 @@ class Player(BaseEntity):
         )
 
     def handle_events(self, event):
-        if event.type == KEYDOWN:
-            if event.key == K_RIGHT and self.key != "left":
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT and self.key != "left":
                 self.key = "right"
                 self.change = (5, 0)
                 self.move_right = True
-            if event.key == K_LEFT and self.key != "right":
+            if event.key == pygame.K_LEFT and self.key != "right":
                 self.key = "left"
                 self.change = (-5, 0)
                 self.move_left = True
-            if event.key == K_UP and self.key != "down":
+            if event.key == pygame.K_UP and self.key != "down":
                 self.key = "up"
                 self.change = (0, -5)
                 self.move_up = True
-            if event.key == K_DOWN and self.key != "up":
+            if event.key == pygame.K_DOWN and self.key != "up":
                 self.key = "down"
                 self.change = (0, 5)
                 self.move_down = True
-        if event.type == KEYUP:
-            if event.key == K_RIGHT:
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
                 self.move_right = False
-            if event.key == K_LEFT:
+            if event.key == pygame.K_LEFT:
                 self.move_left = False
-            if event.key == K_UP:
+            if event.key == pygame.K_UP:
                 self.move_up = False
-            if event.key == K_DOWN:
+            if event.key == pygame.K_DOWN:
                 self.move_down = False
             self.change = (0, 0)
 
@@ -114,9 +112,9 @@ class Player(BaseEntity):
 
         for segment in self.player[:-1]:
             if segment == player_rect and not (
-                self.x1 == WIDTH - 40
+                self.x1 == common.WIDTH - 40
                 or self.x1 == 20
-                or self.y1 == HEIGHT - 40
+                or self.y1 == common.HEIGHT - 40
                 or self.y1 == 20
             ):
                 print("You collided with yourself. Bruh momento")
@@ -144,12 +142,11 @@ class Player(BaseEntity):
                     pos[3],
                 ],
             )
-            # pygame.draw.rect(self.screen, (0, 0, 0), pos)
 
     @staticmethod
     def generate_food():
         return pygame.Rect(
-            random.randint(0, WIDTH - 20), random.randint(0, HEIGHT - 20), 20, 20
+            random.randint(0, common.WIDTH - 20), random.randint(0, common.HEIGHT - 20), 20, 20
         )
 
 

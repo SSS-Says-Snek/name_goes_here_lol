@@ -1,5 +1,5 @@
-from src.common import *
-from src.utils import *
+from src import common
+from src import utils
 from src.Engine.objects import GameException
 
 import pygame
@@ -17,14 +17,14 @@ class BaseState(object):
     Inherited classes MUST override `draw` and `handle_events`, or else it would raise a GameException
     """
 
-    def __init__(self, game_class, screen=SCREEN):
+    def __init__(self, game_class, screen=common.SCREEN):
         """
         Note: self.buttons is a dictionary of buttons MADE IN BUTTONS.PY.
         To display other things (E.g pygame_gui's elements), manually draw them instead of putting them in the
         dictionary
         """
         self.screen = screen  # sets the screen to be the default screen
-        self.font = font(60)  # sets default font
+        self.font = utils.font(60)  # sets default font
         self.next_state = (
             self.__class__
         )  # sets the default state, next_state would change when changing states
@@ -89,9 +89,9 @@ class BaseState(object):
 class DummyState:
     """Exactly like BaseState, but doesn't raise an exception when not overrided"""
 
-    def __init__(self, screen=SCREEN):
+    def __init__(self, screen=common.SCREEN):
         self.screen = screen
-        self.font = font(60)
+        self.font = utils.font(60)
         self.next_state = self.__class__
 
     def draw(self):
@@ -115,7 +115,7 @@ class BaseEntity(object):
     raise a GameException
     """
 
-    def __init__(self, screen=SCREEN):
+    def __init__(self, screen=common.SCREEN):
         """
         Defines several parameters used in entities
 
@@ -162,7 +162,7 @@ class BaseEntity(object):
 
 
 class BaseEnemy(object):
-    def __init__(self, player_obj, screen=SCREEN):
+    def __init__(self, player_obj, screen=common.SCREEN):
         self.player_obj = player_obj
         self.screen = screen
 

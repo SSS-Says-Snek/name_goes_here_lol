@@ -1,9 +1,7 @@
+from src import common
+from src import utils
 from src.Engine.States.base_state import BaseState
-from src.common import *
-from src.utils import *
 from src.Engine.button import MenuButton
-
-# from .state import MenuState
 
 import pygame
 from pygame.locals import *
@@ -15,7 +13,7 @@ class PauseMenu(BaseState):
     def __init__(
         self,
         game_class,
-        screen=SCREEN,
+        screen=common.SCREEN,
     ):
         super().__init__(game_class)
 
@@ -56,7 +54,7 @@ class PauseMenu(BaseState):
         if self.draw_pause:
             if self.alpha < self.max_alpha:
                 self.fade(self.alpha)
-            pause_txt = font(60).render("Paused", True, (0, 0, 0))
+            pause_txt = utils.font(60).render("Paused", True, (0, 0, 0))
             self.screen.blit(pause_txt, (300, 100))
             self.screen.blit(self.screen_surf, (0, 0))
 

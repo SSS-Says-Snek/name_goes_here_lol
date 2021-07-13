@@ -1,4 +1,4 @@
-from src.common import *
+from src import common
 from src.Engine.objects import GameException
 
 import pygame
@@ -14,7 +14,7 @@ class BaseEntity(object):
     raise a GameException
     """
 
-    def __init__(self, screen=SCREEN):
+    def __init__(self, screen=common.SCREEN):
         """
         Defines several parameters used in entities
 

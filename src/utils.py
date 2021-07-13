@@ -1,6 +1,6 @@
 import json
 
-from src.common import *
+from src import common
 from functools import lru_cache
 
 import sys
@@ -57,18 +57,18 @@ def format_byte(size: int, decimal_places=3):
 @lru_cache()
 def load_image(image_name):
     """Loads an image from the asset folder"""
-    return pygame.image.load(IMG_PATH / image_name)
+    return pygame.image.load(common.IMG_PATH / image_name)
 
 
 @lru_cache(1000)
 def font(size, text_font="ThaleahFat"):
     """Loads a font with a given size and an optional parameter for the font name"""
-    return pygame.font.Font(FONT_PATH / f"{text_font}.ttf", size)
+    return pygame.font.Font(common.FONT_PATH / f"{text_font}.ttf", size)
 
 
 def load_setting(key_to_load):
     """Loads a setting in the default config.json"""
-    with open(DATA_PATH / "config.json") as read_setting_file:
+    with open(common.DATA_PATH / "config.json") as read_setting_file:
         all_settings_info = json.load(read_setting_file)
     try:
         return all_settings_info[key_to_load]
@@ -78,14 +78,14 @@ def load_setting(key_to_load):
 
 def modify_setting(key_to_modify, value):
     """Modify a given key in the defualt config.json"""
-    with open(DATA_PATH / "config.json") as read_setting_file:
+    with open(common.DATA_PATH / "config.json") as read_setting_file:
         all_settings_info = json.load(read_setting_file)
     try:
         all_settings_info[key_to_modify] = value
     except KeyError:
         pass
     else:
-        with open(DATA_PATH / "config.json", "w") as write_setting_file:
+        with open(common.DATA_PATH / "config.json", "w") as write_setting_file:
             json.dump(all_settings_info, write_setting_file, indent=4)
 
 

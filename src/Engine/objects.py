@@ -2,13 +2,9 @@
 Other random classes that I might use for other stuff
 """
 
-import random
-
-from src.Engine.button import MenuButton
-from src.utils import *
-
+from src import utils
+from src import common
 import pygame
-from pygame.locals import *
 
 
 class TextBox:
@@ -28,7 +24,7 @@ class TextBox:
         self.active = False
         self.fontsize = fontsize
 
-        self.font = font(self.fontsize)
+        self.font = utils.font(self.fontsize)
         self.txt_surface = self.font.render(self.text, True, self.color)
 
     def handle_event(self, event):
@@ -123,99 +119,6 @@ class DropDown:
         return -1
 
 
-class Menu:
-    """Scrapped version of Menu, but might need it someday..."""
-
-    def __init__(self, surface):
-        self.font = pygame.font.Font(PATH / "Assets/Fonts/ThaleahFat.ttf", 60)
-        self.screen = surface
-        self.title = TITLE
-        self.title_idx = 0
-        self.menustate = "main menu"
-        self.selection = 0  # 0th index
-        self.buttons = {
-            "start_button": MenuButton(
-                self.screen,
-                ((250, 100), (275, 75)),
-                (128, 128, 128),
-                text="Start New Game",
-                text_color=(0, 0, 0),
-                font_size=40,
-            ),
-            "load_button": MenuButton(
-                self.screen,
-                ((250, 200), (200, 75)),
-                (128, 128, 128),
-                text="Load Game",
-                text_color=(0, 0, 0),
-                font_size=40,
-            ),
-            # "home_button": MenuButton(
-            #     self.screen,
-            #     ((0, 0), (75, 75)),
-            #     (255, 0, 0),
-            #     text_color=(0, 0, 0),
-            #     font_size=40,
-            #     rounded=False
-            # ),
-            # "another_text_button": MenuButton(
-            #     self.screen,
-            #     ((400, 400), (75, 75)),
-            #     (0, 255, 0),
-            #     text="Text",
-            #     text_color=(0, 0, 0),
-            #     font_size=40,
-            #     rounded=False
-            # )
-        }
-        self.something_test = 0
-        self.angle_to_rotate = 0
-        self.amount_to_rotate_by = 2
-        self.rand_font = random.randint(50, 250)
-        self.rand_pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
-
-    def draw(self):
-        self.update_title()
-        self.generate_dollar_sign(self.rand_font, self.rand_pos, (0, 255, 0))
-
-        for key, button in self.buttons.items():
-            if self.menustate == "main menu":
-                button.draw()
-
-    def handle_events(self):
-        for events in pygame.events.get():
-            if events.type == KEYDOWN:
-                if events.key == K_DOWN:
-                    self.selection += 1
-                    self.selection %= len(self.buttons)
-
-    def update_title(self):
-        for i in self.title:
-            # random_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            if self.title_idx == self.something_test:
-                title_surf = self.font.render(i, True, (0, 255, 0))
-            else:
-                title_surf = self.font.render(i, True, (0, 128, 0))
-            self.screen.blit(
-                title_surf, (WIDTH // 2 - len(self.title) * 13 + self.title_idx * 30, 0)
-            )
-            self.title_idx += 1
-            self.title_idx %= len(self.title)
-
-        self.something_test += 1
-        self.something_test %= len(self.title)
-
-    def generate_dollar_sign(self, size, pos, color=(0, 255, 0)):
-        dollar_sign = font(size).render("$", True, color)
-        dollar_sign = rot_center(dollar_sign, self.angle_to_rotate, pos[0], pos[1])
-        self.screen.blit(dollar_sign[0], dollar_sign[1])
-        self.angle_to_rotate -= self.amount_to_rotate_by
-        if self.angle_to_rotate <= -30:
-            self.amount_to_rotate_by = -2
-        if self.angle_to_rotate >= 10:
-            self.amount_to_rotate_by = 2
-
-
 class PopUpMessage:
     def __init__(
         self,
@@ -223,7 +126,7 @@ class PopUpMessage:
         rect_color=(0, 0, 0),
         text=None,
         text_font=None,
-        screen=SCREEN,
+        screen=common.SCREEN,
     ):
         self.screen = screen
         self.coords = coords
@@ -273,7 +176,7 @@ class OkayPopUpMessage(PopUpMessage):
         rect_color=(0, 0, 0),
         text=None,
         text_font=None,
-        screen=SCREEN,
+        screen=common.SCREEN,
     ):
         super().__init__(coords, rect_color, text, text_font, screen)
 
@@ -288,7 +191,7 @@ class Slider:
         min_val,
         max_val,
         default_val=None,
-        screen=SCREEN,
+        screen=common.SCREEN,
         num_spaces=-1,
         slide_color=None,
         show_value=True,
@@ -317,7 +220,7 @@ class Slider:
             self.width,
         )
         self.rect = pygame.Rect(self.rect_coord)
-        self.font = font(self.width)
+        self.font = utils.font(self.width)
         self.is_holding_mouse = False
         self.slide_coord = (
             self.coord[0]
@@ -365,19 +268,26 @@ class Slider:
 
     def handle_events(self, event):
         mouse_pos = pygame.mouse.get_pos()
-        if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(mouse_pos):
+        if event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(mouse_pos):
             self.is_holding_mouse = True
-        if event.type == MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONUP:
             self.is_holding_mouse = False
 
     def get_slide_value(self):
         return self.current_val
 
 
+class TextPopUp:
+    def __init__(self):
+        """This class can be used to display text"""
+        pass
+
+
 class GameData:
     def __init__(self):
+        """Contains information about the game"""
         self.camera_offset = [0, 0]
-        self.game_fps = load_setting("fps")
+        self.game_fps = utils.load_setting("fps")
 
 
 class GameException(Exception):

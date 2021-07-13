@@ -1,9 +1,10 @@
-from src.common import *
-from src.utils import *
+import functools
+
+from src import common
+from src import utils
 
 import pygame
-from pygame.locals import *
-from typing import *
+from typing import Union
 
 pygame.init()
 pygame.font.init()
@@ -51,7 +52,7 @@ class Button:
                     else self.coords[1][0] // len(self.text)
                 )
             font_different_size = pygame.font.Font(
-                PATH / "Assets/Fonts/ThaLeahFat.ttf", self.font_size
+                common.PATH / "Assets/Fonts/ThaLeahFat.ttf", self.font_size
             )
             text_surf = font_different_size.render(self.text, True, self.text_color)
             self.screen.blit(
@@ -63,7 +64,7 @@ class Button:
             )
 
     def handle_events(self, event):
-        if event.type == MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             self.func_when_clicked()
 
     def get_rect(self):
@@ -75,7 +76,7 @@ class ImageButton:
 
     def __init__(self, surface, image_name, coord_to_blit, scale=None, resize_to=None):
         self.surface = surface
-        self.image = load_image(image_name)
+        self.image = utils.load_image(image_name)
         self.coord_to_blit = coord_to_blit
         self.scale = scale
         self.resize_to = resize_to
@@ -99,7 +100,7 @@ class ImageButton:
     def draw(self):
         self.surface.blit(self.image, self.coord_to_blit)
 
-    @lru_cache(1000)
+    @functools.lru_cache(1000)
     def get_rect(self):
         return self.image_rect
 
@@ -157,7 +158,7 @@ class MenuButton(Button):
                     else self.coords[1][0] // len(self.text)
                 )
             font_different_size = pygame.font.Font(
-                PATH / "src/Assets/Fonts/ThaleahFat.ttf", self.font_size
+                common.PATH / "src/Assets/Fonts/ThaleahFat.ttf", self.font_size
             )
             text_surf = font_different_size.render(self.text, True, self.text_color)
             self.screen.blit(
@@ -177,7 +178,7 @@ class RadioButton:
 
 class ToggleButton:
     def __init__(
-        self, default="off", off_color=(255, 0, 0), on_color=(0, 255, 0), screen=SCREEN
+        self, default="off", off_color=(255, 0, 0), on_color=(0, 255, 0), screen=common.SCREEN
     ):
         self.default = default
         self.off_color = off_color
