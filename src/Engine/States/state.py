@@ -5,7 +5,7 @@ from src import draw_utils
 from src import utils
 from src import common
 from src.Engine.Entities.player import Player
-from src.Engine.Entities.enemy import BulletEnemy
+from src.Engine.Entities.Mobs.enemy import BulletEnemy
 from src.Engine.base import BaseState
 from src.Engine.objects import Slider, game_data
 from src.Engine.button import MenuButton, ImageButton
