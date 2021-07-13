@@ -1,0 +1,16 @@
+[MASTER]
+disable=
+    C0103, # doesn't conform to X naming style
+    C0114, # naming styles
+    C0115, # naming styles
+    C0116, # naming styles
+    C0411, # import order
+    E0602, # supposed to be uh... Undefined variable, but now it just blabbles on about my constants
+    W0614, # unused wildcard import (bruh),
+    W0702, # bare exceptions
+    W1401  # backslashes and stuff
+
+[FORMAT]
+max-locals=35
+max-statements=90
+max-line-length=140
