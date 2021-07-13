@@ -1,5 +1,5 @@
 from src.common import *
-from src.Engine.other import GameException
+from src.Engine.objects import GameException
 
 import pygame
 

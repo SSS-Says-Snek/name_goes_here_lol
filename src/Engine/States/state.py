@@ -3,7 +3,7 @@ from src.Engine.Entities.player import Player
 from src.Engine.Entities.enemy import BulletEnemy
 from src.Engine.base import BaseState
 from src.Engine.button import *
-from src.Engine.other import Slider, game_data
+from src.Engine.objects import Slider, game_data
 from src.common import __version__, WIDTH, HEIGHT
 
 # from src.utils import *
