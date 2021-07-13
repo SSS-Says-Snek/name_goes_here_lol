@@ -1,6 +1,7 @@
 from src import common
 from src.Engine.base import BaseEnemy
 from src.Engine.objects import game_data
+from src.Engine.Entities.Weapons.bullets import Bullet, TrackingBullet
 
 import random
 import math
@@ -9,7 +10,7 @@ import pygame
 pygame.init()
 
 
-class Bullet:
+"""class Bullet:
     def __init__(self, angle, speed, lifespan, x, y, screen=common.SCREEN):
         self.angle = angle
         self.speed = speed
@@ -25,7 +26,7 @@ class Bullet:
         self.current_lifespan += 1
 
     def draw_bullet(self):
-        pygame.draw.rect(self.screen, (100, 100, 100), [self.x, self.y, 20, 20])
+        pygame.draw.rect(self.screen, (100, 100, 100), [self.x, self.y, 20, 20])"""
 
 
 class BulletEnemy(BaseEnemy):
@@ -36,7 +37,7 @@ class BulletEnemy(BaseEnemy):
         self.enemy_pos = self.start_pos
         self.bullets = []
         self.firing_speed = 5.5
-        self.bullet_speed = 7
+        self.bullet_speed = 1
 
         self.FIREBULLET = pygame.USEREVENT + 2
 
@@ -64,8 +65,9 @@ class BulletEnemy(BaseEnemy):
             )
             print(math.degrees(bullet_rad))
 
+            # Creates bullet, and appends it to
             self.bullets.append(
-                Bullet(bullet_rad, self.bullet_speed, 10, *self.enemy_pos)
+                Bullet(bullet_rad, 3, 10, *self.enemy_pos)
             )
 
     def constant_run(self):
@@ -76,15 +78,13 @@ class BulletEnemy(BaseEnemy):
 
         for bullet in list(self.bullets):
             bullet.update()
-            # if (not 0 < bullet.x < 5600) or (not 0 < bullet.y < 4200):
-            #     self.bullets.remove(bullet)
             if bullet.current_lifespan > bullet.lifespan:
                 self.bullets.remove(bullet)
 
             for i, part in enumerate(reversed(list(self.player_obj.player))):
                 if pygame.Rect(
-                    bullet.x + game_data.camera_offset[0],
-                    bullet.y + game_data.camera_offset[1],
+                    bullet.x + game_data.camera_offset[0],  # + 2*game_data.camera_offset[0],
+                    bullet.y + game_data.camera_offset[1],  # + 2*game_data.camera_offset[1],
                     20,
                     20,
                 ).colliderect(part):

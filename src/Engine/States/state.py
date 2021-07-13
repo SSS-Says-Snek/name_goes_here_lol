@@ -357,6 +357,8 @@ class PlayingGameState(BaseState):
             [1, 1, 1, 1, 1, 1, 1],
         ]
 
+        game_data.player = self.player
+
     def draw(self):
         self.draw_map()
         self.pause_menu.draw()

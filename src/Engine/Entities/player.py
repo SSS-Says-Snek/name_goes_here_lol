@@ -90,18 +90,18 @@ class Player(BaseEntity):
         change = [0, 0]
 
         if self.move_right:
-            change[0] = 5
-        if self.move_left:
-            change[0] = -5
-        if self.move_up:
-            change[1] = -5
-        if self.move_down:
-            change[1] = 5
-        self.x1 += self.change[0]
-        self.y1 += self.change[1]
+            change[0] = 10
+        elif self.move_left:
+            change[0] = -10
+        elif self.move_up:
+            change[1] = -10
+        elif self.move_down:
+            change[1] = 10
+        self.x1 += change[0]
+        self.y1 += change[1]
 
-        self.camera_x1 += self.change[0]
-        self.camera_y1 += self.change[1]
+        self.camera_x1 += change[0]
+        self.camera_y1 += change[1]
 
         player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
         if self.change != (0, 0):
@@ -111,12 +111,7 @@ class Player(BaseEntity):
                 del self.player[0]
 
         for segment in self.player[:-1]:
-            if segment == player_rect and not (
-                self.x1 == common.WIDTH - 40
-                or self.x1 == 20
-                or self.y1 == common.HEIGHT - 40
-                or self.y1 == 20
-            ):
+            if segment == player_rect:
                 print("You collided with yourself. Bruh momento")
 
         if self.food_rect.colliderect(player_rect):

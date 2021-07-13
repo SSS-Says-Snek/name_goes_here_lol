@@ -288,6 +288,7 @@ class GameData:
         """Contains information about the game"""
         self.camera_offset = [0, 0]
         self.game_fps = utils.load_setting("fps")
+        self.player = None  # Will be initialized later, in state.py
 
 
 class GameException(Exception):
