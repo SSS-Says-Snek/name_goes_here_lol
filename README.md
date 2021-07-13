@@ -8,7 +8,9 @@
 
 Title's kinda misleading, it's just Snake+ (upgraded version of snake, I had nothing to do, ok? I just wanted to improve my pygame skillz, as they were nonexistant)
 
-Right now, Snake+ should just be an upgraded version of snake, with progress, **ENEMIES**, and fun. Not good at working with classes, so if you look at my code it's gonna look like trash... Not that my code without classes is good, kek. This is also my first time making a semi-original idea in pygame, so some ideas will suck.
+Right now, Snake+ should just be an upgraded version of snake, with progress, **ENEMIES**, and fun. Not good at working with classes, 
+so if you look at my code it's gonna look like trash... Not that my code without classes is good, kek. 
+This is also my first time making a semi-original idea in pygame, so some ideas will suck.
 
 Only menu's functioning rn lol
 And a semi-playable snake game :kekw:
@@ -16,7 +18,7 @@ And a semi-playable snake game :kekw:
 ## Features
 Well, we got this menu...
 ![Snake+ Menu Screen](Screenshots/menu.png)
-And now we have a *semi-playable* game (I said semi playable because the collision sucks so much)
+And now, we have a *semi-playable* game (I said semi playable because the collision sucks so much)
 ![Snake+ Gameplay Screen](Screenshots/gameplay.png)
 
 ## How to install
@@ -38,13 +40,13 @@ And now we have a *semi-playable* game (I said semi playable because the collisi
    ```shell script
    python3 main.py
    ```
-NOTE: Right now, you have to have python 3.6 or above to run the game. There is no executables right now, because I suck at pyinstaller lel
+NOTE: Right now, you have to have python 3.6 or above to run the game. There are no executables right now, because I suck at pyinstaller lel
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
 - [X] Actually add the game
 - [ ] Implement actual game mechanics
-- [ ] Implement settings button in main menu
+- [X] Implement settings button in main menu
 - [ ] Make debug screen more asthetically pleasing
 - [ ] Implement saving and loading system
 - [ ] Add actually good graphics

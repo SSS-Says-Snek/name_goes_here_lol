@@ -114,6 +114,7 @@ class BaseEntity(object):
     Inherited classes MUST override the `draw` and `handle_event` functions, or else it would
     raise a GameException
     """
+
     def __init__(self, screen=SCREEN):
         """
         Defines several parameters used in entities
@@ -167,16 +168,16 @@ class BaseEnemy(object):
 
     def draw(self):
         """
-                Override this function while inheriting from this class
-                This function is supposed to be overrided, but the purpose of this function is to draw the state onto the screen.
-                This should usually be called in state.py, as enemies are usually defined there. However, there are
-                exceptions.
-                ==========================================  USAGE:  ==========================================
-                >>> player = BaseEntity()
-                >>> entity = BaseEnemy(player)  # Supposed to be something that overrided this function
-                >>> entity.draw()
-                <Draws onto screen based on overrided function>
-                """
+        Override this function while inheriting from this class
+        This function is supposed to be overrided, but the purpose of this function is to draw the state onto the screen.
+        This should usually be called in state.py, as enemies are usually defined there. However, there are
+        exceptions.
+        ==========================================  USAGE:  ==========================================
+        >>> player = BaseEntity()
+        >>> entity = BaseEnemy(player)  # Supposed to be something that overrided this function
+        >>> entity.draw()
+        <Draws onto screen based on overrided function>
+        """
         raise GameException(
             f"Enemy class {self.__class__} must override draw function\n"
             "To see more information, see base_entity.BaseEntity.draw"

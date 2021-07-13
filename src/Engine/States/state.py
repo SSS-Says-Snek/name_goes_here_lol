@@ -5,6 +5,7 @@ from src.Engine.base import BaseState
 from src.Engine.button import *
 from src.Engine.other import Slider, game_data
 from src.common import __version__, WIDTH, HEIGHT
+
 # from src.utils import *
 from src.draw_utils import *
 
@@ -238,6 +239,7 @@ class SettingState(BaseState):
         fps = self.fps_slider.get_slide_value()
 
         self.game_class.fps_setting = fps
+        game_data.game_fps = fps
 
         modify_setting("fps", fps)
         print(fps)
@@ -331,6 +333,7 @@ class PlayingGameState(BaseState):
 
     def __init__(self, game_class):
         from src.Engine.Entities.player import E
+
         super().__init__(game_class)
 
         self.buttons = {
@@ -354,7 +357,7 @@ class PlayingGameState(BaseState):
             [1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1]
+            [1, 1, 1, 1, 1, 1, 1],
         ]
 
     def draw(self):
@@ -373,7 +376,13 @@ class PlayingGameState(BaseState):
         for i, row in enumerate(self.map):
             for j, column in enumerate(row):
                 if column == 1:
-                    self.screen.blit(self.background, (i*800-game_data.camera_offset[0], j*600-game_data.camera_offset[1]))
+                    self.screen.blit(
+                        self.background,
+                        (
+                            i * 800 - game_data.camera_offset[0],
+                            j * 600 - game_data.camera_offset[1],
+                        ),
+                    )
 
     def handle_events(self, event):
         mousex, mousey = pygame.mouse.get_pos()
@@ -410,7 +419,9 @@ class PauseMenu(BaseState):
         self.screen = screen
         self.draw_pause = False
 
-        self.screen_surf = pygame.Surface(self.screen.get_size())  # lgtm [py/call/wrong-arguments]
+        self.screen_surf = pygame.Surface(
+            self.screen.get_size()
+        )  # lgtm [py/call/wrong-arguments]
         self.buttons = {
             "resume_button": (
                 MenuButton(

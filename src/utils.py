@@ -28,8 +28,8 @@ def rot_center(image, angle, x, y):
 def is_hovering(rect, mouse_pos):
     """Checks if a mouse is hovering over a rect"""
     if (
-            rect.left <= mouse_pos[0] <= rect.right
-            and rect.top <= mouse_pos[1] <= rect.bottom
+        rect.left <= mouse_pos[0] <= rect.right
+        and rect.top <= mouse_pos[1] <= rect.bottom
     ):
         return True
     return False

@@ -13,6 +13,7 @@ class BaseEntity(object):
     Inherited classes MUST override the `draw` and `handle_event` functions, or else it would
     raise a GameException
     """
+
     def __init__(self, screen=SCREEN):
         """
         Defines several parameters used in entities

@@ -35,12 +35,26 @@ class Player(BaseEntity):
 
     def draw(self):
         self.draw_player(self.player)
-        pygame.draw.rect(self.screen, (128, 128, 128), [self.x1 - game_data.camera_offset[0],
-                                                        self.y1 - game_data.camera_offset[1],
-                                                        20, 20])
-        pygame.draw.rect(self.screen, (255, 0, 0), [self.food_rect[0] - game_data.camera_offset[0],
-                                                    self.food_rect[1] - game_data.camera_offset[1],
-                                                    self.food_rect[2], self.food_rect[3]])
+        pygame.draw.rect(
+            self.screen,
+            (128, 128, 128),
+            [
+                self.x1 - game_data.camera_offset[0],
+                self.y1 - game_data.camera_offset[1],
+                20,
+                20,
+            ],
+        )
+        pygame.draw.rect(
+            self.screen,
+            (255, 0, 0),
+            [
+                self.food_rect[0] - game_data.camera_offset[0],
+                self.food_rect[1] - game_data.camera_offset[1],
+                self.food_rect[2],
+                self.food_rect[3],
+            ],
+        )
 
     def handle_events(self, event):
         if event.type == KEYDOWN:
@@ -99,19 +113,37 @@ class Player(BaseEntity):
                 del self.player[0]
 
         for segment in self.player[:-1]:
-            if segment == player_rect and not (self.x1 == WIDTH - 40 or self.x1 == 20 or self.y1 == HEIGHT - 40 or self.y1 == 20):
+            if segment == player_rect and not (
+                self.x1 == WIDTH - 40
+                or self.x1 == 20
+                or self.y1 == HEIGHT - 40
+                or self.y1 == 20
+            ):
                 print("You collided with yourself. Bruh momento")
 
         if self.food_rect.colliderect(player_rect):
             self.food_rect = self.generate_food()
             self.player_length += 10
 
-        game_data.camera_offset[0] += (self.change[0] - game_data.camera_offset[0] - 410 + self.x1) // 20
-        game_data.camera_offset[1] += (self.change[1] - game_data.camera_offset[1] - 310 + self.y1) // 20
+        game_data.camera_offset[0] += (
+            self.change[0] - game_data.camera_offset[0] - 410 + self.x1
+        ) // 20
+        game_data.camera_offset[1] += (
+            self.change[1] - game_data.camera_offset[1] - 310 + self.y1
+        ) // 20
 
     def draw_player(self, player_list):
         for pos in player_list:
-            pygame.draw.rect(self.screen, (0, 0, 0), [pos[0] - game_data.camera_offset[0], pos[1] - game_data.camera_offset[1], pos[2], pos[3]])
+            pygame.draw.rect(
+                self.screen,
+                (0, 0, 0),
+                [
+                    pos[0] - game_data.camera_offset[0],
+                    pos[1] - game_data.camera_offset[1],
+                    pos[2],
+                    pos[3],
+                ],
+            )
             # pygame.draw.rect(self.screen, (0, 0, 0), pos)
 
     @staticmethod
