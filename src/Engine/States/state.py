@@ -5,7 +5,7 @@ from src import draw_utils
 from src import utils
 from src import common
 from src.Engine.Entities.player import Player
-from src.Engine.Entities.Mobs.enemy import BulletEnemy
+from src.Engine.Entities.Mobs.enemy import BulletEnemy, HomingBulletEnemy
 from src.Engine.base import BaseState
 from src.Engine.objects import Slider, game_data
 from src.Engine.button import MenuButton, ImageButton
@@ -345,7 +345,7 @@ class PlayingGameState(BaseState):
         self.pause_menu = PauseMenu(game_class)
         self.background = utils.load_image("bg.png").convert()
         self.player = Player()
-        self.enemy = BulletEnemy(self.player)
+        self.enemy = HomingBulletEnemy(self.player)
 
         # Currently, each tile is a 800x600 pixel image. May be changed to a square (possibly 25x25) soon
         self.map = [

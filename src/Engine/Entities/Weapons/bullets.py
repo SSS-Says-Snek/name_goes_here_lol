@@ -20,7 +20,6 @@ class Bullet:
 
         self.screen = screen
         self.current_lifespan = 0
-        self.special_effect = None  # Bullets with special effects would contain a function to do so
         self.start_cam_offset = game_data.camera_offset[:]
 
     def update(self):
@@ -34,22 +33,20 @@ class Bullet:
     def draw_bullet(self):
         pygame.draw.rect(self.screen, (100, 100, 100), [self.x, self.y, 20, 20])
 
+    def on_death(self):
+        """Override this if the custom bullet doese something on death of bullet"""
 
-class TrackingBullet(Bullet):
+
+class HomingBullet(Bullet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.special_effect = self.apply_special_effect
 
     def update(self):
         super().update()
         self.angle = math.atan2(
-            self.x - game_data.player.x1,
-            self.y - game_data.player.y1,
+            self.x - game_data.player.x1 + game_data.camera_offset[0],
+            self.y - game_data.player.y1 + game_data.camera_offset[1],
         ) + math.radians(90)
 
-    # def draw_bullet(self):
-    #     pygame.draw.rect(self.screen, (100, 100, 100), [self.x - game_data.player.camera_x1, self.y - game_data.player.camera_y1, 20, 20])
-
-    def apply_special_effect(self):
+    def on_death(self):
         pass

@@ -1,32 +1,13 @@
 from src import common
 from src.Engine.base import BaseEnemy
 from src.Engine.objects import game_data
-from src.Engine.Entities.Weapons.bullets import Bullet, TrackingBullet
+from src.Engine.Entities.Weapons.bullets import Bullet, HomingBullet
 
 import random
 import math
 import pygame
 
 pygame.init()
-
-
-"""class Bullet:
-    def __init__(self, angle, speed, lifespan, x, y, screen=common.SCREEN):
-        self.angle = angle
-        self.speed = speed
-        self.lifespan = lifespan * game_data.game_fps
-        self.x = x
-        self.y = y
-        self.screen = screen
-        self.current_lifespan = 0
-
-    def update(self):
-        self.x += math.sin(self.angle + math.radians(90)) * self.speed
-        self.y += math.cos(self.angle + math.radians(90)) * self.speed
-        self.current_lifespan += 1
-
-    def draw_bullet(self):
-        pygame.draw.rect(self.screen, (100, 100, 100), [self.x, self.y, 20, 20])"""
 
 
 class BulletEnemy(BaseEnemy):
@@ -37,7 +18,8 @@ class BulletEnemy(BaseEnemy):
         self.enemy_pos = self.start_pos
         self.bullets = []
         self.firing_speed = 5.5
-        self.bullet_speed = 1
+        self.bullet_speed = 7
+        self.bullet_type = Bullet
 
         self.FIREBULLET = pygame.USEREVENT + 2
 
@@ -60,14 +42,10 @@ class BulletEnemy(BaseEnemy):
                 )
                 + math.radians(90)
             )
-            print(
-                f"Enemy: {self.enemy_pos}, Player: {self.player_obj.x1, self.player_obj.y1}"
-            )
-            print(math.degrees(bullet_rad))
 
             # Creates bullet, and appends it to
             self.bullets.append(
-                Bullet(bullet_rad, 3, 10, *self.enemy_pos)
+                self.bullet_type(bullet_rad, self.bullet_speed, 10, *self.enemy_pos)
             )
 
     def constant_run(self):
@@ -91,9 +69,19 @@ class BulletEnemy(BaseEnemy):
                     try:
                         print(f"Hit, at {part.x, part.y} (Real: {bullet.x, bullet.y}")
                         self.player_obj.player = self.player_obj.player[:i]
-                        print("PLAYER LST", self.player_obj.player)
-                        self.player_obj.player_length = len(self.player_obj.player)
+                        self.player_obj.player_length = i  # len(self.player_obj.player)
                         self.bullets.remove(bullet)
                         break
                     except ValueError:
                         continue
+
+
+class HomingBulletEnemy(BulletEnemy):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.firing_speed = 8
+        self.bullet_speed = 3
+        self.bullet_type = HomingBullet
+
+        pygame.time.set_timer(self.FIREBULLET, int(self.firing_speed * 1000))

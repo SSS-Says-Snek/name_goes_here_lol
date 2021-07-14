@@ -26,8 +26,8 @@ class Player(BaseEntity):
         self.move_down = False
         self.holding_key = False
 
-        self.camera_x1 = self.x1
-        self.camera_y1 = self.y1
+        self.camera_x1 = self.x1  # Camera x position
+        self.camera_y1 = self.y1  # Camera y position
 
         self.change = (0, 0)  # Default: Stationary
         self.food_rect = self.generate_food()  # Default: Random position of food
@@ -57,20 +57,19 @@ class Player(BaseEntity):
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT and self.key != "left" and not self.holding_key:
+            if event.key == pygame.K_RIGHT and self.key != "left":  # and not self.holding_key:
                 self.key = "right"
                 self.change = (5, 0)
                 self.move_right = True
-            elif event.key == pygame.K_LEFT and self.key != "right" and not self.holding_key:
+            if event.key == pygame.K_LEFT and self.key != "right":  # and not self.holding_key:
                 self.key = "left"
                 self.change = (-5, 0)
                 self.move_left = True
-            elif event.key == pygame.K_UP and self.key != "down" and not self.holding_key:
+            if event.key == pygame.K_UP and self.key != "down":  # and not self.holding_key:
                 self.key = "up"
                 self.change = (0, -5)
                 self.move_up = True
-                print('up')
-            elif event.key == pygame.K_DOWN and self.key != "up" and not self.holding_key:
+            if event.key == pygame.K_DOWN and self.key != "up":  # and not self.holding_key:
                 self.key = "down"
                 self.change = (0, 5)
                 self.move_down = True
@@ -78,17 +77,14 @@ class Player(BaseEntity):
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 self.move_right = False
-            elif event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT:
                 self.move_left = False
-            elif event.key == pygame.K_UP:
+            if event.key == pygame.K_UP:
                 self.move_up = False
-            elif event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN:
                 self.move_down = False
             self.change = (0, 0)
             self.holding_key = False
-
-        # else:
-        # self.food_rect = pygame.Rect(self.food_rect.x - self.change[0], self.food_rect.y - self.change[1], 20, 20)
 
     def constant_run(self):
         change = [0, 0]
@@ -126,11 +122,11 @@ class Player(BaseEntity):
             self.player_length += 10
 
         game_data.camera_offset[0] += (
-            self.change[0] - game_data.camera_offset[0] - 410 + self.x1
-        ) // 20
+                                              self.change[0] - game_data.camera_offset[0] - 410 + self.x1
+                                      ) // 20
         game_data.camera_offset[1] += (
-            self.change[1] - game_data.camera_offset[1] - 310 + self.y1
-        ) // 20
+                                              self.change[1] - game_data.camera_offset[1] - 310 + self.y1
+                                      ) // 20
 
     def draw_player(self, player_list):
         for pos in player_list:
