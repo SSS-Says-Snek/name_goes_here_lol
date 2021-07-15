@@ -19,4 +19,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint --extension-pkg-list pygame src
+        pylint --extension-pkg-whitelist pygame src
