@@ -277,10 +277,59 @@ class Slider:
         return self.current_val
 
 
-class TextPopUp:
-    def __init__(self):
+class TextMessage:
+    def __init__(self, pos, width, height, rect_color, text, font, font_color=(0, 0, 0), instant_blit=True, screen=common.SCREEN):
         """This class can be used to display text"""
-        pass
+        self.pos = pos
+        self.width = width
+        self.height = height
+        self.rect_color = rect_color
+        self.text = text
+        self.font = font
+        self.font_color = font_color
+        self.instant_blit = instant_blit
+        self.screen = screen
+
+        self.text_rect = pygame.Rect(self.pos[0], self.pos[1], self.width, self.height)
+        print(self.text_rect)
+        self.split_text = utils.wrap_text(self.text, self.width, self.font)
+        print(self.split_text)
+
+        if not self.instant_blit:
+            self.blitted_chars = ['' for _ in self.split_text]
+            self.char_blit_line = 0
+            self.blit_line_idx = 0
+            self.prev_line_text = ''
+
+    def draw(self):
+        pygame.draw.rect(self.screen, self.rect_color, self.text_rect)
+        if self.instant_blit:
+            for i, text in enumerate(self.split_text):
+                rendered_text = self.font.render(text, True, self.font_color)
+                self.screen.blit(rendered_text, (self.pos[0], self.pos[1] + i * self.font.get_height()))
+
+        else:
+            self.char_blit_line += 1
+
+            prev_text = self.split_text[self.blit_line_idx][:self.char_blit_line]
+            self.blitted_chars[self.blit_line_idx] = self.split_text[self.blit_line_idx][:self.char_blit_line]
+
+            if self.blitted_chars[self.blit_line_idx] == self.prev_line_text:
+                if self.blit_line_idx + 1 < len(self.split_text):
+                    self.char_blit_line = 0
+                    self.blit_line_idx += 1
+
+            for i, text in enumerate(self.blitted_chars):
+                rendered_text = self.font.render(text, True, self.font_color)
+                self.screen.blit(rendered_text, (self.pos[0], self.pos[1] + i * self.font.get_height()))
+            self.prev_line_text = prev_text
+
+    def reset_current_text(self):
+        """Only applies for non-instant blit textboxes"""
+        self.blitted_chars = ['' for _ in self.split_text]
+        self.char_blit_line = 0
+        self.blit_line_idx = 0
+        self.prev_line_text = ''
 
 
 class GameData:
@@ -289,6 +338,9 @@ class GameData:
         self.camera_offset = [0, 0]
         self.game_fps = utils.load_setting("fps")
         self.player = None  # Will be initialized later, in state.py
+        self.player_list = {}
+        self.current_substate = None
+        self.playing_substate = None
 
 
 class GameException(Exception):

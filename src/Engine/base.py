@@ -124,9 +124,6 @@ class BaseEntity(object):
         """
         self.screen = screen
 
-    def __str__(self):
-        return f"e{self}"
-
     def draw(self):
         """
         Override this function while inheriting from this class

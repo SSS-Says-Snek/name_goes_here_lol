@@ -4,8 +4,10 @@ import pygame
 from src import draw_utils
 from src import utils
 from src import common
+from src.Engine import objects
 from src.Engine.Entities.player import Player
 from src.Engine.Entities.Mobs.enemy import BulletEnemy, HomingBulletEnemy
+from src.Engine.Entities.shop import ShopEntity
 from src.Engine.base import BaseState
 from src.Engine.objects import Slider, game_data
 from src.Engine.button import MenuButton, ImageButton
@@ -346,6 +348,7 @@ class PlayingGameState(BaseState):
         self.background = utils.load_image("bg.png").convert()
         self.player = Player()
         self.enemy = HomingBulletEnemy(self.player)
+        self.shop = ShopEntity()
 
         # Currently, each tile is a 800x600 pixel image. May be changed to a square (possibly 25x25) soon
         self.map = [
@@ -359,18 +362,26 @@ class PlayingGameState(BaseState):
         ]
 
         game_data.player = self.player
+        game_data.player_list['main_player'] = self.player
+        game_data.playing_substate = self
+        game_data.current_substate = self
 
     def draw(self):
-        self.draw_map()
-        self.pause_menu.draw()
-        self.player.draw()
-        self.enemy.draw()
+        if game_data.current_substate.__class__ == self.__class__:
+            self.draw_map()
+            self.enemy.draw()
+            self.shop.draw()
+        else:
+            game_data.current_substate.draw()
 
         for button in self.buttons.values():
             if self.pause_menu.draw_pause:
                 button[0][1].draw()
             else:
                 button[0][0].draw()
+
+        game_data.player.draw()
+        self.pause_menu.draw()
 
     def draw_map(self):
         self.screen.fill((135, 206, 235))
@@ -398,15 +409,18 @@ class PlayingGameState(BaseState):
 
         self.pause_menu.handle_events(event)
 
-        if not self.pause_menu.draw_pause:
+        if not self.pause_menu.draw_pause and game_data.current_substate.__class__ == self.__class__:
             self.enemy.handle_events(event)
-            self.player.handle_events(event)
-            # self.enemy.handle_events(event)
+        if game_data.current_substate.__class__ != self.__class__:
+            game_data.current_substate.handle_events(event)
+
+        game_data.player.handle_events(event)
 
     def constant_run(self):
         if not self.pause_menu.draw_pause:
-            self.player.constant_run()
+            game_data.player.constant_run()
             self.enemy.constant_run()
+            self.shop.constant_run()
 
 
 class PauseMenu(BaseState):

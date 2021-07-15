@@ -146,3 +146,11 @@ class Player(BaseEntity):
         return pygame.Rect(
             random.randint(0, common.WIDTH - 20), random.randint(0, common.HEIGHT - 20), 20, 20
         )
+
+
+class ShopPlayer(Player):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def draw(self):
+        pygame.draw.rect(self.screen, (128, 128, 128), [400, 400, 20, 20])
