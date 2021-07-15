@@ -57,19 +57,27 @@ class Player(BaseEntity):
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT and self.key != "left":  # and not self.holding_key:
+            if (
+                event.key == pygame.K_RIGHT and self.key != "left"
+            ):  # and not self.holding_key:
                 self.key = "right"
                 self.change = (5, 0)
                 self.move_right = True
-            if event.key == pygame.K_LEFT and self.key != "right":  # and not self.holding_key:
+            if (
+                event.key == pygame.K_LEFT and self.key != "right"
+            ):  # and not self.holding_key:
                 self.key = "left"
                 self.change = (-5, 0)
                 self.move_left = True
-            if event.key == pygame.K_UP and self.key != "down":  # and not self.holding_key:
+            if (
+                event.key == pygame.K_UP and self.key != "down"
+            ):  # and not self.holding_key:
                 self.key = "up"
                 self.change = (0, -5)
                 self.move_up = True
-            if event.key == pygame.K_DOWN and self.key != "up":  # and not self.holding_key:
+            if (
+                event.key == pygame.K_DOWN and self.key != "up"
+            ):  # and not self.holding_key:
                 self.key = "down"
                 self.change = (0, 5)
                 self.move_down = True
@@ -122,11 +130,11 @@ class Player(BaseEntity):
             self.player_length += 10
 
         game_data.camera_offset[0] += (
-                                              self.change[0] - game_data.camera_offset[0] - 410 + self.x1
-                                      ) // 20
+            self.change[0] - game_data.camera_offset[0] - 410 + self.x1
+        ) // 20
         game_data.camera_offset[1] += (
-                                              self.change[1] - game_data.camera_offset[1] - 310 + self.y1
-                                      ) // 20
+            self.change[1] - game_data.camera_offset[1] - 310 + self.y1
+        ) // 20
 
     def draw_player(self, player_list):
         for pos in player_list:
@@ -144,7 +152,10 @@ class Player(BaseEntity):
     @staticmethod
     def generate_food():
         return pygame.Rect(
-            random.randint(0, common.WIDTH - 20), random.randint(0, common.HEIGHT - 20), 20, 20
+            random.randint(0, common.WIDTH - 20),
+            random.randint(0, common.HEIGHT - 20),
+            20,
+            20,
         )
 
 

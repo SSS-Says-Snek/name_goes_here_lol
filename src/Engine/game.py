@@ -30,7 +30,8 @@ class GameLoop:
         """Initializes some class attributes first"""
         self.screen = screen
         self.manager = pygame_gui.UIManager(
-            (common.WIDTH, common.HEIGHT), common.PATH / "src/Assets/Themes/test_theme.json"
+            (common.WIDTH, common.HEIGHT),
+            common.PATH / "src/Assets/Themes/test_theme.json",
         )
         self.clock = pygame.time.Clock()
         self.font = utils.font(60)

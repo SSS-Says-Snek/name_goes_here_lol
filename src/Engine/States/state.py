@@ -89,7 +89,9 @@ class MenuState(BaseState):
         version_txt = utils.font(15, "PixelMillenium").render(
             f"Version {common.__version__}", True, (0, 0, 0)
         )
-        version_txt_rect = version_txt.get_rect(bottomright=(common.WIDTH, common.HEIGHT))
+        version_txt_rect = version_txt.get_rect(
+            bottomright=(common.WIDTH, common.HEIGHT)
+        )
         self.screen.blit(version_txt, version_txt_rect)
         self.update_title()
         for dict_key, button in self.buttons.items():
@@ -254,7 +256,8 @@ class NewGameState(BaseState):
         super().__init__(game_class)
         # self.next_state = NewGameState
         self.manager = pygame_gui.UIManager(
-            (common.WIDTH, common.HEIGHT), common.PATH / "src/Assets/Themes/test_theme.json"
+            (common.WIDTH, common.HEIGHT),
+            common.PATH / "src/Assets/Themes/test_theme.json",
         )
         self.clock = pygame.time.Clock()
         self.screen_width, self.screen_height = self.screen.get_size()
@@ -295,7 +298,9 @@ class NewGameState(BaseState):
 
     def draw(self):
         dt = self.clock.tick(30) / 1000
-        new_game_txt = utils.font(51).render("Enter File name for new game:", True, (0, 0, 0))
+        new_game_txt = utils.font(51).render(
+            "Enter File name for new game:", True, (0, 0, 0)
+        )
         new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
         self.screen.blit(new_game_txt, new_game_txt_rect)
         for dict_key, button in self.buttons.items():
@@ -362,7 +367,7 @@ class PlayingGameState(BaseState):
         ]
 
         game_data.player = self.player
-        game_data.player_list['main_player'] = self.player
+        game_data.player_list["main_player"] = self.player
         game_data.playing_substate = self
         game_data.current_substate = self
 
@@ -409,7 +414,10 @@ class PlayingGameState(BaseState):
 
         self.pause_menu.handle_events(event)
 
-        if not self.pause_menu.draw_pause and game_data.current_substate.__class__ == self.__class__:
+        if (
+            not self.pause_menu.draw_pause
+            and game_data.current_substate.__class__ == self.__class__
+        ):
             self.enemy.handle_events(event)
         if game_data.current_substate.__class__ != self.__class__:
             game_data.current_substate.handle_events(event)

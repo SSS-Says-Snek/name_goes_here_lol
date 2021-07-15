@@ -178,7 +178,11 @@ class RadioButton:
 
 class ToggleButton:
     def __init__(
-        self, default="off", off_color=(255, 0, 0), on_color=(0, 255, 0), screen=common.SCREEN
+        self,
+        default="off",
+        off_color=(255, 0, 0),
+        on_color=(0, 255, 0),
+        screen=common.SCREEN,
     ):
         self.default = default
         self.off_color = off_color

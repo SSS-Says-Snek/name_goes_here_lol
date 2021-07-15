@@ -16,7 +16,7 @@ class ShopSubstate:
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_F7:
-                game_data.player = game_data.player_list['main_player']
+                game_data.player = game_data.player_list["main_player"]
                 game_data.current_substate = game_data.playing_substate
 
                 game_data.player.x1 = 200

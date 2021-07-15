@@ -2,7 +2,9 @@ from src import common
 from src import utils
 
 
-def blit_multicolor_text(text_font, text_list: dict, coord_to_blit, screen=common.SCREEN):
+def blit_multicolor_text(
+    text_font, text_list: dict, coord_to_blit, screen=common.SCREEN
+):
     """
     Function used to render multicolored text. Used as:
     >>> blit_multicolor_text(utils.font(20), {"Text lol": (128, 128, 128), "More Text": (128, 0, 0)})

@@ -14,7 +14,10 @@ class BulletEnemy(BaseEnemy):
     def __init__(self, player_obj, screen=common.SCREEN):
         super().__init__(player_obj, screen)
 
-        self.start_pos = (random.randint(0, common.WIDTH), random.randint(0, common.HEIGHT))
+        self.start_pos = (
+            random.randint(0, common.WIDTH),
+            random.randint(0, common.HEIGHT),
+        )
         self.enemy_pos = self.start_pos
         self.bullets = []
         self.firing_speed = 5.5
@@ -61,8 +64,10 @@ class BulletEnemy(BaseEnemy):
 
             for i, part in enumerate(reversed(list(self.player_obj.player))):
                 if pygame.Rect(
-                    bullet.x + game_data.camera_offset[0],  # + 2*game_data.camera_offset[0],
-                    bullet.y + game_data.camera_offset[1],  # + 2*game_data.camera_offset[1],
+                    bullet.x
+                    + game_data.camera_offset[0],  # + 2*game_data.camera_offset[0],
+                    bullet.y
+                    + game_data.camera_offset[1],  # + 2*game_data.camera_offset[1],
                     20,
                     20,
                 ).colliderect(part):

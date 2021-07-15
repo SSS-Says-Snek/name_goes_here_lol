@@ -28,8 +28,8 @@ def rot_center(image, angle, x, y):
 def is_hovering(rect, mouse_pos):
     """Checks if a mouse is hovering over a rect"""
     if (
-            rect.left <= mouse_pos[0] <= rect.right
-            and rect.top <= mouse_pos[1] <= rect.bottom
+        rect.left <= mouse_pos[0] <= rect.right
+        and rect.top <= mouse_pos[1] <= rect.bottom
     ):
         return True
     return False
@@ -112,35 +112,35 @@ def unclean_wrap_text(text, width, render_font):
     return wrapped_lines
 
 
-def wrap_text(text,  width, font):
+def wrap_text(text, width, font):
     """Wrap text to fit inside a given width when rendered.
     :param text: The text to be wrapped.
     :param font: The font the text will be rendered in.
     :param width: The width to wrap to.
     """
-    text_lines = text.replace('\t', '    ').split('\n')
+    text_lines = text.replace("\t", "    ").split("\n")
     if width is None or width == 0:
         return text_lines
 
     wrapped_lines = []
     for line in text_lines:
-        line = line.rstrip() + ' '
-        if line == ' ':
+        line = line.rstrip() + " "
+        if line == " ":
             wrapped_lines.append(line)
             continue
 
         # Get the leftmost space ignoring leading whitespace
         start = len(line) - len(line.lstrip())
-        start = line.index(' ', start)
+        start = line.index(" ", start)
         while start + 1 < len(line):
             # Get the next potential splitting point
-            next_splitting_point = line.index(' ', start + 1)
+            next_splitting_point = line.index(" ", start + 1)
             if font.size(line[:next_splitting_point])[0] <= width:
                 start = next_splitting_point
             else:
                 wrapped_lines.append(line[:start])
-                line = line[start + 1:]
-                start = line.index(' ')
+                line = line[start + 1 :]
+                start = line.index(" ")
         line = line[:-1]
         if line:
             wrapped_lines.append(line)
