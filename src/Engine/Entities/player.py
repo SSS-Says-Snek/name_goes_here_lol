@@ -25,6 +25,7 @@ class Player(BaseEntity):
         self.move_up = False
         self.move_down = False
         self.holding_key = False
+        self.redraw_body = True
 
         self.camera_x1 = self.x1  # Camera x position
         self.camera_y1 = self.y1  # Camera y position
@@ -61,25 +62,25 @@ class Player(BaseEntity):
                 event.key == pygame.K_RIGHT and self.key != "left"
             ):  # and not self.holding_key:
                 self.key = "right"
-                self.change = (5, 0)
+                self.change = (10, 0)
                 self.move_right = True
             if (
                 event.key == pygame.K_LEFT and self.key != "right"
             ):  # and not self.holding_key:
                 self.key = "left"
-                self.change = (-5, 0)
+                self.change = (-10, 0)
                 self.move_left = True
             if (
                 event.key == pygame.K_UP and self.key != "down"
             ):  # and not self.holding_key:
                 self.key = "up"
-                self.change = (0, -5)
+                self.change = (0, -10)
                 self.move_up = True
             if (
                 event.key == pygame.K_DOWN and self.key != "up"
             ):  # and not self.holding_key:
                 self.key = "down"
-                self.change = (0, 5)
+                self.change = (0, 10)
                 self.move_down = True
             self.holding_key = True
         if event.type == pygame.KEYUP:
@@ -115,7 +116,7 @@ class Player(BaseEntity):
 
         player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
 
-        if change != [0, 0]:
+        if change != [0, 0] and self.redraw_body:
             self.player.append(player_rect)
 
             if len(self.player) > self.player_length:
@@ -148,6 +149,9 @@ class Player(BaseEntity):
                     pos[3],
                 ],
             )
+
+    def move_body_to_head(self):
+        pass
 
     @staticmethod
     def generate_food():
