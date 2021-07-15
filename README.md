@@ -42,6 +42,14 @@ And now, we have a *semi-playable* game (I said semi playable because the collis
    python3 main.py
    ```
 NOTE: Right now, you have to have python 3.6 or above to run the game. There are no executables right now, because I suck at pyinstaller lel
+
+## How to install (for you big brain people)
+1. Use git to clone repo
+2. `git clone https://github.com/SSS-Says-Snek/name_goes_here_lol.git`
+3. CD into the extracted folder
+4. Install required packages just like the normal steps
+5. Run the game just like the normal steps
+
 ## Todo and Checklists
 
 - [X] Added bare bones for menu
