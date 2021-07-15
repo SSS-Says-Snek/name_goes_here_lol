@@ -84,6 +84,7 @@ class GameLoop:
                     }
                 )
 
+            # Do pygame gui stuff
             self.manager.update(dt)
             self.manager.draw_ui(self.screen)
 

@@ -360,12 +360,25 @@ class TextMessage:
 
             self.prev_line_text = prev_text
 
+    def handle_events(self, event):
+        if event.type == pygame.KEYDOWN and not self.instant_blit and self.blitted_chars != self.split_text:
+            self.blitted_chars = self.split_text[:]
+            self.blit_line_idx = len(self.blitted_chars) - 1
+            self.char_blit_line = len(self.blitted_chars[-1])
+
     def reset_current_text(self):
         """Only applies for non-instant blit textboxes"""
         self.blitted_chars = ["" for _ in self.split_text]
         self.char_blit_line = 0
         self.blit_line_idx = 0
         self.prev_line_text = ""
+
+    @property
+    def is_finished(self):
+        if not self.instant_blit and self.blitted_chars != self.split_text:
+            print('bruv')
+            return False
+        return True
 
 
 class GameData:

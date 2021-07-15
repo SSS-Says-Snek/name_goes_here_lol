@@ -30,18 +30,25 @@ class ShopEntity(BaseEntity):
             border_color=(80, 80, 80),
             border_width=10,
         )
-        self.draw_text_message = False
+        self.player_collide = False
 
     def draw(self):
         pygame.draw.rect(
             self.screen, (0, 0, 128), [self.shop_pos[0], self.shop_pos[1], 60, 60]
         )
 
-        if self.draw_text_message:
+        if self.player_collide:
             self.text_message.draw()
 
     def handle_events(self, event):
-        pass
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN and self.player_collide and self.text_message.is_finished:
+                game_data.current_substate = substates.ShopSubstate()
+                shop_player = ShopPlayer()
+                game_data.player = shop_player
+                game_data.player_list["shop_player"] = shop_player
+
+            self.text_message.handle_events(event)
 
     def constant_run(self):
         self.shop_pos[0] = self.start_shop_pos[0] - game_data.camera_offset[0]
@@ -53,11 +60,7 @@ class ShopEntity(BaseEntity):
             20,
             20,
         ).colliderect(pygame.Rect(self.shop_pos[0], self.shop_pos[1], 60, 60)):
-            self.draw_text_message = True
+            self.player_collide = True
         else:
-            self.draw_text_message = False
+            self.player_collide = False
             self.text_message.reset_current_text()
-            # game_data.current_substate = substates.ShopSubstate()
-            # shop_player = ShopPlayer()
-            # game_data.player = shop_player
-            # game_data.player_list["shop_player"] = shop_player

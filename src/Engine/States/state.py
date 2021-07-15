@@ -1,12 +1,28 @@
+"""
+This file contains all state machines used in the game.
+Basically, state machines allow us to easily transition from "state" to "state", like from
+    a Main Menu to a Settings state
+This is mainly used in game.py, though of course, there are exceptions
+    (E.g wanting to access a state attribute in a different file)
+The basic structure of state machines is:
+    - XState.draw()
+    - XState.handle_events(event) (Don't ask why it's with an s
+    - XState.constant_run() (Optional, but highly recommended)
+
+=============================  U S A G E  =============================
+>>> from src.Engine.States.state import MenuState
+>>> MenuState().draw()
+"""
+
+# Imports
 import pygame_gui
 import pygame
 
 from src import draw_utils
 from src import utils
 from src import common
-from src.Engine import objects
 from src.Engine.Entities.player import Player
-from src.Engine.Entities.Mobs.enemy import BulletEnemy, HomingBulletEnemy
+from src.Engine.Entities.Mobs.enemy import HomingBulletEnemy
 from src.Engine.Entities.shop import ShopEntity
 from src.Engine.base import BaseState
 from src.Engine.objects import Slider, game_data
@@ -24,6 +40,11 @@ class MenuState(BaseState):
         self.title_idx = 0
         self.title_thing = 0
         self.TITLEUPDATE = pygame.USEREVENT + 1
+
+        # List of all buttons, stored as a key-value pair, where
+        # key is the name of the button, and value is a tuple with
+        # first element as a Button class, and second element as
+        # function to call once clicked
         self.buttons = {
             "start_button": (
                 MenuButton(
@@ -85,15 +106,22 @@ class MenuState(BaseState):
         pygame.time.set_timer(self.TITLEUPDATE, 33)
 
     def draw(self):
-        """MenuState doc for draw"""
+        """Performs all drawing related tasks related to the Main Menu."""
+
+        # Draws the version at the bottom right
         version_txt = utils.font(15, "PixelMillenium").render(
             f"Version {common.__version__}", True, (0, 0, 0)
         )
         version_txt_rect = version_txt.get_rect(
             bottomright=(common.WIDTH, common.HEIGHT)
         )
+
         self.screen.blit(version_txt, version_txt_rect)
+
+        # Updates the title
         self.update_title()
+
+        # Loops through all buttons
         for dict_key, button in self.buttons.items():
             # The button is a tuple of two things: the actual button, and the action
             if self.selection == list(self.buttons).index(dict_key):
@@ -102,16 +130,14 @@ class MenuState(BaseState):
                 button[0].draw()
 
     def handle_events(self, pygame_event):
-        """MenuState doc for handle_events"""
+        """Handles all events regarding the Main Menu."""
         mousex, mousey = pygame.mouse.get_pos()
 
         if pygame_event.type == pygame.KEYDOWN:
             if pygame_event.key == pygame.K_DOWN:
-                print("Menu Selection Down")
                 self.selection += 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == pygame.K_UP:
-                print("Menu Selection Up")
                 self.selection -= 1
                 self.selection %= len(self.buttons)
             if pygame_event.key == pygame.K_RETURN:
@@ -135,6 +161,7 @@ class MenuState(BaseState):
                 self.selection = list(self.buttons.keys()).index(dict_key)
 
     def update_title(self):
+        """Updates the main menu title."""
         draw_utils.blit_multicolor_text(
             self.font,
             {
@@ -152,6 +179,7 @@ class StatState(BaseState):
     def __init__(self, game_class):
         super().__init__(game_class)
 
+        # Initializes buttons, like MenuState
         self.buttons = {
             "test_button": (
                 MenuButton(
@@ -167,14 +195,14 @@ class StatState(BaseState):
         }
 
     def draw(self):
-        """STATSTATE doc for draw"""
+        """Performs all tasks related to drawing related to the Statistics Menu."""
         txt = self.font.render("Game Statistics", True, (0, 0, 0))
         self.screen.blit(txt, (200, 20))
         for dict_key, button in self.buttons.items():
             button[0].draw()
 
     def handle_events(self, pygame_event):
-        """STATSTATE doc for handle_events"""
+        """Handles all events related to thte Statistics Menu."""
         if pygame_event.type == pygame.MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
             for name, button in self.buttons.items():
@@ -188,6 +216,7 @@ class SettingState(BaseState):
     def __init__(self, game_class):
         super().__init__(game_class)
 
+        # Initializes the buttons, like in MenuState
         self.buttons = {
             (
                 MenuButton(
@@ -212,11 +241,16 @@ class SettingState(BaseState):
                 lambda: self.apply_changes(),
             ),
         }
+
+        # Sets the FPS slider (ranging from 10 to 500)
         self.fps_slider = Slider(
             (200, 100), (230, 230, 0), 500, 40, 10, 500, slide_color=(200, 0, 0)
         )
 
     def draw(self):
+        """Performs all tasks related to drawing related to the Settings Menu."""
+
+        # Blits "Game Settings"
         txt = self.font.render("Game Settings", True, (0, 0, 0))
         draw_utils.blit_on_center(txt, (400, 30))
 
@@ -224,11 +258,18 @@ class SettingState(BaseState):
         self.screen.blit(fps_txt, (40, 100))
 
         self.fps_slider.draw()
+
+        # Draws all buttons
         for button in self.buttons:
             button[0].draw()
 
     def handle_events(self, pygame_event):
+        """Handles all events related to thte Settings Menu."""
+
+        # Handles FPS Slider events
         self.fps_slider.handle_events(pygame_event)
+
+        # Handles mouse and button events
         if pygame_event.type == pygame.MOUSEBUTTONDOWN:
             mousex, mousey = pygame.mouse.get_pos()
             for button in self.buttons:
@@ -236,9 +277,7 @@ class SettingState(BaseState):
                     button[1]()
 
     def apply_changes(self):
-        """
-        Right now, you need to restart game for it to take change, hang on, I'm gonna change that soon-ish (TM)
-        """
+        """Applies the FPS change to the game."""
         fps = self.fps_slider.get_slide_value()
 
         self.game_class.fps_setting = fps
@@ -252,9 +291,7 @@ class NewGameState(BaseState):
     """State that handles the "new game" file making"""
 
     def __init__(self, game_class):
-        # important things
         super().__init__(game_class)
-        # self.next_state = NewGameState
         self.manager = pygame_gui.UIManager(
             (common.WIDTH, common.HEIGHT),
             common.PATH / "src/Assets/Themes/test_theme.json",
@@ -297,12 +334,19 @@ class NewGameState(BaseState):
         )
 
     def draw(self):
+        """Performs all draw related tasks related to the "New Game" Menu."""
+
+        # Gets delta time
         dt = self.clock.tick(30) / 1000
+
+        # Renders and blits text
         new_game_txt = utils.font(51).render(
             "Enter File name for new game:", True, (0, 0, 0)
         )
         new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
         self.screen.blit(new_game_txt, new_game_txt_rect)
+
+        # Draws buttons
         for dict_key, button in self.buttons.items():
             button[0].draw()
 
@@ -312,17 +356,24 @@ class NewGameState(BaseState):
         pygame.display.update()
 
     def handle_events(self, event):
+        """Handles all events related to thte "New Game" Menu."""
+
         mousex, mousey = pygame.mouse.get_pos()
+
+        # Add effects on text input from pygame_gui
         self.new_game_input.enable()
         self.new_game_input.focus()
         self.new_game_input.rebuild_from_changed_theme_data()
         self.new_game_input.process_event(event)
+
+        # Handles logic for buttons
         if event.type == pygame.MOUSEBUTTONDOWN:
             for key, button in self.buttons.items():
                 if button[0].get_rect().collidepoint((mousex, mousey)):
                     button[1]()
 
     def okay(self):
+        """Handles logic for the MenuButtons."""
         input_text = self.new_game_input.get_text()
         if input_text != "":
             print(f"Ze text you typed is: {input_text}\nRedirecting to game screen...")
@@ -340,6 +391,7 @@ class PlayingGameState(BaseState):
     def __init__(self, game_class):
         super().__init__(game_class)
 
+        # Initializes buttons, like MenuState
         self.buttons = {
             "pause_button": (
                 [
@@ -349,6 +401,9 @@ class PlayingGameState(BaseState):
                 NotImplemented,
             )
         }
+
+        # Initializes other important components.
+        # NOTE: Some will be converted to lists, to obtain multiple entities of that
         self.pause_menu = PauseMenu(game_class)
         self.background = utils.load_image("bg.png").convert()
         self.player = Player()
@@ -366,29 +421,37 @@ class PlayingGameState(BaseState):
             [1, 1, 1, 1, 1, 1, 1],
         ]
 
+        # Sets some commonly used gamewide data
         game_data.player = self.player
         game_data.player_list["main_player"] = self.player
         game_data.playing_substate = self
         game_data.current_substate = self
 
     def draw(self):
+        """Performs all draw related tasks related to the Main Game."""
+
+        # If the current state is the playing state
         if game_data.current_substate.__class__ == self.__class__:
             self.draw_map()
             self.enemy.draw()
             self.shop.draw()
         else:
+            # Otherwise, draw the substate with its .draw method
             game_data.current_substate.draw()
 
+        # Draws the buttons
         for button in self.buttons.values():
             if self.pause_menu.draw_pause:
                 button[0][1].draw()
             else:
                 button[0][0].draw()
 
+        # Draws player and potentially pause menu
         game_data.player.draw()
         self.pause_menu.draw()
 
     def draw_map(self):
+        """Extra function, used to draw the map, based off of self.map."""
         self.screen.fill((135, 206, 235))
         for i, row in enumerate(self.map):
             for j, column in enumerate(row):
@@ -402,6 +465,9 @@ class PlayingGameState(BaseState):
                     )
 
     def handle_events(self, event):
+        """Handles all events related to thte Main Game."""
+
+        # Handles mouse presses and pause button presses
         mousex, mousey = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             for button_name, button in self.buttons.items():
@@ -412,19 +478,26 @@ class PlayingGameState(BaseState):
                     if button[0][0].get_rect().collidepoint((mousex, mousey)):
                         self.pause_menu.toggle_menu()
 
+        # Handles pause menu related events
         self.pause_menu.handle_events(event)
 
+        # If game's not paused, and current state is the playing state
+        # Handle the shop and enemy's events
         if (
             not self.pause_menu.draw_pause
             and game_data.current_substate.__class__ == self.__class__
         ):
             self.enemy.handle_events(event)
-        if game_data.current_substate.__class__ != self.__class__:
+            self.shop.handle_events(event)
+        # If the current state's not the playing state,
+        # Handle the substate's events with its .handle_events() method
+        elif game_data.current_substate.__class__ != self.__class__:
             game_data.current_substate.handle_events(event)
 
         game_data.player.handle_events(event)
 
     def constant_run(self):
+        """Handles all things that will be run ONCE per frame in the Main Game."""
         if not self.pause_menu.draw_pause:
             game_data.player.constant_run()
             self.enemy.constant_run()
