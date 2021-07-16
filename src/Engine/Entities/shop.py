@@ -20,6 +20,7 @@ class ShopEntity(BaseEntity):
         self.shop_pos = self.start_shop_pos[:]
         self.shop_rect = pygame.Rect(self.shop_pos[0], self.shop_pos[1], 60, 60)
         self.shop_collision = [None for _ in range(9)]
+        self.shop_state = substates.ShopSubstate()
 
         self.text_message = TextMessage(
             (20, 400),
@@ -45,7 +46,7 @@ class ShopEntity(BaseEntity):
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN and self.player_collide and self.text_message.is_finished:
-                game_data.current_substate = substates.ShopSubstate()
+                game_data.current_substate = self.shop_state
                 shop_player = ShopPlayer()
                 game_data.player = shop_player
                 game_data.player_list["shop_player"] = shop_player

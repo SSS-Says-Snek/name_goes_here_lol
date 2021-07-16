@@ -39,11 +39,11 @@ class BulletEnemy(BaseEnemy):
     def handle_events(self, event):
         if event.type == self.FIREBULLET:
             bullet_rad = (
-                math.atan2(
-                    self.enemy_pos[0] - self.player_obj.x1 + game_data.camera_offset[0],
-                    self.enemy_pos[1] - self.player_obj.y1 + game_data.camera_offset[1],
-                )
-                + math.radians(90)
+                    math.atan2(
+                        self.enemy_pos[0] - self.player_obj.x1 + game_data.camera_offset[0],
+                        self.enemy_pos[1] - self.player_obj.y1 + game_data.camera_offset[1],
+                    )
+                    + math.radians(90)
             )
 
             # Creates bullet, and appends it to
@@ -56,6 +56,7 @@ class BulletEnemy(BaseEnemy):
             self.start_pos[0] - game_data.camera_offset[0],
             self.start_pos[1] - game_data.camera_offset[1],
         )
+        # print("Outside:", self.player_obj.player)
 
         for bullet in list(self.bullets):
             bullet.update()
@@ -64,17 +65,24 @@ class BulletEnemy(BaseEnemy):
 
             for i, part in enumerate(reversed(list(self.player_obj.player))):
                 if pygame.Rect(
-                    bullet.x
-                    + game_data.camera_offset[0],  # + 2*game_data.camera_offset[0],
-                    bullet.y
-                    + game_data.camera_offset[1],  # + 2*game_data.camera_offset[1],
-                    20,
-                    20,
+                        bullet.x
+                        + game_data.camera_offset[0],  # + 2*game_data.camera_offset[0],
+                        bullet.y
+                        + game_data.camera_offset[1],  # + 2*game_data.camera_offset[1],
+                        20,
+                        20,
                 ).colliderect(part):
                     try:
                         print(f"Hit, at {part.x, part.y} (Real: {bullet.x, bullet.y}")
                         self.player_obj.player = self.player_obj.player[:i]
-                        self.player_obj.player_length = i  # len(self.player_obj.player)
+                        self.player_obj.player_length = i
+                        print(self.player_obj.player)
+
+                        change_dict = {"right": [self.player_obj.player_speed, 0], "left": [-self.player_obj.player_speed, 0],
+                                       "up": [0, -self.player_obj.player_speed], "down": [0, self.player_obj.player_speed]}
+
+                        self.player_obj.change = change_dict[self.player_obj.key]
+                        print(self.player_obj.change)
                         self.bullets.remove(bullet)
                         break
                     except ValueError:

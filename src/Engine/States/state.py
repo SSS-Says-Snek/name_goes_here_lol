@@ -22,7 +22,7 @@ from src import draw_utils
 from src import utils
 from src import common
 from src.Engine.Entities.player import Player
-from src.Engine.Entities.Mobs.enemy import HomingBulletEnemy
+from src.Engine.Entities.Mobs import enemy
 from src.Engine.Entities.shop import ShopEntity
 from src.Engine.base import BaseState
 from src.Engine.objects import Slider, game_data
@@ -407,7 +407,7 @@ class PlayingGameState(BaseState):
         self.pause_menu = PauseMenu(game_class)
         self.background = utils.load_image("bg.png").convert()
         self.player = Player()
-        self.enemy = HomingBulletEnemy(self.player)
+        self.enemy = enemy.BulletEnemy(self.player)
         self.shop = ShopEntity()
 
         # Currently, each tile is a 800x600 pixel image. May be changed to a square (possibly 25x25) soon
