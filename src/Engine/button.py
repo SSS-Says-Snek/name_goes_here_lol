@@ -38,7 +38,7 @@ class Button:
         self.rounded = rounded
         self.func_when_clicked = func_when_clicked
 
-    def draw(self):
+    def draw(self, rect_color=None):
         rect = pygame.Rect(self.coords)
         pygame.draw.rect(
             self.screen, self.rect_color, rect, border_radius=20 if self.rounded else 0
