@@ -1,5 +1,4 @@
 from src import common
-from src import utils
 
 
 def blit_multicolor_text(
@@ -7,6 +6,7 @@ def blit_multicolor_text(
 ):
     """
     Function used to render multicolored text. Used as:
+    >>> from src import utils
     >>> blit_multicolor_text(utils.font(20), {"Text lol": (128, 128, 128), "More Text": (128, 0, 0)})
     <blits font rendering with "Text lol" colored gray, and "More Text" colored red>
     """

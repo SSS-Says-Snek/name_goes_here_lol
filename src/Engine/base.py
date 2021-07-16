@@ -7,7 +7,7 @@ import pygame
 pygame.init()
 
 
-class BaseState(object):
+class BaseState:
     """
     The base state for other states to inherit from. This class contains:
         - self.screen, used to manage the screen
@@ -107,7 +107,7 @@ class DummyState:
         pass
 
 
-class BaseEntity(object):
+class BaseEntity:
     """
     The base entity for all entities to inherit from. The base class contains:
         - screen (used to blit objects onto the window)
@@ -158,7 +158,7 @@ class BaseEntity(object):
         )
 
 
-class BaseEnemy(object):
+class BaseEnemy:
     def __init__(self, player_obj, screen=common.SCREEN):
         self.player_obj = player_obj
         self.screen = screen

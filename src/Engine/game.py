@@ -8,7 +8,9 @@ This file stores the actual game class, used to run the game in main.py
 Note that GameLoop should ONLY be run inside main.py, and no where else. I just wanna make main.py look cool
 """
 
-from src.Engine.States.state import *
+from src import common
+from src import utils
+from src.Engine.States.state import MenuState
 from src.Engine.States.debug_game import DebugGame
 
 import time

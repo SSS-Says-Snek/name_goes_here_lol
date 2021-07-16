@@ -22,7 +22,8 @@ class ShopSubstate:
 
         self.screen.blit(utils.font(80).render(str(self.rand_num), True, (0, 0, 0)), (100, 100))
 
-    def handle_events(self, event):
+    @staticmethod
+    def handle_events(event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_F7:
                 game_data.player = game_data.player_list["main_player"]
