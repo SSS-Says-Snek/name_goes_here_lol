@@ -390,6 +390,7 @@ class GameData:
         self.player_list = {}
         self.current_substate = None
         self.playing_substate = None
+        self.player_money = 0
 
 
 class GameException(Exception):
