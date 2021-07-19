@@ -28,7 +28,7 @@ class TextBox:
         self.font = utils.font(self.fontsize)
         self.txt_surface = self.font.render(self.text, True, self.color)
 
-    def handle_event(self, event):
+    def handle_events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):

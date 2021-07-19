@@ -6,6 +6,7 @@ This file stores the actual game class, used to run the game in main.py
 >>> game_loop.run()
 
 Note that GameLoop should ONLY be run inside main.py, and no where else. I just wanna make main.py look cool
+Cool as in, "My main.py has only 4 lines of code."
 """
 
 from src import common
@@ -32,8 +33,7 @@ class GameLoop:
         """Initializes some class attributes first"""
         self.screen = screen
         self.manager = pygame_gui.UIManager(
-            (common.WIDTH, common.HEIGHT),
-            common.PATH / "src/Assets/Themes/test_theme.json",
+            (common.WIDTH, common.HEIGHT)
         )
         self.clock = pygame.time.Clock()
         self.font = utils.font(60)

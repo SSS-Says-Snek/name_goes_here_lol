@@ -18,7 +18,7 @@ class BulletEnemy(BaseEnemy):
             random.randint(0, common.WIDTH),
             random.randint(0, common.HEIGHT),
         )
-        self.enemy_pos = self.start_pos
+        self.pos = self.start_pos
         self.bullets = []
         self.firing_speed = 5.5
         self.bullet_speed = 7
@@ -30,7 +30,7 @@ class BulletEnemy(BaseEnemy):
 
     def draw(self):
         pygame.draw.rect(
-            self.screen, (180, 180, 180), (self.enemy_pos[0], self.enemy_pos[1], 40, 40)
+            self.screen, (180, 180, 180), (self.pos[0], self.pos[1], 40, 40)
         )
 
         for bullet in self.bullets:
@@ -40,19 +40,19 @@ class BulletEnemy(BaseEnemy):
         if event.type == self.FIREBULLET:
             bullet_rad = (
                     math.atan2(
-                        self.enemy_pos[0] - self.player_obj.x1 + game_data.camera_offset[0],
-                        self.enemy_pos[1] - self.player_obj.y1 + game_data.camera_offset[1],
+                        self.pos[0] - self.player_obj.pos[0] + game_data.camera_offset[0],
+                        self.pos[1] - self.player_obj.pos[1] + game_data.camera_offset[1]
                     )
                     + math.radians(90)
             )
 
             # Creates bullet, and appends it to
             self.bullets.append(
-                self.bullet_type(bullet_rad, self.bullet_speed, 10, *self.enemy_pos)
+                self.bullet_type(bullet_rad, self.bullet_speed, 10, *self.pos)
             )
 
     def constant_run(self):
-        self.enemy_pos = (
+        self.pos = (
             self.start_pos[0] - game_data.camera_offset[0],
             self.start_pos[1] - game_data.camera_offset[1],
         )
@@ -66,9 +66,9 @@ class BulletEnemy(BaseEnemy):
             for i, part in enumerate(reversed(list(self.player_obj.player))):
                 if pygame.Rect(
                         bullet.x
-                        + game_data.camera_offset[0],  # + 2*game_data.camera_offset[0],
+                        + game_data.camera_offset[0],
                         bullet.y
-                        + game_data.camera_offset[1],  # + 2*game_data.camera_offset[1],
+                        + game_data.camera_offset[1],
                         20,
                         20,
                 ).colliderect(part):

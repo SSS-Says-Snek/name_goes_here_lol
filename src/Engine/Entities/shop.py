@@ -58,8 +58,8 @@ class ShopEntity(BaseEntity):
         self.shop_pos[1] = self.start_shop_pos[1] - game_data.camera_offset[1]
 
         player_rect = pygame.Rect(
-            game_data.player.x1 - game_data.camera_offset[0],
-            game_data.player.y1 - game_data.camera_offset[1],
+            game_data.player.pos[0] - game_data.camera_offset[0],
+            game_data.player.pos[1] - game_data.camera_offset[1],
             20,
             20,
         )

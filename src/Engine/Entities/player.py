@@ -1,3 +1,12 @@
+"""
+This file stores all player classes (E.g main player, shop player, etc)
+Each player inherits from BaseEntity, which means that the following methods are required:
+    - XEntity.draw()
+    - XEntity.handle_events(event)
+As usual, there is also XEntity.constant_run(), but of course, it's optional, and not every
+entity needs that
+"""
+
 import random
 
 from src import common
@@ -18,8 +27,9 @@ class Player(BaseEntity):
         self.player = []  # Default: Empty list
         self.player_length = 10  # Default: 10 segments
         self.player_speed = 8  # Default: 8 Pixels per frame
-        self.x1 = common.WIDTH // 2  # Default: Starting X position
-        self.y1 = common.HEIGHT // 2  # Default: Starting Y position
+        self.pos = [common.WIDTH // 2, common.HEIGHT // 2]
+        # self.x1 = common.WIDTH // 2  # Default: Starting X position
+        # self.y1 = common.HEIGHT // 2  # Default: Starting Y position
 
         self.move_right = False
         self.move_left = False
@@ -28,24 +38,27 @@ class Player(BaseEntity):
         self.holding_key = False
         self.redraw_body = True
 
-        self.camera_x1 = self.x1  # Camera x position
-        self.camera_y1 = self.y1  # Camera y position
+        # self.camera_x1 = self.x1  # Camera x position
+        # self.camera_y1 = self.y1  # Camera y position
+        self.camera_pos = self.pos[:]
 
         self.change = (0, 0)  # Default: Stationary
         self.food_rect = self.generate_food()  # Default: Random position of food
 
     def draw(self):
         self.draw_player(self.player)
+
         pygame.draw.rect(
             self.screen,
             (128, 128, 128),
             [
-                self.x1 - game_data.camera_offset[0],
-                self.y1 - game_data.camera_offset[1],
+                self.pos[0] - game_data.camera_offset[0],
+                self.pos[1] - game_data.camera_offset[1],
                 20,
                 20,
             ],
         )
+
         pygame.draw.rect(
             self.screen,
             (255, 0, 0),
@@ -61,28 +74,29 @@ class Player(BaseEntity):
         if event.type == pygame.KEYDOWN:
             if (
                     event.key == pygame.K_RIGHT and self.key != "left"
-            ):  # and not self.holding_key:
+            ):
                 self.key = "right"
                 self.change = [self.player_speed, 0]
                 self.move_right = True
             if (
                     event.key == pygame.K_LEFT and self.key != "right"
-            ):  # and not self.holding_key:
+            ):
                 self.key = "left"
                 self.change = [-self.player_speed, 0]
                 self.move_left = True
             if (
                     event.key == pygame.K_UP and self.key != "down"
-            ):  # and not self.holding_key:
+            ):
                 self.key = "up"
                 self.change = [0, -self.player_speed]
                 self.move_up = True
             if (
                     event.key == pygame.K_DOWN and self.key != "up"
-            ):  # and not self.holding_key:
+            ):
                 self.key = "down"
                 self.change = [0, self.player_speed]
                 self.move_down = True
+
             self.holding_key = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
@@ -97,7 +111,7 @@ class Player(BaseEntity):
             self.holding_key = False
 
     def constant_run(self):
-        player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
+        player_rect = pygame.Rect(self.pos + [20, 20])
         if self.change != [0, 0] and self.redraw_body:
             self.player.append(player_rect)
 
@@ -108,21 +122,21 @@ class Player(BaseEntity):
 
         if self.move_right:
             self.change[0] = self.player_speed
-            self.x1 += self.player_speed
+            self.pos[0] += self.player_speed
         elif self.move_left:
             self.change[0] = -self.player_speed
-            self.x1 -= self.player_speed
+            self.pos[0] -= self.player_speed
         elif self.move_up:
             self.change[1] = -self.player_speed
-            self.y1 -= self.player_speed
+            self.pos[1] -= self.player_speed
         elif self.move_down:
             self.change[1] = self.player_speed
-            self.y1 += self.player_speed
+            self.pos[1] += self.player_speed
 
-        self.camera_x1 += self.change[0]
-        self.camera_y1 += self.change[1]
+        self.camera_pos[0] += self.change[0]
+        self.camera_pos[1] += self.change[1]
 
-        player_rect = pygame.Rect([self.x1, self.y1, 20, 20])
+        player_rect = pygame.Rect(self.pos + [20, 20])
 
         for segment in self.player[:-1]:
             if segment == player_rect:
@@ -134,10 +148,10 @@ class Player(BaseEntity):
             game_data.player_money += 10 + random.randint(0, 8)
 
         game_data.camera_offset[0] += (
-                                              self.change[0] - game_data.camera_offset[0] - 410 + self.x1
+                                              self.change[0] - game_data.camera_offset[0] - 410 + self.pos[0]
                                       ) // 20
         game_data.camera_offset[1] += (
-                                              self.change[1] - game_data.camera_offset[1] - 310 + self.y1
+                                              self.change[1] - game_data.camera_offset[1] - 310 + self.pos[1]
                                       ) // 20
 
         prev_segment = None
@@ -188,4 +202,4 @@ class ShopPlayer(Player):
         self.player_speed = 5
 
     def draw(self):
-        pygame.draw.rect(self.screen, (128, 128, 128), [self.x1, self.y1, 20, 20])
+        pygame.draw.rect(self.screen, (128, 128, 128), self.pos + [20, 20])

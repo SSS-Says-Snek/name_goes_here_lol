@@ -51,12 +51,13 @@ class HomingBullet(Bullet):
 
     def update(self):
         super().update()
+
         self.angle = (
-            math.atan2(
-                self.x - game_data.player.x1 + game_data.camera_offset[0],
-                self.y - game_data.player.y1 + game_data.camera_offset[1],
-            )
-            + math.radians(90)
+                math.atan2(
+                    self.x - game_data.player.pos[0] + game_data.camera_offset[0],
+                    self.y - game_data.player.pos[1] + game_data.camera_offset[1],
+                )
+                + math.radians(90)
         )
 
     def on_death(self):
