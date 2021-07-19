@@ -20,5 +20,5 @@ jobs:
         python -m pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint --extension-pkg-whitelist pygame --fail-under 7.2 --exit-zero src
+        pylint --extension-pkg-whitelist pygame --fail-under 8.5 --exit-zero src
         
