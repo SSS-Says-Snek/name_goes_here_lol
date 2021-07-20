@@ -61,7 +61,7 @@ def load_image(image_name):
 
 
 @lru_cache(1000)
-def font(size, text_font="ThaleahFat"):
+def load_font(size, text_font="ThaleahFat"):
     """Loads a font with a given size and an optional parameter for the font name"""
     return pygame.font.Font(common.FONT_PATH / f"{text_font}.ttf", size)
 

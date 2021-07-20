@@ -25,7 +25,7 @@ class TextBox:
         self.active = False
         self.fontsize = fontsize
 
-        self.font = utils.font(self.fontsize)
+        self.font = utils.load_font(self.fontsize)
         self.txt_surface = self.font.render(self.text, True, self.color)
 
     def handle_events(self, event):
@@ -183,6 +183,9 @@ class OkayPopUpMessage(PopUpMessage):
 
 
 class Slider:
+    # pylint: disable=too-many-instance-attributes
+    # Well, whaddya expect, there needs to be a lot to customize the slider
+
     def __init__(
         self,
         coord,
@@ -221,7 +224,7 @@ class Slider:
             self.width,
         )
         self.rect = pygame.Rect(self.rect_coord)
-        self.font = utils.font(self.width)
+        self.font = utils.load_font(self.width)
         self.is_holding_mouse = False
         self.slide_coord = (
             self.coord[0]

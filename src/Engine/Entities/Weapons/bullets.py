@@ -8,7 +8,7 @@ pygame.init()
 
 
 class Bullet:
-    def __init__(self, angle, speed, lifespan, x, y, screen=common.SCREEN):
+    def __init__(self, angle, speed, lifespan, x, y, damage=None, screen=common.SCREEN):
         self.angle = (
             angle  # Default angle for the bullet: MAY CHANGE FOR DIFFERENT BULLETS
         )
@@ -21,6 +21,8 @@ class Bullet:
         self.unadjusted_y = y
         self.x = self.unadjusted_x
         self.y = self.unadjusted_y
+
+        self.damage = damage
 
         self.screen = screen
         self.current_lifespan = 0
@@ -40,6 +42,18 @@ class Bullet:
 
     def draw_bullet(self):
         pygame.draw.rect(self.screen, (100, 100, 100), [self.x, self.y, 20, 20])
+
+    def handle_collision(self, other_rect):
+        if pygame.Rect(
+                self.x
+                + game_data.camera_offset[0],
+                self.y
+                + game_data.camera_offset[1],
+                20,
+                20,
+        ).colliderect(other_rect):
+            return True
+        return False
 
     def on_death(self):
         """Override this if the custom bullet doese something on death of bullet"""

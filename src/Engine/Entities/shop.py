@@ -28,7 +28,7 @@ class ShopEntity(BaseEntity):
             190,
             (128, 128, 128),
             "Are you sure you want to enter the shop? (Enter to enter shop, move away to exit)",
-            utils.font(50),
+            utils.load_font(50),
             instant_blit=False,
             border_color=(80, 80, 80),
             border_width=10,

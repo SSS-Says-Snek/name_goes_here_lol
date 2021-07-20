@@ -13,27 +13,27 @@ class DebugGame:
         debug_surf = pygame.Surface((400, 230))  # lgtm [py/call/wrong-arguments]
         debug_surf.fill((128, 128, 128))
 
-        debug_title_txt = utils.font(50).render("Debug Screen", True, (0, 0, 0))
+        debug_title_txt = utils.load_font(50).render("Debug Screen", True, (0, 0, 0))
         debug_title_txt_pos = debug_title_txt.get_rect()
         debug_title_txt_pos.center = (175, 20)
         debug_surf.blit(debug_title_txt, debug_title_txt_pos)
 
-        debug_state_txt = utils.font(16).render(
+        debug_state_txt = utils.load_font(16).render(
             f"State: {information['state']}", True, (0, 0, 0)
         )
         debug_surf.blit(debug_state_txt, (15, 60))
 
-        debug_fps_txt = utils.font(20).render(
+        debug_fps_txt = utils.load_font(20).render(
             f"Frames per second: {str(round(information['fps'], 5))}", True, (0, 0, 0)
         )
         debug_surf.blit(debug_fps_txt, (15, 90))
 
-        debug_cpu_txt = utils.font(20).render(
+        debug_cpu_txt = utils.load_font(20).render(
             f"CPU Percentage: {information['cpu']}%", True, (0, 0, 0)
         )
         debug_surf.blit(debug_cpu_txt, (15, 120))
 
-        debug_mem_txt = utils.font(20).render(
+        debug_mem_txt = utils.load_font(20).render(
             f"RAM Taken Up: {utils.format_byte(information['mem'][0])} "
             f"({round(information['mem'][0] / information['mem'][1] * 100, 3)}% of "
             f"{utils.format_byte(information['mem'][1])})",
@@ -42,7 +42,7 @@ class DebugGame:
         )
         debug_surf.blit(debug_mem_txt, (15, 150))
 
-        debug_time_txt = utils.font(20).render(
+        debug_time_txt = utils.load_font(20).render(
             f"Time Played: {information['time'][0].humanize(information['time'][1], only_distance=True)}",
             True,
             (0, 0, 0),

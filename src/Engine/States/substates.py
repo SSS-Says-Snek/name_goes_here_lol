@@ -15,7 +15,7 @@ class ShopSubstate:
     def draw(self):
         self.screen.fill((0, 255, 0))
 
-        shop_txt = utils.font(80).render("Shop", True, (0, 0, 0))
+        shop_txt = utils.load_font(80).render("Shop", True, (0, 0, 0))
         shop_txt_rect = shop_txt.get_rect(center=(common.WIDTH // 2, 40))
         self.screen.blit(shop_txt, shop_txt_rect)
 

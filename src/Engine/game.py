@@ -36,7 +36,7 @@ class GameLoop:
             (common.WIDTH, common.HEIGHT)
         )
         self.clock = pygame.time.Clock()
-        self.font = utils.font(60)
+        self.font = utils.load_font(60)
         self.running = True
 
         self.state = MenuState(self)

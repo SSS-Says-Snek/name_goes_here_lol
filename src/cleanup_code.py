@@ -9,7 +9,7 @@ try:
     import black
 except ImportError:
     print("We use black to format code. Please install it with 'pip install black'")
-    raise SystemExit
+    raise SystemExit from ImportError
 
 
 def cleanup_code():

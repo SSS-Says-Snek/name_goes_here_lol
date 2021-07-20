@@ -45,6 +45,7 @@ class BulletEnemy(BaseEnemy):
                     )
                     + math.radians(90)
             )
+            print(math.degrees(bullet_rad))
 
             # Creates bullet, and appends it to
             self.bullets.append(
@@ -78,11 +79,15 @@ class BulletEnemy(BaseEnemy):
                         self.player_obj.player_length = i
                         print(self.player_obj.player)
 
-                        change_dict = {"right": [self.player_obj.player_speed, 0], "left": [-self.player_obj.player_speed, 0],
-                                       "up": [0, -self.player_obj.player_speed], "down": [0, self.player_obj.player_speed]}
+                        change_dict = {
+                            "right": [self.player_obj.player_speed, 0],
+                            "left": [-self.player_obj.player_speed, 0],
+                            "up": [0, -self.player_obj.player_speed],
+                            "down": [0, self.player_obj.player_speed],
+                            None: [0, 0]
+                        }
 
                         self.player_obj.change = change_dict[self.player_obj.key]
-                        print(self.player_obj.change)
                         self.bullets.remove(bullet)
                         break
                     except ValueError:

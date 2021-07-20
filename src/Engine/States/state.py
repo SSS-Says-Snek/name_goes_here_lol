@@ -109,7 +109,7 @@ class MenuState(BaseState):
         """Performs all drawing related tasks related to the Main Menu."""
 
         # Draws the version at the bottom right
-        version_txt = utils.font(15, "PixelMillenium").render(
+        version_txt = utils.load_font(15, "PixelMillenium").render(
             f"Version {common.__version__}", True, (0, 0, 0)
         )
         version_txt_rect = version_txt.get_rect(
@@ -254,7 +254,7 @@ class SettingState(BaseState):
         txt = self.font.render("Game Settings", True, (0, 0, 0))
         draw_utils.blit_on_center(txt, (400, 30))
 
-        fps_txt = utils.font(50).render("FPS:", True, (0, 0, 0))
+        fps_txt = utils.load_font(50).render("FPS:", True, (0, 0, 0))
         self.screen.blit(fps_txt, (40, 100))
 
         self.fps_slider.draw()
@@ -340,7 +340,7 @@ class NewGameState(BaseState):
         dt = self.clock.tick(30) / 1000
 
         # Renders and blits text
-        new_game_txt = utils.font(51).render(
+        new_game_txt = utils.load_font(51).render(
             "Enter File name for new game:", True, (0, 0, 0)
         )
         new_game_txt_rect = new_game_txt.get_rect(center=(self.screen_width // 2, 40))
@@ -549,7 +549,7 @@ class PauseMenu(BaseState):
         if self.draw_pause:
             if self.alpha < self.max_alpha:
                 self.fade(self.alpha)
-            pause_txt = utils.font(60).render("Paused", True, (0, 0, 0))
+            pause_txt = utils.load_font(60).render("Paused", True, (0, 0, 0))
             self.screen.blit(pause_txt, (300, 100))
             self.screen.blit(self.screen_surf, (0, 0))
 

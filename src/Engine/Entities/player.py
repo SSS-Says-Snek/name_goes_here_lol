@@ -8,10 +8,12 @@ entity needs that
 """
 
 import random
+import time
 
 from src import common
 from src.Engine.base import BaseEntity
 from src.Engine.objects import game_data
+from src.Engine.Entities.Weapons.guns import BasicGun
 
 import pygame
 
@@ -28,18 +30,19 @@ class Player(BaseEntity):
         self.player_length = 10  # Default: 10 segments
         self.player_speed = 8  # Default: 8 Pixels per frame
         self.pos = [common.WIDTH // 2, common.HEIGHT // 2]
-        # self.x1 = common.WIDTH // 2  # Default: Starting X position
-        # self.y1 = common.HEIGHT // 2  # Default: Starting Y position
+        self.bullets = []  # Default: No bullets shot yet
+        self.inventory = [BasicGun()]  # Default: No items in inventory (yet)
+        self.inventory_idx = 0
+        self.weapon_last_fired = None
 
+        # Self-explanatory
         self.move_right = False
         self.move_left = False
         self.move_up = False
         self.move_down = False
+
         self.holding_key = False
         self.redraw_body = True
-
-        # self.camera_x1 = self.x1  # Camera x position
-        # self.camera_y1 = self.y1  # Camera y position
         self.camera_pos = self.pos[:]
 
         self.change = (0, 0)  # Default: Stationary
@@ -70,6 +73,9 @@ class Player(BaseEntity):
             ],
         )
 
+        for bullet in self.bullets:
+            bullet.draw_bullet()
+
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
             if (
@@ -97,7 +103,15 @@ class Player(BaseEntity):
                 self.change = [0, self.player_speed]
                 self.move_down = True
 
+            if (
+                    event.key == pygame.K_SPACE
+            ):
+                if (self.weapon_last_fired is None) or (time.time() - self.weapon_last_fired > self.inventory[self.inventory_idx].cooldown):
+                    self.inventory[self.inventory_idx].fire()
+                    self.weapon_last_fired = time.time()
+
             self.holding_key = True
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 self.move_right = False
@@ -107,10 +121,12 @@ class Player(BaseEntity):
                 self.move_up = False
             if event.key == pygame.K_DOWN:
                 self.move_down = False
-            self.change = (0, 0)
+            self.change = [0, 0]
             self.holding_key = False
 
     def constant_run(self):
+        self.handle_bullets()
+
         player_rect = pygame.Rect(self.pos + [20, 20])
         if self.change != [0, 0] and self.redraw_body:
             self.player.append(player_rect)
@@ -158,8 +174,10 @@ class Player(BaseEntity):
 
         for i, segment in enumerate(self.player):
             try:
-                if abs(segment.x - prev_segment.x) not in [self.player_speed, 0] or \
-                        abs(segment.y - prev_segment.y) not in [self.player_speed, 0]:
+                if (abs(segment.x - prev_segment.x) not in [self.player_speed, 0] or
+                    abs(segment.y - prev_segment.y) not in [self.player_speed, 0]) and \
+                        (abs(segment.x - prev_segment.x) not in [self.player_speed * 2, 0] or
+                         abs(segment.y - prev_segment.y) not in [self.player_speed * 2, 0]):
                     print(f"Detektid at {prev_segment} to {segment}")
                     print(f"Player rect: {self.player}")
                     del self.player[:i + 1]
@@ -182,8 +200,12 @@ class Player(BaseEntity):
                 ],
             )
 
-    def move_body_to_head(self):
-        pass
+    def handle_bullets(self):
+        for bullet in list(self.bullets):
+            bullet.update()
+
+            if bullet.current_lifespan > bullet.lifespan:
+                self.bullets.remove(bullet)
 
     @staticmethod
     def generate_food():

@@ -24,7 +24,7 @@ class BaseState:
         dictionary
         """
         self.screen = screen  # sets the screen to be the default screen
-        self.font = utils.font(60)  # sets default font
+        self.font = utils.load_font(60)  # sets default font
         self.next_state = (
             self.__class__
         )  # sets the default state, next_state would change when changing states
@@ -91,7 +91,7 @@ class DummyState:
 
     def __init__(self, screen=common.SCREEN):
         self.screen = screen
-        self.font = utils.font(60)
+        self.font = utils.load_font(60)
         self.next_state = self.__class__
 
     def draw(self):
