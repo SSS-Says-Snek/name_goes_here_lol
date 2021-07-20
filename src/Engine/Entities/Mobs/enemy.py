@@ -39,11 +39,11 @@ class BulletEnemy(BaseEnemy):
     def handle_events(self, event):
         if event.type == self.FIREBULLET:
             bullet_rad = (
-                    math.atan2(
-                        self.pos[0] - self.player_obj.pos[0] + game_data.camera_offset[0],
-                        self.pos[1] - self.player_obj.pos[1] + game_data.camera_offset[1]
-                    )
-                    + math.radians(90)
+                math.atan2(
+                    self.pos[0] - self.player_obj.pos[0] + game_data.camera_offset[0],
+                    self.pos[1] - self.player_obj.pos[1] + game_data.camera_offset[1],
+                )
+                + math.radians(90)
             )
             print(math.degrees(bullet_rad))
 
@@ -66,12 +66,10 @@ class BulletEnemy(BaseEnemy):
 
             for i, part in enumerate(reversed(list(self.player_obj.player))):
                 if pygame.Rect(
-                        bullet.x
-                        + game_data.camera_offset[0],
-                        bullet.y
-                        + game_data.camera_offset[1],
-                        20,
-                        20,
+                    bullet.x + game_data.camera_offset[0],
+                    bullet.y + game_data.camera_offset[1],
+                    20,
+                    20,
                 ).colliderect(part):
                     try:
                         print(f"Hit, at {part.x, part.y} (Real: {bullet.x, bullet.y}")
@@ -84,7 +82,7 @@ class BulletEnemy(BaseEnemy):
                             "left": [-self.player_obj.player_speed, 0],
                             "up": [0, -self.player_obj.player_speed],
                             "down": [0, self.player_obj.player_speed],
-                            None: [0, 0]
+                            None: [0, 0],
                         }
 
                         self.player_obj.change = change_dict[self.player_obj.key]

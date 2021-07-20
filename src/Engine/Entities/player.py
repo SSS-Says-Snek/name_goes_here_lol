@@ -78,35 +78,28 @@ class Player(BaseEntity):
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
-            if (
-                    event.key == pygame.K_RIGHT and self.key != "left"
-            ):
+            if event.key == pygame.K_RIGHT and self.key != "left":
                 self.key = "right"
                 self.change = [self.player_speed, 0]
                 self.move_right = True
-            if (
-                    event.key == pygame.K_LEFT and self.key != "right"
-            ):
+            if event.key == pygame.K_LEFT and self.key != "right":
                 self.key = "left"
                 self.change = [-self.player_speed, 0]
                 self.move_left = True
-            if (
-                    event.key == pygame.K_UP and self.key != "down"
-            ):
+            if event.key == pygame.K_UP and self.key != "down":
                 self.key = "up"
                 self.change = [0, -self.player_speed]
                 self.move_up = True
-            if (
-                    event.key == pygame.K_DOWN and self.key != "up"
-            ):
+            if event.key == pygame.K_DOWN and self.key != "up":
                 self.key = "down"
                 self.change = [0, self.player_speed]
                 self.move_down = True
 
-            if (
-                    event.key == pygame.K_SPACE
-            ):
-                if (self.weapon_last_fired is None) or (time.time() - self.weapon_last_fired > self.inventory[self.inventory_idx].cooldown):
+            if event.key == pygame.K_SPACE:
+                if (self.weapon_last_fired is None) or (
+                    time.time() - self.weapon_last_fired
+                    > self.inventory[self.inventory_idx].cooldown
+                ):
                     self.inventory[self.inventory_idx].fire()
                     self.weapon_last_fired = time.time()
 
@@ -164,23 +157,26 @@ class Player(BaseEntity):
             game_data.player_money += 10 + random.randint(0, 8)
 
         game_data.camera_offset[0] += (
-                                              self.change[0] - game_data.camera_offset[0] - 410 + self.pos[0]
-                                      ) // 20
+            self.change[0] - game_data.camera_offset[0] - 410 + self.pos[0]
+        ) // 20
         game_data.camera_offset[1] += (
-                                              self.change[1] - game_data.camera_offset[1] - 310 + self.pos[1]
-                                      ) // 20
+            self.change[1] - game_data.camera_offset[1] - 310 + self.pos[1]
+        ) // 20
 
         prev_segment = None
 
         for i, segment in enumerate(self.player):
             try:
-                if (abs(segment.x - prev_segment.x) not in [self.player_speed, 0] or
-                    abs(segment.y - prev_segment.y) not in [self.player_speed, 0]) and \
-                        (abs(segment.x - prev_segment.x) not in [self.player_speed * 2, 0] or
-                         abs(segment.y - prev_segment.y) not in [self.player_speed * 2, 0]):
+                if (
+                    abs(segment.x - prev_segment.x) not in [self.player_speed, 0]
+                    or abs(segment.y - prev_segment.y) not in [self.player_speed, 0]
+                ) and (
+                    abs(segment.x - prev_segment.x) not in [self.player_speed * 2, 0]
+                    or abs(segment.y - prev_segment.y) not in [self.player_speed * 2, 0]
+                ):
                     print(f"Detektid at {prev_segment} to {segment}")
                     print(f"Player rect: {self.player}")
-                    del self.player[:i + 1]
+                    del self.player[: i + 1]
                     self.player_length = i
             except AttributeError:
                 pass

@@ -365,7 +365,11 @@ class TextMessage:
             self.prev_line_text = prev_text
 
     def handle_events(self, event):
-        if event.type == pygame.KEYDOWN and not self.instant_blit and self.blitted_chars != self.split_text:
+        if (
+            event.type == pygame.KEYDOWN
+            and not self.instant_blit
+            and self.blitted_chars != self.split_text
+        ):
             self.blitted_chars = self.split_text[:]
             self.blit_line_idx = len(self.blitted_chars) - 1
             self.char_blit_line = len(self.blitted_chars[-1])
@@ -380,7 +384,7 @@ class TextMessage:
     @property
     def is_finished(self):
         if not self.instant_blit and self.blitted_chars != self.split_text:
-            print('bruv')
+            print("bruv")
             return False
         return True
 

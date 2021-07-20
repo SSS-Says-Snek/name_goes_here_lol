@@ -32,9 +32,7 @@ class GameLoop:
     def __init__(self, screen=common.SCREEN):
         """Initializes some class attributes first"""
         self.screen = screen
-        self.manager = pygame_gui.UIManager(
-            (common.WIDTH, common.HEIGHT)
-        )
+        self.manager = pygame_gui.UIManager((common.WIDTH, common.HEIGHT))
         self.clock = pygame.time.Clock()
         self.font = utils.load_font(60)
         self.running = True

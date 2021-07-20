@@ -45,12 +45,10 @@ class Bullet:
 
     def handle_collision(self, other_rect):
         if pygame.Rect(
-                self.x
-                + game_data.camera_offset[0],
-                self.y
-                + game_data.camera_offset[1],
-                20,
-                20,
+            self.x + game_data.camera_offset[0],
+            self.y + game_data.camera_offset[1],
+            20,
+            20,
         ).colliderect(other_rect):
             return True
         return False
@@ -67,11 +65,11 @@ class HomingBullet(Bullet):
         super().update()
 
         self.angle = (
-                math.atan2(
-                    self.x - game_data.player.pos[0] + game_data.camera_offset[0],
-                    self.y - game_data.player.pos[1] + game_data.camera_offset[1],
-                )
-                + math.radians(90)
+            math.atan2(
+                self.x - game_data.player.pos[0] + game_data.camera_offset[0],
+                self.y - game_data.player.pos[1] + game_data.camera_offset[1],
+            )
+            + math.radians(90)
         )
 
     def on_death(self):

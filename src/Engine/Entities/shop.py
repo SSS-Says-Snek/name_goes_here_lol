@@ -45,7 +45,11 @@ class ShopEntity(BaseEntity):
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN and self.player_collide and self.text_message.is_finished:
+            if (
+                event.key == pygame.K_RETURN
+                and self.player_collide
+                and self.text_message.is_finished
+            ):
                 game_data.current_substate = self.shop_state
                 shop_player = ShopPlayer()
                 game_data.player = shop_player
