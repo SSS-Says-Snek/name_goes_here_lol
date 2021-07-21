@@ -35,6 +35,8 @@ class ShopEntity(BaseEntity):
         )
         self.player_collide = False
 
+        self.do_collision = False  # Let's not do it for now :kekw:
+
     def draw(self):
         pygame.draw.rect(
             self.screen, (0, 0, 128), [self.shop_pos[0], self.shop_pos[1], 60, 60]
@@ -73,44 +75,33 @@ class ShopEntity(BaseEntity):
             self.check_collision(player_rect)
             self.player_collide = True
 
-            """if self.shop_collision[0] or self.shop_collision[2] or self.shop_collision[4]:
-                player_rect.right = self.shop_rect.left
-                game_data.player.redraw_body = False
-                print("Left")
-            elif self.shop_collision[1] or self.shop_collision[3] or self.shop_collision[5]:
-                player_rect.left = self.shop_rect.right
-                game_data.player.redraw_body = False
-                print("Right")
-            elif self.shop_collision[0] or self.shop_collision[1] or self.shop_collision[6]:
-                player_rect.bottom = self.shop_rect.top
-                game_data.player.redraw_body = False
-                print("Top")
-            elif self.shop_collision[2] or self.shop_collision[3] or self.shop_collision[7]:
-                player_rect.top = self.shop_rect.bottom
-                game_data.player.redraw_body = False
-                print("Bottom")
+            if self.do_collision:
+                if abs(self.shop_rect.right - player_rect.left) < game_data.player.player_speed and game_data.player.change[0] < 0:
+                    print('right')
+                    player_rect.left = self.shop_rect.right
+                    game_data.player.redraw_body = False
+                if abs(self.shop_rect.left - player_rect.right) < game_data.player.player_speed and game_data.player.change[0] > 0:
+                    print('left')
+                    player_rect.right = self.shop_rect.left
+                    game_data.player.redraw_body = False
+                if abs(self.shop_rect.top - player_rect.bottom) < game_data.player.player_speed and game_data.player.change[1] > 0:
+                    print('top')
+                    player_rect.bottom = self.shop_rect.top
+                    game_data.player.redraw_body = False
+                if abs(self.shop_rect.bottom - player_rect.top) < game_data.player.player_speed and game_data.player.change[1] < 0:
+                    print('bottom')
+                    player_rect.top = self.shop_rect.bottom
+                    game_data.player.redraw_body = False
 
-            if player_rect.right > self.shop_rect.left and game_data.player.change[0] > 0:
-                print("Left")
-                player_rect.right = self.shop_rect.left + 5
-                game_data.player.redraw_body = False
-            elif player_rect.left < self.shop_rect.right and game_data.player.change[0] < 0:
-                print("Right")
-                player_rect.left = self.shop_rect.right - 5
-                game_data.player.redraw_body = False
-            elif player_rect.bottom > self.shop_rect.top and game_data.player.change[1] > 0:
-                print("Top")
-                player_rect.bottom = self.shop_rect.top + 5
-                game_data.player.redraw_body = False
-            elif player_rect.top < self.shop_rect.bottom and game_data.player.change[1] < 0:
-                print("Bottom")
-                player_rect.top = self.shop_rect.bottom - 5
-                game_data.player.redraw_body = False
-            player_rect.x -= game_data.player.change[0]
-            player_rect.y -= game_data.player.change[1]
+                player_rect.x -= game_data.player.change[0]
+                player_rect.y -= game_data.player.change[1]
 
-            game_data.player.x1 = player_rect.x + game_data.camera_offset[0]
-            game_data.player.y1 = player_rect.y + game_data.camera_offset[1]"""
+                game_data.player.pos = [player_rect.x + game_data.camera_offset[0], player_rect.y + game_data.camera_offset[1]]
+        elif (
+                self.do_collision and
+                utils.distance(self.shop_rect.centerx, player_rect.centerx, self.shop_rect.centery, player_rect.centery) <= 100
+        ):
+            self.player_collide = True
         else:
             self.player_collide = False
             game_data.player.redraw_body = True
