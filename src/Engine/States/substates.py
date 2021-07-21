@@ -3,7 +3,6 @@ from src import utils
 from src.Engine.objects import game_data
 
 import pygame
-import random
 
 pygame.init()
 
