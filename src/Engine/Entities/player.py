@@ -114,7 +114,9 @@ class Player(BaseEntity):
                 self.move_up = False
             if event.key == pygame.K_DOWN:
                 self.move_down = False
-            self.change = [0, 0]
+
+            if event.key in [pygame.K_RIGHT, pygame.K_LEFT, pygame.K_UP, pygame.K_DOWN]:
+                self.change = [0, 0]
             self.holding_key = False
 
     def constant_run(self):
