@@ -13,6 +13,7 @@ Date Last Modified: Apr 22, 2021, at ???:?? AM
 Date of Release: Apr 22, 2021, at ???:?? PM
 
 
+
 Version -4.5.0 changelogs:
 - Completely refactor code and put code into new src folder
 - Added function to create a new game file (not really)
@@ -24,6 +25,7 @@ Date Last Modified: Apr 28, 2021, at 1:35 PM
 Date of Release: Apr 28, 2021, at 1:42 PM
 
 
+
 Version -4.4.999999 changelogs:
 - Refactor some code
 - Add Pause menu and improve debug screen
@@ -31,4 +33,110 @@ Version -4.4.999999 changelogs:
 
 Date of Planning: May 1, 2021, at 11:21 PM
 Date Last Modified: May 4, 2021, at 1:32 PM
-Date of Release: May 4, 2 020, at 1:38 PM
+Date of Release: May 4, 2021, at 1:38 PM
+
+
+
+Version -4.4.5.b-1 changelogs:
+- UNKNOWN (If known, please inform me)
+
+Date of Planning: May 4, 2021, at 1:42 PM
+Date Last Modified: May 17, 2021, at ???:?? PM
+Date of Release: May 17, 2021, at ???:?? PM
+
+
+
+Version -4.4.5.a-2.b-3.1.4 changelogs:
+- UNKNOWN (If known, please inform me)
+
+Date of Planning: May 17, 2021, at ???:?? PM
+Date Last Modified: May 20, 2021, at ???:?? PM
+Date of Release: May 20, 2021, at ???:?? PM
+
+
+
+Version -4.4.5.b-inf changelogs:
+- Added webhook support in my discord server (just a bunch of IRL friends)
+- Add some docstrings and comments
+- Modify SettingState
+
+Date of Planning: May 20, 2021, at ???:?? PM
+Date Last Modified: May 20, 2021, at ???:?? PM
+Date of Release: May 20, 2021, at ???:?? PM
+
+
+
+Version -4.4.4.a-3235623 changelogs:
+- UNKNOWN (If known, please inform me)
+
+Date of Planning: May 21, 2021, at ???:?? PM
+Date Last Modified: Jun 1, 2021, at ???:?? PM
+Date of Release: Jun 1, 2021, at ???:?? PM
+
+
+
+Version -3.0.0 changelogs:
+- BIG UPDATE
+- Actually got semi-playable snake game
+
+Date of Planning: Jun 2, 2021, at ???:?? PM
+Date Last Modified: Jun 17, 2021, at ???:?? PM
+Date of Release: Jun 17, 2021, at ???:?? PM
+
+
+
+Version -2.6.0.b-5 changelogs:
+- Added beta version for bullet enemies (currently, no homing bullet enemies)
+- Added beta version for expanded 8kx8k pixel map (will be finalized later, in v-2.6.0)
+
+Date of Planning: Jun 17, 2021, at 11:42 PM
+Date Last Modified: Jul 5, 2021, at 3:12 PM
+Date of Release: Jul 7, 2021, at 6:32 PM
+
+
+
+Version -2.6.0.b1 changelogs:
+- Bug fixes (If you have more change logs, please inform me)
+
+Date of Planning: Jul 7, 2021, at 6:36 PM
+Date Last Modified: Jul 11, 2021, at 3:42 PM
+Date of Release: Jul 11, 2021, at 3:53 PM
+
+
+
+Version -2.6.0 changelogs:
+------ FULL RELEASE OF v-2.6.0: This contains all included stuff in the beta versions, plus more -------
+- Officially add bullet enemies!
+    - Two different kinds: Homing and normal
+        - Normal shoots at the player, but never changes the angle, so it's easy to dodge
+        - Homing shoots at the player, but it always changes the angle, so it's harder to dodge
+            - However, homing bullets are VERY slow
+- 2D Map has been officially added as well!
+    - Fixed multiple bugs of beta version
+    - To be added: Collision with 2D map
+
+Date of Planning: Jul 12, 2021, at 10:34 PM
+Date Last Modified: Jul 15, 2021, at 7:31 AM
+Date of Release: Jul 15, 2021, at 7:43 AM
+
+
+
+############################################################################################################################################
+#                                                                                                                                          #
+#                           ALL VERSION RELEASES BEYOND THIS POINT WILL HAVE A SPECIFIC FORMAT TO FOLLOW                                   #
+#                                                                                                                                          #
+############################################################################################################################################
+
+
+
+Version -2.4.0.rc1j changelogs:
+v2.4.0.rc1j (yes, it's imaginary) changelogs;
+- [NEW]: New TextMessage class for displaying wrapped text. Image version coming soon
+- [NEW]: Substates are here! Currently, the only substate is a very alpha release of the Shop State
+- [MODIFIED]: Bug fixes, especially those regarding bullets
+- [MODIFIED]: More comments and docstrings
+- [MINOR]: Pylint now lints the game, so hopefully I'll be able to maintain cleanliness of the code
+- [GITHUB]: New workflows, Greetings and Pylint, to assist you in your pull requests and issues
+- [GITHUB]: Added security advices
+- [GITHUB]: Pylint and CodeQL checks must pass. CodeQL analyzes potential security risks, and Pylint checks for code readability.
+            If Pylint score gets less than 7.2/10 (current: 9.42/10), you would need to work on your code before merging it.
