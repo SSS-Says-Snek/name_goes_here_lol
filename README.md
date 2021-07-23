@@ -14,6 +14,7 @@ so if you look at my code it's gonna look like trash... Not that my code without
 This is also my first time making a semi-original idea in pygame, so some ideas will suck.
 
 Only menu's functioning rn lol
+
 And a semi-playable snake game :kekw:
 
 ## Features
