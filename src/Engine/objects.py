@@ -310,7 +310,7 @@ class TextMessage:
         self.screen = screen
 
         self.text_rect = pygame.Rect(self.pos[0], self.pos[1], self.width, self.height)
-        self.split_text = utils.wrap_text(
+        self.split_text = self.wrap_text(
             self.text, self.width - (self.border_width or 0), self.font
         )
 
@@ -380,6 +380,41 @@ class TextMessage:
         self.char_blit_line = 0
         self.blit_line_idx = 0
         self.prev_line_text = ""
+
+    @staticmethod
+    def wrap_text(text, width, font):
+        """Wrap text to fit inside a given width when rendered.
+        :param text: The text to be wrapped.
+        :param font: The font the text will be rendered in.
+        :param width: The width to wrap to.
+        """
+        text_lines = text.replace("\t", "    ").split("\n")
+        if width is None or width == 0:
+            return text_lines
+
+        wrapped_lines = []
+        for line in text_lines:
+            line = line.rstrip() + " "
+            if line == " ":
+                wrapped_lines.append(line)
+                continue
+
+            # Get the leftmost space ignoring leading whitespace
+            start = len(line) - len(line.lstrip())
+            start = line.index(" ", start)
+            while start + 1 < len(line):
+                # Get the next potential splitting point
+                next_splitting_point = line.index(" ", start + 1)
+                if font.size(line[:next_splitting_point])[0] <= width:
+                    start = next_splitting_point
+                else:
+                    wrapped_lines.append(line[:start])
+                    line = line[start + 1:]
+                    start = line.index(" ")
+            line = line[:-1]
+            if line:
+                wrapped_lines.append(line)
+        return wrapped_lines
 
     @property
     def is_finished(self):
