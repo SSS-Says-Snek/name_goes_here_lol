@@ -19,6 +19,6 @@
 5. Add StatState (Also already here, but there would be a test stat file to test the stat screen)
 6. Fix the bad collision detection between player and food
 7. Fix the "not applying after clicking apply button" bug
-8.
-9.
-10.
+8. Add beta, working state of the Shop
+9. Add alpha, working inventory and gun system
+10. Add graphics kek
