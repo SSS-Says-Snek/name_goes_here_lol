@@ -140,3 +140,7 @@ v2.4.0.rc1j (yes, it's imaginary) changelogs;
 - [GITHUB]: Added security advices
 - [GITHUB]: Pylint and CodeQL checks must pass. CodeQL analyzes potential security risks, and Pylint checks for code readability.
             If Pylint score gets less than 7.2/10 (current: 9.42/10), you would need to work on your code before merging it.
+
+Date of Planning: Jul 16, 2021, at 8:41 PM
+Date Last Modified: Aug 2, 2021, at 2:14 PM
+Date of Release: Aug 3, 2021, at ???:??? PM
