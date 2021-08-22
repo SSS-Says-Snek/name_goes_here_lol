@@ -25,7 +25,7 @@ from src.Engine.Entities.player import Player
 from src.Engine.Entities.Mobs import enemy
 from src.Engine.Entities.shop import ShopEntity
 from src.Engine.base import BaseState
-from src.Engine.objects import Slider, game_data
+from src.Engine.objects import Slider, game_data, HealthBar
 from src.Engine.button import MenuButton, ImageButton
 
 
@@ -409,6 +409,8 @@ class PlayingGameState(BaseState):
         self.player = Player()
         self.enemy = enemy.BulletEnemy(self.player)
         self.shop = ShopEntity()
+
+        self.test_hp = HealthBar(300, 300, 30, 5, 50, 100, 0, (128, 128, 128), (100, 100, 100), 1)
 
         # Currently, each tile is a 800x600 pixel image. May be changed to a square (possibly 25x25) soon
         self.map = [

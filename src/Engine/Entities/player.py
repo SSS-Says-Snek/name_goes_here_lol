@@ -6,7 +6,7 @@ Each player inherits from BaseEntity, which means that the following methods are
 As usual, there is also XEntity.constant_run(), but of course, it's optional, and not every
 entity needs that
 """
-
+import enum
 import random
 import time
 
@@ -18,6 +18,13 @@ from src.Engine.Entities.Weapons.guns import BasicGun
 import pygame
 
 pygame.init()
+
+
+class PlayerDirection(enum.Enum):
+    UP = complex(0, -1)
+    DOWN = complex(0, 1)
+    LEFT = complex(-1, 0)
+    RIGHT = complex(1, 0)
 
 
 class Player(BaseEntity):

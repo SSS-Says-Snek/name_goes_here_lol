@@ -6,16 +6,17 @@ from src import utils
 from src import common
 
 import pygame
+import colorsys
 
 
 class TextBox:
     def __init__(
-        self,
-        coordinates,
-        beginning_text="",
-        inactive_color=pygame.Color("lightskyblue3"),
-        active_color=pygame.Color("dodgerblue2"),
-        fontsize=60,
+            self,
+            coordinates,
+            beginning_text="",
+            inactive_color=pygame.Color("lightskyblue3"),
+            active_color=pygame.Color("dodgerblue2"),
+            fontsize=60,
     ):
         self.rect = pygame.Rect(coordinates)
         self.text = beginning_text
@@ -64,7 +65,7 @@ class TextBox:
 
 class DropDown:
     def __init__(
-        self, screen, color_menu, color_option, coords, dropdown_font, main, options
+            self, screen, color_menu, color_option, coords, dropdown_font, main, options
     ):
         self.screen = screen
         self.color_menu = color_menu
@@ -122,12 +123,12 @@ class DropDown:
 
 class PopUpMessage:
     def __init__(
-        self,
-        coords: tuple,
-        rect_color=(0, 0, 0),
-        text=None,
-        text_font=None,
-        screen=common.SCREEN,
+            self,
+            coords: tuple,
+            rect_color=(0, 0, 0),
+            text=None,
+            text_font=None,
+            screen=common.SCREEN,
     ):
         self.screen = screen
         self.coords = coords
@@ -172,12 +173,12 @@ class PopUpMessage:
 
 class OkayPopUpMessage(PopUpMessage):
     def __init__(
-        self,
-        coords: tuple,
-        rect_color=(0, 0, 0),
-        text=None,
-        text_font=None,
-        screen=common.SCREEN,
+            self,
+            coords: tuple,
+            rect_color=(0, 0, 0),
+            text=None,
+            text_font=None,
+            screen=common.SCREEN,
     ):
         super().__init__(coords, rect_color, text, text_font, screen)
 
@@ -187,18 +188,18 @@ class Slider:
     # Well, whaddya expect, there needs to be a lot to customize the slider
 
     def __init__(
-        self,
-        coord,
-        color,
-        length,
-        width,
-        min_val,
-        max_val,
-        default_val=None,
-        screen=common.SCREEN,
-        num_spaces=-1,
-        slide_color=None,
-        show_value=True,
+            self,
+            coord,
+            color,
+            length,
+            width,
+            min_val,
+            max_val,
+            default_val=None,
+            screen=common.SCREEN,
+            num_spaces=-1,
+            slide_color=None,
+            show_value=True,
     ):
         self.coord = coord
         self.color = color
@@ -258,14 +259,14 @@ class Slider:
             )
             self.screen.blit(current_val_txt, current_val_txt_rect)
         if (
-            self.is_holding_mouse
-            and self.coord[0] <= mouse_pos[0] <= self.coord[0] + self.length
+                self.is_holding_mouse
+                and self.coord[0] <= mouse_pos[0] <= self.coord[0] + self.length
         ):
             # if self.is_holding_mouse and distance(mouse_pos[0], current_rect.centerx, mouse_pos[1], current_rect.centery) < 100:
             self.slide_coord = (mouse_pos[0], self.slide_coord[1])
             self.current_val = (
-                mouse_pos[0] - self.coord[0]
-            ) / self.length * self.max_val + self.default_val
+                                       mouse_pos[0] - self.coord[0]
+                               ) / self.length * self.max_val + self.default_val
             if self.current_val > self.max_val:
                 self.current_val = self.max_val
             self.current_val = round(self.current_val)
@@ -283,18 +284,18 @@ class Slider:
 
 class TextMessage:
     def __init__(
-        self,
-        pos,
-        width,
-        height,
-        rect_color,
-        text,
-        font,
-        font_color=(0, 0, 0),
-        border_color=None,
-        border_width=None,
-        instant_blit=True,
-        screen=common.SCREEN,
+            self,
+            pos,
+            width,
+            height,
+            rect_color,
+            text,
+            font,
+            font_color=(0, 0, 0),
+            border_color=None,
+            border_width=None,
+            instant_blit=True,
+            screen=common.SCREEN,
     ):
         """This class can be used to display text"""
         self.pos = pos
@@ -344,8 +345,8 @@ class TextMessage:
 
             prev_text = self.split_text[self.blit_line_idx][: self.char_blit_line]
             self.blitted_chars[self.blit_line_idx] = self.split_text[
-                self.blit_line_idx
-            ][: self.char_blit_line]
+                                                         self.blit_line_idx
+                                                     ][: self.char_blit_line]
 
             if self.blitted_chars[self.blit_line_idx] == self.prev_line_text:
                 if self.blit_line_idx + 1 < len(self.split_text):
@@ -366,9 +367,9 @@ class TextMessage:
 
     def handle_events(self, event):
         if (
-            event.type == pygame.KEYDOWN
-            and not self.instant_blit
-            and self.blitted_chars != self.split_text
+                event.type == pygame.KEYDOWN
+                and not self.instant_blit
+                and self.blitted_chars != self.split_text
         ):
             self.blitted_chars = self.split_text[:]
             self.blit_line_idx = len(self.blitted_chars) - 1
@@ -422,6 +423,59 @@ class TextMessage:
             print("bruv")
             return False
         return True
+
+
+class HealthBar:
+    def __init__(
+            self, x, y, width, height, starting_hp, max_hp, min_hp, rect_color,
+            border_color=None, border_width=None, screen=common.SCREEN
+    ):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.starting_hp = starting_hp
+        self.max_hp = max_hp
+        self.min_hp = min_hp
+        self.rect_color = rect_color
+        self.border_color = border_color
+        self.border_width = border_width
+
+        self.screen = screen
+        self.rect = pygame.Rect(x, y, width, height)
+        self.current_hp = self.starting_hp
+
+    def draw(self):
+        pygame.draw.rect(self.screen, self.rect_color, self.rect)
+
+        # bar_percentage = self.current_hp / (self.max_hp - self.min_hp) * 100
+        # h, s, v = 0.33 * bar_percentage, 1, 1
+        # r, g, b = colorsys.hsv_to_rgb(h, s, v)
+
+        r = min(255, 255 - (255 * ((self.current_hp - (self.max_hp - self.current_hp)) / self.max_hp)))
+        g = min(255, 255 * (self.current_hp / (self.max_hp / 2)))
+
+        # color = ((r * 255), int(g * 255), int(b * 255))
+        color = (r, g, 0)
+
+        pygame.draw.rect(
+            self.screen, color, [
+                self.x, self.y,
+                self.current_hp / (self.max_hp - self.min_hp) * self.width,
+                self.height
+            ]
+        )
+
+        if self.border_color and self.border_width:
+            pygame.draw.rect(
+                self.screen, self.border_color,
+                [
+                    self.x, self.y, self.width, self.height
+                ], self.border_width
+            )
+
+    def update_hp(self, new_hp):
+        self.current_hp = new_hp
 
 
 class GameData:
