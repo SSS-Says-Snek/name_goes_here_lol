@@ -1,5 +1,6 @@
 ![Github Release Badge](https://img.shields.io/github/v/release/SSS-Says-Snek/name_goes_here_lol?include_prereleases&sort=date)
 ![Github Repo Size Badge](https://img.shields.io/github/repo-size/SSS-Says-Snek/name_goes_here_lol)
+![Lines of Code](https://img.shields.io/tokei/lines/github/SSS-Says-Snek/name_goes_here_Lol?color=aeaeaee&label=Lines%20of%20Code)
 ![Commits since last version](https://img.shields.io/github/commits-since/SSS-Says-Snek/name_goes_here_lol/latest?color=%28255%2C%200%2C%200%29&include_prereleases)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2d4a2c27e7094629b96ac732b81076c3)](https://www.codacy.com/gh/SSS-Says-Snek/name_goes_here_lol/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SSS-Says-Snek/name_goes_here_lol&amp;utm_campaign=Badge_Grade)
 
