@@ -6,7 +6,6 @@
 
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/SSS-Says-Snek/name_goes_here_lol.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SSS-Says-Snek/name_goes_here_lol/context:python)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/SSS-Says-Snek/name_goes_here_lol.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SSS-Says-Snek/name_goes_here_lol/alerts/)
-![Downloads (Github)](https://img.shields.io/github/downloads/SSS-Says-Snek/name_goes_here_lol/total)
 
 Title's kinda misleading, it's just Snake+ (upgraded version of snake, I had nothing to do, ok? I just wanted to improve my pygame skillz, as they were nonexistant)
 
